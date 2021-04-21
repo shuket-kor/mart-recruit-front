@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { login, getuser } = require("../app/controllers/userController")
+const { login, getuser, create } = require("../app/controllers/userController")
 // const { checkToken } = require("../app/auth/token_validation");
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -29,6 +29,7 @@ router.get('/signup', function(req, res, next) {
 
 router.post('/userlogin', login);
 router.get('/userlist', getuser);
+router.post('/usercreate', create);
 
 router.get('/mart', function(req, res, next) {
   var title = '마트협회 구인/구직';
