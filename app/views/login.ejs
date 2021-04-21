@@ -99,7 +99,7 @@
     <div class="container text-center">
         <div class="user-account">
             <div class="account-content">
-                <form action="http://localhost:3000/api/users/login" class="tr-form" method="POST">
+                <form action="/userlogin" class="tr-form" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="아이디" id="user_id" name="user_id">
                     </div>
@@ -114,7 +114,7 @@
                             <a href="#">비밀번호 찾기</a>
                         </div>
                     </div> -->
-                    <button type="submit" class="btn btn-primary">로그인</button>
+                    <button type="submit" class="btn btn-primary" id="login_btn" onclick="loginFunc()">로그인</button>
                 </form>	
                 <div class="new-user text-center">
                     <span><a href="signup">회원가입</a> </span>
@@ -152,4 +152,15 @@
 </div>
 <!-- /.footer -->
 
-<%- contentFor('script') %></div>
+<%- contentFor('script') %>
+<script>
+    // $(document).ready(function(){
+    //     $("#login_btn").click(function(){
+    //         self.location('/user')
+    //     });
+    // })
+    
+    function loginFunc(){
+        self.location = `/userlogin`
+    }
+</script>
