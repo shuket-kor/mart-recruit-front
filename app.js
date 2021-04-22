@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const logger = require('./app/config/logger');
 const expressLayouts = require('express-ejs-layouts');
-const indexRouter = require('./routes/index')
+const indexRouter = require('./routes/users')
 
 var app = express();
 

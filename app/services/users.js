@@ -97,7 +97,6 @@ module.exports = class userService {
                 return createUser.body.data;
             } else {
                 //실패
-                console.log("실패~~~~~~~~~~~~~~~~~~")
                 logger.writeLog('error', `services/getUserService/create: ${getUser.body.result}`);           
                 return createUser.body
             }

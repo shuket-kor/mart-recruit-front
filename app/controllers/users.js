@@ -1,5 +1,5 @@
 // const numeral = require('numeral');
-const userService = require("../services/userService.js");
+const userService = require("../services/users.js");
 
 module.exports = {
     async login(req, res, next) {
@@ -12,6 +12,7 @@ module.exports = {
             info: userInfo,
         });
     },
+    
     async getuser(req, res, next) {
         // const body = req.body;
         let token = req.cookies.xToken;

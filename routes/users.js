@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const { login, getuser, create } = require("../app/controllers/userController")
-// const { checkToken } = require("../app/auth/token_validation");
+const { login, getuser, create } = require("../app/controllers/users")
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var title = '마트협회 구인/구직';
@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/userlogin', login);
+
 router.get('/login', function(req, res, next) {
   var title = '마트협회 구인/구직';
     res.render('login', { 
@@ -18,6 +20,8 @@ router.get('/login', function(req, res, next) {
     title: title
   });
 });
+
+router.post('/usercreate', create);
 
 router.get('/signup', function(req, res, next) {
   var title = '마트협회 구인/구직';
@@ -27,9 +31,7 @@ router.get('/signup', function(req, res, next) {
   });
 });
 
-router.post('/userlogin', login);
 router.get('/userlist', getuser);
-router.post('/usercreate', create);
 
 router.get('/mart', function(req, res, next) {
   var title = '마트협회 구인/구직';
