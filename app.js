@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const logger = require('./app/config/logger');
 const expressLayouts = require('express-ejs-layouts');
 const indexRouter = require('./routes/users')
+const noticeRouter = require('./routes/notice');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/assets', express.static(path.join(__dirname, '/assets/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
 app.use('/', indexRouter);
+app.use('/', noticeRouter);
 
 app.use(
   morgan('combined', 
