@@ -1,6 +1,5 @@
 const logger = require('../config/logger.js');
 const got = require('got');
-const { render } = require('ejs');
 
 module.exports = class noticeService {
     /*static async list() {
@@ -26,13 +25,13 @@ module.exports = class noticeService {
             } else {
                 apiURL = 'http://api.martrecuruit.com/api/notice/list';
             }
-            var {response} = await got.get(apiURL, {
+            var {body} = await got(apiURL, {
                 responseType: 'json'
             });
-            console.log(response);
-            if (response.result == 'success'){
+
+            if (body.result == 'success'){
                 console.log('response.result === success');
-                return response;
+                return body.data;
             } else {
                 console.log('response.result !== success');
                 logger.writeLog('error', `services/noticeService/list: ${error}`);

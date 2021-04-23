@@ -68,7 +68,16 @@
             <th scope="col">수정일</th>
             <th scope="col" style="width: 15%;"></th>
           </tr>
-          
+          <% data.forEach(item => {%>
+            <tr>
+                <td><%=item.SEQ %></td>
+                <td><%=item.SUBJECT %></td>
+                <td><%=item.CONTENT %></td>
+                <td><%=item.USER_SEQ %></td>
+                <td><%=item.CREATED %></td>
+                <td><%=item.MODIFIED %></td>
+            </tr>
+          <% }) %>
       </table>
     </div>
   </div>
