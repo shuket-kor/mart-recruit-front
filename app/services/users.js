@@ -12,7 +12,7 @@ module.exports = class userService {
 
             const userData = await got.post(apiURL, {
                 json: {
-                    user_id: body.user_id,
+                    userid: body.user-id,
                     password: body.password,
                 },
                 responseType: "json",
@@ -71,8 +71,8 @@ module.exports = class userService {
     static async userCreate(body) {
         try {
             var apiURL = "";
-            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users";
-            else apiURL = `http://localhost:3000/api/users`;
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/create";
+            else apiURL = `http://localhost:3000/api/users/create`;
 
             const createUser = await got.post(apiURL, {
                 json: {
@@ -132,8 +132,8 @@ module.exports = class userService {
     static async userDelete(body) {
         try {
             var apiURL = "";
-            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/delete";
-            else apiURL = `http://localhost:3000/api/users/delete`;
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/remove";
+            else apiURL = `http://localhost:3000/api/users/remove`;
 
             const deleteUser = await got.patch(apiURL, {
                 json: {
@@ -147,7 +147,7 @@ module.exports = class userService {
                 return deleteUser.body.data;
             } else {
                 //실패
-                logger.writeLog("error", `services/getUserService/delete: ${deleteUser.body.result}`);
+                logger.writeLog("error", `services/getUserService/delete: ${removeUser.body.result}`);
                 return deleteUser.body;
             }
         } catch (error) {

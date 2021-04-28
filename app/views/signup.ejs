@@ -1,8 +1,6 @@
-<%- contentFor('style') %>
-
-<%- contentFor('header') %>
+<%- contentFor('style') %> <%- contentFor('header') %>
 <header class="tr-header">
-    <img src="images/ico/logo1.png" style="display: none;">
+    <img src="images/ico/logo1.png" style="display: none" />
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <div class="navbar-header">
@@ -15,7 +13,8 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav navbar-nav">
-                    <li class="tr-dropdown"><a href="#">홈</a>
+                    <li class="tr-dropdown">
+                        <a href="#">홈</a>
                         <ul class="tr-dropdown-menu left tr-list fadeInUp" role="menu">
                             <li><a href="/">홈페이지(비로그인)</a></li>
                             <li><a href="index-user.html">홈(구직자 로그인)</a></li>
@@ -79,26 +78,24 @@
 </header>
 <!-- /.tr-header -->
 
-
-<%- contentFor('title') %>
-
-
-<%- contentFor('content') %>
+<%- contentFor('title') %> <%- contentFor('content') %>
 <div class="tr-breadcrumb bg-image section-before">
     <div class="container">
         <div class="breadcrumb-info text-center">
             <div class="page-title">
                 <h1>회원가입</h1>
                 <span>회원가입 하세요..</span>
-            </div>				
+            </div>
         </div>
-    </div><!-- /.container -->
-</div><!-- tr-breadcrumb -->	
+    </div>
+    <!-- /.container -->
+</div>
+<!-- tr-breadcrumb -->
 <div class="tr-account section-padding">
     <div class="container text-center">
         <div class="user-account">
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs  nav-justified" role="tablist">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
                 <li role="presentation"><a class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
                 <li role="presentation"><a href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
             </ul>
@@ -107,24 +104,24 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="seeker">
                     <div class="account-content">
-                        <form action="usercreate" class="tr-form" method='POST'>
-                            <div style="display: none;">
-                                <input type="text" value="U" id="user_type" name="user_type">
+                        <form action="usercreate" class="tr-form" method="POST">
+                            <div style="display: none">
+                                <input type="text" value="U" name="user-type" />
                             </div>
-                            <div style="display: none;">
-                                <input type="text" value="Y" id="active" name="active">
+                            <div style="display: none">
+                                <input type="text" value="Y" name="active" />
                             </div>
                             <div>
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" id="user_id" name="user_id">
+                                <input type="text" class="form-control" placeholder="아이디" name="user-id" />
                             </div>
                             <!-- <div class="form-group">
                                 <input type="email" class="form-control" placeholder="Email">
                             </div> -->
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" id="passowrd" name="password">
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" />
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인">
@@ -139,50 +136,52 @@
                                 이메일 인증
                             </div> -->
                             <button type="submit" class="btn btn-primary" id="btn_reg_user" onclick="createFunc()">가입하기</button>
-                        </form>	
+                        </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면, <a href="login">로그인</a> </span>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="employers">
                     <div class="account-content">
-                        <form action="localhost:3000/api/users" class="tr-form">
-                            <div style="display: none;">
-                                <input type="text" value="M" id="user_type" name="user_type">
+                        <form action="localhost:3000/api/users" class="tr-form" method="POST">
+                            <div style="display: none">
+                                <input type="text" value="M" name="user-type" />
                             </div>
-                            <div style="display: none;">
-                                <input type="text" value="Y" id="active" name="active">
+                            <div style="display: none">
+                                <input type="text" value="Y" name="active" />
                             </div>
                             <div>
                                 <p>기업 인증</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="사업자 등록번호">
+                                <input type="text" class="form-control" placeholder="사업자 등록번호" />
                             </div>
                             <div>
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="user_id">
+                                <input type="text" class="form-control" placeholder="아이디" name="user-id" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="passowrd">
+                                <input type="password" class="form-control" placeholder="비밀번호" name="passowrd" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호 확인">
+                                <input type="password" class="form-control" placeholder="비밀번호 확인" />
                             </div>
-                            <button type="submit" class="btn btn-primary">회원가입</button>
-                        </form>	
+                            <button type="submit" class="btn btn-primary" onclick="createFunc()">회원가입</button>
+                        </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면. <a href="login">로그인</a> </span>
                         </div>
                     </div>
                 </div>
-            </div>				
-        </div>	
-    </div><!-- container -->
-</div><!-- /.tr-account-->	
+            </div>
+        </div>
+    </div>
+    <!-- container -->
+</div>
+<!-- /.tr-account-->
 
 <%- contentFor('footer') %>
 <div class="footer">
@@ -214,7 +213,7 @@
 
 <%- contentFor('script') %>
 <script>
-    function createFunc(){
-        self.location('/usercreate')
+    function createFunc() {
+        self.location("/usercreate");
     }
 </script>
