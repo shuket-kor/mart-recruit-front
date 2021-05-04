@@ -1,12 +1,12 @@
 // const numeral = require('numeral');
 const userService = require("../services/users.js");
-
+const secretkey = require("../config/secretKey").secretKey;
 module.exports = {
     // 유저 로그인
     async login(req, res, next) {
-        const body = req.body;
-        let userInfo = await userService.login(body);
-        // console.log(userInfo.token);
+        let userId = req.body.userid
+        let password = req.body.password
+        let userInfo = await userService.login(userId, password);
         res.cookie("xToken", userInfo.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.render("user", {
             layout: "layouts/default",
@@ -15,12 +15,9 @@ module.exports = {
     },
     
     // 유저 조회
-    async getuser(req, res, next) {
-        // const body = req.body;
+    async list(req, res, next) {
         let token = req.cookies.xToken;
-        console.log("token ? ? " + token);
-        let getuser = await userService.getuser(token);
-        // console.log(userInfo.token);
+        let getuser = await userService.list(token, secretkey);
         // res.cookie("xToken", userInfo.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.render("userlist", {
             layout: "layouts/default",
@@ -30,9 +27,11 @@ module.exports = {
 
     // 유저 생성
     async create(req, res, next) {
-        const body = req.body;
-        let userCreate = await userService.userCreate(body);
-        // console.log("완료 이다음 렌더 해야함.");
+        let userId = req.body.userid
+        let password = req.body.password
+        let userType = req.body.usertype
+        let active = req.body.active
+        let userCreate = await userService.create(userId, password, userType, active);
         res.render("user", {
             layout: "layouts/default",
             info: userCreate,
@@ -41,9 +40,12 @@ module.exports = {
 
     // 유저 수정
     async update(req, res, next) {
-        const body = req.body;
-        let userUpdate = await userService.userUpdate(body);
-        // console.log("완료 이다음 렌더 해야함.");
+        let userId = req.body.userid
+        let password = req.body.password
+        let userType = req.body.usertype
+        let active = req.body.active
+        let seq = req.body.seq
+        let userUpdate = await userService.userUpdate(userId, password, userType, active, seq);
         res.render("userupdate", {
             layout: "layouts/default",
             info: userUpdate,
@@ -52,13 +54,43 @@ module.exports = {
     
     // 유저 삭제
     async delete(req, res, next) {
-        const body = req.body;
-        let userDelete = await userService.userDelete(body);
-        // console.log("완료 이다음 렌더 해야함.");
+        let seq = req.body.seq
+        let userDelete = await userService.userDelete(seq);
         res.render("userdelete", {
             layout: "layouts/default",
             info: userDelete,
         });
     },
     
+    async index(req, res, next){
+        res.render("index", {
+            layout: "layouts/default",
+            
+        });
+    },
+
+    async signup(req, res, next){
+        res.render("signup", {
+            layout: "layouts/default",
+            
+        });
+    },
+
+    async mypage(req, res, next){
+        res.render("mypage", {
+            layout: "layouts/default",
+            
+        });
+    },
+    async signin(req, res, next){
+        res.render("login", {
+            layout: "layouts/default", 
+        });
+    },
+
+    async logout(req, res, next){
+        res.render("index", {
+            layout: "layouts/default", 
+        });
+    },
 };

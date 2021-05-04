@@ -106,7 +106,7 @@
                     <div class="account-content">
                         <form action="usercreate" class="tr-form" method="POST">
                             <div style="display: none">
-                                <input type="text" value="U" name="user-type" />
+                                <input type="text" value="U" name="usertype" />
                             </div>
                             <div style="display: none">
                                 <input type="text" value="Y" name="active" />
@@ -115,11 +115,9 @@
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="user-id" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" />
                             </div>
-                            <!-- <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email">
-                            </div> -->
+                            <button class="btn btn-primary" id="idcheckbtn" >아이디 중복 체크</button>
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호" name="password" />
                             </div>
@@ -135,7 +133,7 @@
                             <div>
                                 이메일 인증
                             </div> -->
-                            <button type="submit" class="btn btn-primary" id="btn_reg_user" onclick="createFunc()">가입하기</button>
+                            <button type="submit" class="btn btn-primary" onclick="createFunc()">가입하기</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면, <a href="login">로그인</a> </span>
@@ -144,9 +142,9 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="employers">
                     <div class="account-content">
-                        <form action="localhost:3000/api/users" class="tr-form" method="POST">
+                        <form action="usercreate" class="tr-form" method="POST">
                             <div style="display: none">
-                                <input type="text" value="M" name="user-type" />
+                                <input type="text" value="M" name="usertype" />
                             </div>
                             <div style="display: none">
                                 <input type="text" value="Y" name="active" />
@@ -161,10 +159,10 @@
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="user-id" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="passowrd" />
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" />
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인" />
@@ -216,4 +214,9 @@
     function createFunc() {
         self.location("/usercreate");
     }
+    $(document).ready(function(){
+        $("#idcheckbtn").click(function{
+            alert("Test");
+        })
+    })
 </script>
