@@ -1,5 +1,4 @@
 <%- contentFor('style') %>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
 <%- contentFor('header') %>
 <header class="tr-header">
@@ -52,51 +51,40 @@
 
 <%- contentFor('content') %>
 
-<div class="tr-profile section-padding">
+<div class="all-view section-padding">
     <div class="container">
+        <% data.forEach(item => {%>
+            <h1 style="text-align: center; margin:0 0 70px 0;">공지 사항</h1>
+        <form class="section">
+           
+            <ul class="tr-list resume-info">
+                <li class="work-history media">
+                    <div class="media-body">            
+                        <ul class="tr-list">
+                            <li>
+                                <p class="tr-title"><%=item.SUBJECT %></p>
+                            </li>
+                            <li>
+                                <span><%=item.CONTENT %></span>
+                            </li>
+                            <li>
+                                <span>작성자: <%=item.USER_SEQ %></span>
+                                <span>작성날짜: <%=item.CREATED %></span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>							
+            </ul>
+            
+            <div class="buttons pull-right">
+                <a href="/notice/list?page=<%= item.SEQ %>" class="btn btn-primary">목록으로</a>
+            </div>					
+        </form>
+        <% }) %>
+    </div>	
+</div>
 
-        <div class="panel">
-            <div class="row">
-                <div class="col-md-9 col-lg-12">
-                    <div class="tab-pane open-role" id="open-role">
 
-                        <h1 style="text-align: center; margin:0">공지 사항</h1>
-                    
-                        <% list.forEach(item => {%>
-                            <div class="role remove-item" style="margin-top: 20px;">
-                                <form class="left-content">
-                                        <div>
-                                            <div class="clearfix">
-                                                <span class="tr-title">
-                                                    <a href="/notice/view?seq=<%= item.SEQ %>"><%=item.SUBJECT %></a>
-                                                </span>
-                                            </div>
-                                            <span class="deadline"><%=item.CONTENT %></span>
-                                            <ul class="tr-list job-meta">
-                                                <li>No. <%=item.SEQ %></li>
-                                                <li>작성자 : <%=item.USER_SEQ %></li>
-                                                <li>작성일 : <%=item.CREATED %></li>
-                                            </ul>
-                                        </div>									
-                                </form><!--left-content-->
-                            </div><!--role remove-item-->
-                        <% }) %>
-                    </div><!--tab-pane open-role-->
-                </div><!--col-md-9-->
-            </div><!--row-->
-        </div><!--panel-->
-
-        <div class="panel">
-            <div class="row" style="width: 100%;">
-                <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
-                    <ul class="pagination justify-content-center" id="mart-page"></ul>
-                </nav>
-            </div><!--row-->
-        </div>
-    
-        
-    </div><!--container-->
-</div><!--tr-profile-->
 <%- contentFor('footer') %>
       <div class="footer">
           <div class="footer-top" style="padding: 40px 0">
@@ -126,17 +114,9 @@
       <!-- /.footer -->
       
 <%- contentFor('script') %>
+
 <script>
-    var totalCount = <%= totalCount %>; 
-    var page = <%= page %>;
-    var rowCount = <%= rowCount %>;   
-
-    $(document).ready(function() {
-        if (totalCount <= rowCount) {
-            $('#mart-page').hide();
-        } else {
-            createPagination('mart-page', totalCount, rowCount, page, 5, `/notice/list?`);
-        }
-    });
+    function noticeEdit(){
+        self.location('/update')
+    }
 </script>
-

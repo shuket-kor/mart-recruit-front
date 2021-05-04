@@ -2,47 +2,59 @@ const logger = require('../config/logger.js');
 const got = require('got');
 
 module.exports = class noticeService {
-    /*static async list() {
-        try {
-            var apiURL = "";
-            if(process.env.NODE_ENV == "develope") {
-                apiURL = 'http://localhost:3000/api/notice/list';
-            } else {
-                apiURL = 'http://localhost:3000/api/notice/list';
-                const {response} = await got.get(apiURL, {
-                    responseType: 'json'
-                });
+    
+        // 공지사항 리스트
+        static async list(page, rowCount) {
+            try {
+
+                var apiURL = "";
+                if(process.env.NODE_ENV == "develope") {
+                    apiURL = 'http://localhost:3000/api/notice/list';
+                } else {
+                    apiURL = 'http://localhost:3000/api/notice/list';
+                }
+                var {body} = await got.get(apiURL + "?page=" + page + "&offset=" + rowCount, { responseType: 'json' });
+    
+                if (body.result == 'success'){
+                    console.log('response.result === success 확인');
+                    //console.log(body.data);
+                    return body.data;
+                } else {
+                    console.log('response.result !== success');
+                    logger.writeLog('error', `services/noticeService/list (확인!!!): ${error}`);
+                    return null;
+                }
+            } catch (error) {
+                logger.writeLog('error',`serives/noticeService/list: ${error}`)
+                return null;
             }
-        } catch (error) {
-            logger.writeLog('error',`serives/noticeService/list: ${error}`)
         }
-    }*/
-    static async list() {
+
+    // 공지사항 자세히 보기
+    static async views(seq) {
+
         try {
             var apiURL = "";
             if(process.env.NODE_ENV == "develope") {
-                apiURL = 'http://localhost:3000/api/notice/list';
+                apiURL = 'http://localhost:3000/api/notice/view';
             } else {
-                apiURL = 'http://api.martrecuruit.com/api/notice/list';
+                apiURL = 'http://localhost:3000/api/notice/view';
             }
-            var {body} = await got(apiURL, {
-                responseType: 'json'
-            });
+            var {body} = await got.get(apiURL + "?seq=" + seq , { responseType: 'json' });
 
             if (body.result == 'success'){
                 console.log('response.result === success');
                 return body.data;
             } else {
                 console.log('response.result !== success');
-                logger.writeLog('error', `services/noticeService/list: ${error}`);
+                logger.writeLog('error', `services/noticeService/views: ${error}`);
                 return null;
             }
         } catch (error) {
-            logger.writeLog('error',`serives/noticeService/list: ${error}`)
+            logger.writeLog('error',`serives/noticeService/views: ${error}`)
             return null;
         }
     }
-
 
     
 };
