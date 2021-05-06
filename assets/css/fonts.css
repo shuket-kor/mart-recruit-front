@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'NanumSquareRoundL';
+    src: url('../fonts/NanumSquareRoundL.eot');
+    src: url('../fonts/NanumSquareRoundL.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumSquareRoundL.woff2') format('woff2'),
+        url('../fonts/NanumSquareRoundL.woff') format('woff'),
+        url('../fonts/NanumSquareRoundL.ttf') format('truetype'),
+        url('../fonts/NanumSquareRoundL.svg#NanumSquareRoundL') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '../fonts/NanumSquareRoundB';
+    src: url('../fonts/NanumSquareRoundB.eot');
+    src: url('../fonts/NanumSquareRoundB.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumSquareRoundB.woff2') format('woff2'),
+        url('../fonts/NanumSquareRoundB.woff') format('woff'),
+        url('../fonts/NanumSquareRoundB.ttf') format('truetype'),
+        url('../fonts/NanumSquareRoundB.svg#NanumSquareRoundB') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumSquareRoundEB';
+    src: url('../fonts/NanumSquareRoundEB.eot');
+    src: url('../fonts/NanumSquareRoundEB.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumSquareRoundEB.woff2') format('woff2'),
+        url('../fonts/NanumSquareRoundEB.woff') format('woff'),
+        url('../fonts/NanumSquareRoundEB.ttf') format('truetype'),
+        url('../fonts/NanumSquareRoundEB.svg#NanumSquareRoundEB') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumSquareRoundR';
+    src: url('../fonts/NanumSquareRoundR.eot');
+    src: url('../fonts/NanumSquareRoundR.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumSquareRoundR.woff2') format('woff2'),
+        url('../fonts/NanumSquareRoundR.woff') format('woff'),
+        url('../fonts/NanumSquareRoundR.ttf') format('truetype'),
+        url('../fonts/NanumSquareRoundR.svg#NanumSquareRoundR') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumGothicBold';
+    src: url('../fonts/NanumGothicBold.eot');
+    src: url('../fonts/NanumGothicBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumGothicBold.woff2') format('woff2'),
+        url('../fonts/NanumGothicBold.woff') format('woff'),
+        url('../fonts/NanumGothicBold.ttf') format('truetype'),
+        url('../fonts/NanumGothicBold.svg#NanumGothicBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumGothic';
+    src: url('../fonts/NanumGothic.eot');
+    src: url('../fonts/NanumGothic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumGothic.woff2') format('woff2'),
+        url('../fonts/NanumGothic.woff') format('woff'),
+        url('../fonts/NanumGothic.ttf') format('truetype'),
+        url('../fonts/NanumGothic.svg#NanumGothic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumGothicExtraBold';
+    src: url('../fonts/NanumGothicExtraBold.eot');
+    src: url('../fonts/NanumGothicExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumGothicExtraBold.woff2') format('woff2'),
+        url('../fonts/NanumGothicExtraBold.woff') format('woff'),
+        url('../fonts/NanumGothicExtraBold.ttf') format('truetype'),
+        url('../fonts/NanumGothicExtraBold.svg#NanumGothicExtraBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NanumGothicLight';
+    src: url('../fonts/NanumGothicLight.eot');
+    src: url('../fonts/NanumGothicLight.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NanumGothicLight.woff2') format('woff2'),
+        url('../fonts/NanumGothicLight.woff') format('woff'),
+        url('../fonts/NanumGothicLight.ttf') format('truetype'),
+        url('../fonts/NanumGothicLight.svg#NanumGothicLight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+

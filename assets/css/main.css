@@ -99,7 +99,7 @@ body {
     font-size: 14px;
     background-color: #f5f4f5;
     -webkit-font-smoothing: antialiased;
-    font-family: "Varela Round", sans-serif;
+    font-family: NanumGothic, NanumSquareRound, "Varela Round", sans-serif;
 }
 
 h1,
@@ -534,6 +534,7 @@ select:focus,
 .navbar-nav > li > a {
     padding: 15px 10px;
     line-height: 25px;
+    font-size: 12pt;
 }
 
 .navbar-nav li a:hover,
@@ -3490,4 +3491,9 @@ button.btn-primary,
     -ms-transition: all 500ms;
     -o-transition: all 500ms;
     transition: all 500ms;
+}
+
+.navbar-nav li a {
+    font-size: 18px;
+    font-family: NanumSquareRoundB;
 }

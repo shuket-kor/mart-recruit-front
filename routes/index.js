@@ -1,13 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-// const { functionName } = require('../app/controllers/controllerName.js');
+const { verify } = require('../app/controllers/auth.js');
+const { main } = require('../app/controllers/main.js');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-// router.get('/', functionName);
+// 
+router.get('/', verify, main);
 
 module.exports = router;
