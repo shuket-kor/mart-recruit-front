@@ -99,7 +99,7 @@
     <div class="container text-center">
         <div class="user-account">
             <div class="account-content">
-                <form action="/userlogin" class="tr-form" method="POST">
+                <form action="/users/login" class="tr-form" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="아이디"  name="userid">
                     </div>
@@ -153,8 +153,27 @@
 <!-- /.footer -->
 
 <%- contentFor('script') %>
-<script>
+<script type="text/javascript">
+    var loginResultCode = '<%=resultCode %>';
     $(document).ready(function(){
+        loginViewMessage()
+    });
+    function loginViewMessage(){
+        switch (loginResultCode) {
+            case '1':
+                alert("로그인 정보가 올바르지 않습니다.");
+                break;
+                case '2':
+                    alert("로그인이 처리되지 않았습니다. 잠시 후에 다시 시도해 주십시오.");
+                    break;
+                    case '3':
+                        alert("이 사용자는 접근 권한이 없습니다.");
+                        break;
+                    }
+                }
+
+
+        // 로그인 정보 저장 일단 킾
     //     let userInputId = getCookie("userInputId");//저장된 쿠기값 가져오기
     //     $("input[name='userid']").val(userInputId); 
         
@@ -179,34 +198,31 @@
     //         }
     //     });
     // });
+    // function setCookie(cookieName, value, exdays){
+    // var exdate = new Date();
+    // exdate.setDate(exdate.getDate() + exdays);
+    // var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    // document.cookie = cookieName + "=" + cookieValue;
+    // }
     
-    function loginFunc(){
-        self.location = `/userlogin`
-    }
-    function setCookie(cookieName, value, exdays){
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
-}
- 
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-}
- 
-function getCookie(cookieName) {
-    cookieName = cookieName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cookieName);
-    var cookieValue = '';
-    if(start != -1){
-        start += cookieName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cookieValue = cookieData.substring(start, end);
-    }
-    return unescape(cookieValue);
-}
+    // function deleteCookie(cookieName){
+    //     var expireDate = new Date();
+    //     expireDate.setDate(expireDate.getDate() - 1);
+    //     document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+    // }
+    
+    // function getCookie(cookieName) {
+    //     cookieName = cookieName + '=';
+    //     var cookieData = document.cookie;
+    //     var start = cookieData.indexOf(cookieName);
+    //     var cookieValue = '';
+    //     if(start != -1){
+    //         start += cookieName.length;
+    //         var end = cookieData.indexOf(';', start);
+    //         if(end == -1)end = cookieData.length;
+    //         cookieValue = cookieData.substring(start, end);
+    //     }
+    //     return unescape(cookieValue);
+    // }
+
 </script>

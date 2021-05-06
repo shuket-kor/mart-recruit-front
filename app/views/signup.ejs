@@ -1,6 +1,6 @@
 <%- contentFor('style') %> <%- contentFor('header') %>
 <header class="tr-header">
-    <img src="images/ico/logo1.png" style="display: none" />
+    <!-- <img src="images/ico/logo1.png" style="display: none" /> -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <div class="navbar-header">
@@ -96,15 +96,15 @@
         <div class="user-account">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation"><a class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
-                <li role="presentation"><a href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
+                <li role="presentation" id='usertab'><a class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
+                <li role="presentation" id='marttab'><a href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="seeker">
                     <div class="account-content">
-                        <form action="usercreate" class="tr-form" method="POST">
+                        <form action="usercreate" class="tr-form" method="POST" id="user-signup-form">
                             <div style="display: none">
                                 <input type="text" value="U" name="usertype" />
                             </div>
@@ -115,11 +115,11 @@
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="userid" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="user-loginid" />
                             </div>
-                            <button class="btn btn-primary" id="idcheckbtn" >아이디 중복 체크</button>
+                            <button type='button' class="btn btn-primary idcheckbtn">아이디 중복 체크</button>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" />
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id='user-password'/>
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인">
@@ -133,7 +133,7 @@
                             <div>
                                 이메일 인증
                             </div> -->
-                            <button type="submit" class="btn btn-primary" onclick="createFunc()">가입하기</button>
+                            <button type="button" class="btn btn-primary" id='user-login' form="user-signup-form">가입하기</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면, <a href="login">로그인</a> </span>
@@ -142,7 +142,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="employers">
                     <div class="account-content">
-                        <form action="usercreate" class="tr-form" method="POST">
+                        <form action="usercreate" class="tr-form" method="POST" id="mart-signup-form">
                             <div style="display: none">
                                 <input type="text" value="M" name="usertype" />
                             </div>
@@ -159,15 +159,16 @@
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="userid" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="mart-loginid" />
                             </div>
+                            <button type='button' class="btn btn-primary idcheckbtn" >아이디 중복 체크</button>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" />
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id='mart-password'/>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인" />
-                            </div>
-                            <button type="submit" class="btn btn-primary" onclick="createFunc()">회원가입</button>
+                            </div> -->
+                            <button type="submit" class="btn btn-primary" >회원가입</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면. <a href="login">로그인</a> </span>
@@ -211,12 +212,74 @@
 
 <%- contentFor('script') %>
 <script>
-    function createFunc() {
-        self.location("/usercreate");
-    }
     $(document).ready(function(){
-        $("#idcheckbtn").click(function{
-            alert("Test");
+        // 아이디 중복 체크
+        let idcheckflag = false
+        let usermartflag = true
+        $("#marttab").click(function(){
+            usermartflag == false
         })
+        $("#usertab").click(function(){
+            usermartflag == true
+        })
+        $(".idcheckbtn").click(function(){
+            // 아이디가 마트쪽 인지 유저쪽인지 체크
+            let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val()  
+
+            doPostCallSync('/checkid',{
+                loginid: loginId
+            })
+            .success(function(json){
+                // 아이디 중복체크가 false 이면 가입이 불가능.
+                if (json.result == "success"){
+                    if(json.data.tf == false){
+                        alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
+                        idcheckflag = false
+                        location.reload();
+                    }else{
+                        alert("사용 가능한 아이디 입니다.");
+                        idcheckflag = true
+                        return
+                    }
+                }
+            })
+            .fail(function(){
+                alert("아이디 중복체크 오류...");
+            });
+        })
+
+        // 아이디 중복체크 불가능일때 회원가입 시도시
+        $("#user-login").click(function(){
+            if ($("#user-loginid").val().length == 0) {
+                alert("아이디를 입력하세요");
+                return
+            }
+            if ($("#user-password").val().length == 0) {
+                alert("암호를 입력하세요");
+                return
+            }
+            if(idcheckflag == false){
+                alert("아이디 중복체크를 해주세요.");
+                return
+            }else{
+                $("#user-signup-form").submit();
+            }
+        });
+        $("#mart-login").click(function(){
+            if ($("#mart-loginid").val().length == 0) {
+                alert("아이디를 입력하세요");
+                return
+            }
+            if ($("#mart-password").val().length == 0) {
+                alert("암호를 입력하세요");
+                return
+            }
+            if(idcheckflag == false){
+                alert("아이디 중복체크를 해주세요.");
+                return
+            }else{
+                $("#mart-signup-form").submit();
+            }
+        });
     })
 </script>

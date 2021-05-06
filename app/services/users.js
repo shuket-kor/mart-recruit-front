@@ -20,13 +20,48 @@ module.exports = class userService {
             if (body.result === "success") {
                 return body;
             } else {
-                logger.writeLog("error", `FRONT - services/login: ${body}`);
-                return null;
+                logger.writeLog("error", `FRONT - services/login: ${body.data}`);
+                return body;
             }
         } catch (error) {
             logger.writeLog("error", `FRONT - services/login: ${error}`);
         }
     }
+
+    // auth
+    static async authorizatoin(userId, password) {
+        try {
+            var apiURL = "";
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/login";
+            else apiURL = `http://localhost:3000/api/users/login`;
+
+            const {body} = await got.post(apiURL, {
+                json: {
+                    userId: userId,
+                    password: password,
+                },
+                responseType: "json",
+            });
+            // console.log(body)
+            if (body.result === "success") {
+                logger.writeLog("error", `FRONT_TRY - services/authorizatoin: ${body}`);
+                // 인증에 성공하면 data에 담겨온 토큰을 리턴
+                return body;
+            } else {
+                //실패
+                console.log(body.data);
+                logger.writeLog("error", `FRONT_TRY - services/authorizatoin: ${error}`);
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/authorizatoin: system error - ${error}`);
+            return null;
+        }
+    }
+
+
+
+
     // 유저 조회
     static async list(token, secretkey) {
         try {
@@ -67,6 +102,31 @@ module.exports = class userService {
                     password: password,
                     usertype: userType,
                     active: active,
+                },
+                responseType: "json",
+            });
+            console.log(body)
+            if (body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `services/create: `);
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/create: ${error}`);
+        }
+    }
+    
+    static async checkid(userId) {
+        try {
+            var apiURL = "";
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/checkid";
+            else apiURL = `http://localhost:3000/api/users/checkid`;
+
+            const {body} = await got.post(apiURL, {
+                json: {
+                    userid: userId
                 },
                 responseType: "json",
             });
