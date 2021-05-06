@@ -46,16 +46,27 @@
 				
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="nav navbar-nav">
+					<% if (!user || user.Type == 'U') { %>
 						<li class="m-l-30"><a href="job-post.html">지역별 공고</a></li>
 						<li class="m-l-30"><a href="listing.html">직종별 공고</a></li>
+					<%} else { %>
+						<li class="m-l-30"><a href="job-post.html">지역별 이력서</a></li>
+						<li class="m-l-30"><a href="listing.html">직종별 이력서</a></li>
+						<li class="m-l-30"><a href="listing.html">추천 이력서</a></li>
+					<% } %>
 					</ul>
 				</div>
 
 				<div class="navbar-right">			
 					<ul class="sign-in tr-list">
 						<li><i class="fa fa-user"></i></li>
-						<li><a href="/users/login">로그인 </a></li>
-						<li><a href="/users/signup">회원 가입</a></li>
+						<% if (user) { %>
+							<li><a href="/auth/logout">로그아웃 </a></li>
+							<li><a href="/users/mypage">정보관리</a></li>
+						<%} else { %>
+							<li><a href="/auth/login">로그인 </a></li>
+							<li><a href="/users/signup">회원 가입</a></li>
+						<% } %>
 					</ul><!-- /.sign-in -->					
 
 					<a href="job-post.html" class="btn btn-primary">마트 서비스</a>
