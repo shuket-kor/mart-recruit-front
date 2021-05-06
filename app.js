@@ -28,6 +28,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, '/assets/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
+app.set('baseTitle', '마트협회구인구직');
+if (process.env.NODE_ENV == 'develope') {
+  process.env.APIHOST = 'http://localhost:3000';
+} else {
+  process.env.APIHOST = 'http://localhost:3000';
+}
+
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
