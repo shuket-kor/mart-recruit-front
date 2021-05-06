@@ -2,36 +2,6 @@
 const userService = require("../services/users.js");
 const secretkey = require("../config/secretKey").secretKey;
 module.exports = {
-    // 유저 로그인
-    async login(req, res, next) {
-        var resultCode = 0; // 0: 정상 1 :로그인 에러 후
-        if (req.query.result) {
-            resultCode = req.query.result;
-        }
-        console.log("result Code? ? ? ? ? ? : " + resultCode)
-        res.render("login", {
-            layout: "layouts/default",
-            resultCode: resultCode,
-        });
-    },
-    //  로그인 프로세스
-    async loginProcess(req, res, next) {
-        // 인증서버로부터 인증 정보를 받는다.
-        const loginbody = await userService.authorizatoin(req.body.userid, req.body.password);
-        if (loginbody) {
-          res.cookie("xToken", loginbody.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-          if(loginbody.data.USERTYPE == 'U'){
-                res.redirect("/users");
-          }else if(loginbody.data.USERTYPE == 'M'){
-              res.redirect("/mart");  
-          }else{
-            res.redirect("/");  
-          }
-        } else {
-          res.redirect("/users/login?result=1");
-        }
-      },
-
     // 유저 조회
     async list(req, res, next) {
         let token = req.cookies.xToken;
@@ -97,18 +67,13 @@ module.exports = {
     async signup(req, res, next){
         res.render("signup", {
             layout: "layouts/default",
+            user: req.user,
         });
     },
 
     async mypage(req, res, next){
         res.render("mypage", {
             layout: "layouts/default",
-        });
-    },
-
-    async logout(req, res, next){
-        res.render("index", {
-            layout: "layouts/default", 
         });
     },
     

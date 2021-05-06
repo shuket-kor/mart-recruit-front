@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { list, create, index, signup, mypage, login, logout, checkid, loginProcess } = require("../app/controllers/users")
+const { list, create, index, signup, mypage, checkid } = require("../app/controllers/users")
 
 /* GET home page. */
 // 인덱스페이지, 첫 접속화면
@@ -14,10 +14,10 @@ router.post('/usercreate', create);
 router.get('/mypage', mypage);
 
 // 로그인 페이지
-router.get('/login', login);
-router.post('/login', loginProcess);
+// router.get('/login', login);
+// router.post('/login', loginProcess);
 
-router.get('/logout', logout)
+// router.get('/logout', logout)
 router.get('/userlist', list);
 
 // 아이디 체크
