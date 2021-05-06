@@ -21,11 +21,11 @@ module.exports = {
         if (loginbody) {
           res.cookie("xToken", loginbody.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
           if(loginbody.data.USERTYPE == 'U'){
-                res.redirect("/useruseruser");  
+                res.redirect("/users");
           }else if(loginbody.data.USERTYPE == 'M'){
-              res.redirect("/martmartmart");  
+              res.redirect("/mart");  
           }else{
-            res.redirect("/adminadminadmin");  
+            res.redirect("/");  
           }
         } else {
           res.redirect("/users/login?result=1");
@@ -91,26 +91,18 @@ module.exports = {
     async index(req, res, next){
         res.render("index", {
             layout: "layouts/default",
-            
         });
     },
 
     async signup(req, res, next){
         res.render("signup", {
             layout: "layouts/default",
-            
         });
     },
 
     async mypage(req, res, next){
         res.render("mypage", {
             layout: "layouts/default",
-            
-        });
-    },
-    async signin(req, res, next){
-        res.render("login", {
-            layout: "layouts/default", 
         });
     },
 
