@@ -28,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, '/assets/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
-app.use('/', require('./routes/users'));
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
 
 app.use(
