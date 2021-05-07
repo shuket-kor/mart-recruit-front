@@ -61,4 +61,16 @@ module.exports = class authService {
             return null;
         }
     }
+
+    //  해당 페이지가 어떤 등급을 허용하는지, 허용하지 않으면 경고를 하고 루트로 리턴
+    //  allows는 배열임
+    static checkPermission(allows, userType) {
+        if (allows.indexOf('A') != -1 || (allows.indexOf(userType) != -1)) {
+            return true;
+        } else {
+            return false;
+        }
+      }
+  
+  
 }

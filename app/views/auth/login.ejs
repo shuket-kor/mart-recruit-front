@@ -114,10 +114,11 @@
                             <a href="#">비밀번호 찾기</a>
                         </div>
                     </div> -->
+                    <input type="hidden" id="refer" name="refer" value="">
                     <button type="submit" class="btn btn-primary">로그인</button>
                 </form>	
                 <div class="new-user text-center">
-                    <span><a href="signup">회원가입</a> </span>
+                    <span><a href="/users/signup">회원가입</a> </span>
                 </div>
             </div>
         </div>			
@@ -154,10 +155,16 @@
 
 <%- contentFor('script') %>
 <script type="text/javascript">
-    var loginResultCode = '<%=resultCode %>';
+    let loginResultCode = '<%=resultCode %>';
+    let refer = '<%=refer %>';
+
     $(document).ready(function(){
         loginViewMessage()
+
+        if (refer === '') refer = document.referrer;
+        $("#refer").val(refer);
     });
+    
     function loginViewMessage(){
         switch (loginResultCode) {
             case '1':

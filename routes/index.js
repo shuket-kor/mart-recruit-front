@@ -5,6 +5,6 @@ const { verify, redirectLogin } = require('../app/controllers/auth.js');
 const { main } = require('../app/controllers/main.js');
 
 // 
-router.get('/', verify, redirectLogin, main);
+router.get('/', verify, main);
 
 module.exports = router;
