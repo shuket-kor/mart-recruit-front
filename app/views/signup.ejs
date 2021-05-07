@@ -123,6 +123,10 @@
         $(".idcheckbtn").click(function(){
             // 아이디가 마트쪽 인지 유저쪽인지 체크
             let loginId = (usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val());
+            if(loginId.length == 0){
+                alert("아이디를 입력해주세요.");
+                return
+            }
             console.log(loginId);
             doPostCallSync('/users/checkid',{
                 loginid: loginId
