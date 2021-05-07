@@ -39,6 +39,7 @@ app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
+app.use('/recruit', require('./routes/recruit'));
 
 app.use(
   morgan('combined', 
