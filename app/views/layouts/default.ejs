@@ -48,7 +48,8 @@
 					<ul class="nav navbar-nav">
 					<% if (!user || user.Type == 'U') { %>
 						<li class="m-l-30"><a href="/recruit/listRegion?a=1&p=1">지역별 공고</a></li>
-						<li class="m-l-30"><a href="listing.html">직종별 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listJobType?a=1&p=1">직종별 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listJobType?a=1&p=1">추천 공고</a></li>
 					<%} else { %>
 						<li class="m-l-30"><a href="job-post.html">지역별 이력서</a></li>
 						<li class="m-l-30"><a href="listing.html">직종별 이력서</a></li>
@@ -68,8 +69,9 @@
 							<li><a href="/users/signup">회원 가입</a></li>
 						<% } %>
 					</ul><!-- /.sign-in -->					
-
+					<% if (!user || user.Type == 'M') { %>
 					<a href="job-post.html" class="btn btn-primary">마트 서비스</a>
+					<% } %>
 				</div><!-- /.nav-right -->
 			</div><!-- /.container -->
 		</nav><!-- /.navbar -->
