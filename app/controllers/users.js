@@ -21,7 +21,7 @@ module.exports = {
         let active = req.body.active
         let userCreate = await userService.create(userId, password, userType, active);
         // 유저 화면으로 리다이렉트.
-        res.redirect("/login");
+        res.redirect("auth/login");
     },
 
     // 아이디 중복체크
@@ -67,13 +67,16 @@ module.exports = {
     async signup(req, res, next){
         res.render("signup", {
             layout: "layouts/default",
-            user: req.user,
+            title: '한국마트협회 구인구직',
+            user: req.user
         });
     },
 
     async mypage(req, res, next){
         res.render("mypage", {
             layout: "layouts/default",
+            title: '한국마트협회 구인구직',
+            user: req.user
         });
     },
     
