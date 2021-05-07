@@ -69,14 +69,15 @@ module.exports = {
   async loginProcess(req, res, next) {
     // 인증서버로부터 인증 정보를 받는다.
     const loginbody = await authService.authorizatoin(req.body.userid, req.body.password);
+    console.log(loginbody);
     if (loginbody) {
       res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
       if(loginbody.data.USERTYPE == 'U'){
-            res.redirect("/useruseruser");  
+            res.redirect("/");
       }else if(loginbody.data.USERTYPE == 'M'){
-          res.redirect("/martmartmart");  
+          res.redirect("/");
       }else{
-        res.redirect("/adminadminadmin");  
+        res.redirect("/");
       }
     } else {
       res.redirect("/auth/login?result=1");
@@ -85,7 +86,6 @@ module.exports = {
 
   async logout(req, res, next) {
     res.cookie('xToken', {expires: 0});
-
     res.redirect("/");
   }
 }

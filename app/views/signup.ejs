@@ -1,84 +1,6 @@
-<%- contentFor('style') %> <%- contentFor('header') %>
-<header class="tr-header">
-    <!-- <img src="images/ico/logo1.png" style="display: none" /> -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"><i class="fa fa-align-justify"></i></span>
-                </button>
-                <a class="navbar-brand" href="/"><img class="img-fluid" src="assets/images/martlogo.png" style="margin-bottom: 30px" alt="Logo" /></a>
-            </div>
-            <!-- /.navbar-header -->
+<%- contentFor('style') %>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="nav navbar-nav">
-                    <li class="tr-dropdown">
-                        <a href="#">홈</a>
-                        <ul class="tr-dropdown-menu left tr-list fadeInUp" role="menu">
-                            <li><a href="/">홈페이지(비로그인)</a></li>
-                            <li><a href="index-user.html">홈(구직자 로그인)</a></li>
-                            <li><a href="index-mart.html">홈(고용주 로그인)</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="job-post.html">채용공고 등록</a></li>
-                    <li><a href="listing.html">채용공고</a></li>
-                    <li><a href="listing_2.html">공개 이력서</a></li>
-                    <li><a href="job-details.html">회사 소개</a></li>
-                    <!-- <li><a href="employee-profile.html">이력서 관리</a></li> -->
-                    <li class="tr-dropdown">
-                        <a href="#">기타</a>
-                        <ul class="tr-dropdown-menu tr-list fadeInUp" role="menu">
-                            <li>
-                                <a href="employee-profile.html">구직자 프로필</a>
-                            </li>
-                            <li>
-                                <a href="employer-profile.html">고용주 프로필</a>
-                            </li>
-                            <!-- <li><a href="view-compnay.html">View Compnay</a></li>
-                        <li><a href="view-resume.html">View Resume</a></li>
-                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                        <li><a href="notification.html">Notification</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="signup.html">Sign Up</a></li>
-                        <li><a href="signin.html">Sign In</a></li>
-                        <li><a href="500.html">500 Opsss</a></li>
-                        <li><a href="404.html">404 Error</a></li> -->
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="navbar-right">
-                <!-- <div class="dropdown tr-change-dropdown">
-                <i class="fa fa-globe"></i>
-                <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">United Kingdom</span><i class="fa fa-angle-down"></i></a>
-                <ul class="dropdown-menu tr-change tr-list">
-                    <li><a href="#">United Kingdom</a></li>
-                    <li><a href="#">United States</a></li>
-                    <li><a href="#">China</a></li>
-                    <li><a href="#">Russia</a></li>
-                </ul>								
-            </div>/.language-dropdown	 -->
-                <ul class="sign-in tr-list active">
-                    <li><i class="fa fa-user"></i></li>
-                    <li><a href="login">로그인</a></li>
-                    <li class="active"><a href="signup">회원가입</a></li>
-                </ul>
-                <!-- /.sign-in -->
-
-                <a href="job-post.html" class="btn btn-primary">채용공고 등록</a>
-            </div>
-            <!-- /.nav-right -->
-        </div>
-        <!-- /.container -->
-    </nav>
-    <!-- /.navbar -->
-</header>
-<!-- /.tr-header -->
-
-<%- contentFor('title') %> <%- contentFor('content') %>
+<%- contentFor('content') %>
 <div class="tr-breadcrumb bg-image section-before">
     <div class="container">
         <div class="breadcrumb-info text-center">
@@ -96,8 +18,8 @@
         <div class="user-account">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" id='usertab'><a class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
-                <li role="presentation" id='marttab'><a href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
+                <li role="presentation" ><a id='usertab' class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
+                <li role="presentation" ><a id='marttab' href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -136,7 +58,7 @@
                             <button type="button" class="btn btn-primary" id='user-login' form="user-signup-form">가입하기</button>
                         </form>
                         <div class="new-user text-center">
-                            <span>이미 회원가입을 했다면, <a href="login">로그인</a> </span>
+                            <span>이미 회원가입을 했다면, <a href="../auth/login">로그인</a> </span>
                         </div>
                     </div>
                 </div>
@@ -171,7 +93,7 @@
                             <button type="submit" class="btn btn-primary" >회원가입</button>
                         </form>
                         <div class="new-user text-center">
-                            <span>이미 회원가입을 했다면. <a href="login">로그인</a> </span>
+                            <span>이미 회원가입을 했다면. <a href="../auth/login">로그인</a> </span>
                         </div>
                     </div>
                 </div>
@@ -182,51 +104,27 @@
 </div>
 <!-- /.tr-account-->
 
-<%- contentFor('footer') %>
-<div class="footer">
-    <div class="footer-top" style="padding: 40px 0">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3 center-block">
-                    <img src="assets/images/others/ft_logo.png" style="padding-top: 15%" />
-                </div>
-                <!-- /.col-sm-3 -->
-                <div class="col-sm-9">
-                    <div class="footer-widget">
-                        <ul class="tr-list" style="font-size: 12px; padding-left: 5%">
-                            <li>개인정보처리방침 협회소개 서비스이용약관</li>
-                            <li>사단법인 한국마트협회 | 서울시 강서구 발산로40 식품종합상가 3층(외발산동, 강서농산물시장)</li>
-                            <li>TEL: 02-305-6100, 6110 | FAX: 02-2640-6400 | email : koreamart6100@gmail.com | 회장 : 김성민</li>
-                            <li>COPYRIGHT by 사단법인 한국마트협회. ALL RIGHTS RESERVED.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.footer-top -->
-</div>
-<!-- /.footer -->
-
 <%- contentFor('script') %>
 <script>
     $(document).ready(function(){
         // 아이디 중복 체크
-        let idcheckflag = false
-        let usermartflag = true
+        var idcheckflag = false
+        var usermartflag = true
         $("#marttab").click(function(){
-            usermartflag == false
+            // console.log("마트클릭");
+            usermartflag = false
+            // alert(usermartflag);
         })
         $("#usertab").click(function(){
-            usermartflag == true
+            // console.log("유저클릭");
+            usermartflag = true
+            // alert(usermartflag);
         })
         $(".idcheckbtn").click(function(){
             // 아이디가 마트쪽 인지 유저쪽인지 체크
-            let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val()  
-
-            doPostCallSync('/checkid',{
+            let loginId = (usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val());
+            console.log(loginId);
+            doPostCallSync('/users/checkid',{
                 loginid: loginId
             })
             .success(function(json){
