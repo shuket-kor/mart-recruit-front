@@ -47,7 +47,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="nav navbar-nav">
 					<% if (!user || user.Type == 'U') { %>
-						<li class="m-l-30"><a href="job-post.html">지역별 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listRegion?a=1&p=1">지역별 공고</a></li>
 						<li class="m-l-30"><a href="listing.html">직종별 공고</a></li>
 					<%} else { %>
 						<li class="m-l-30"><a href="job-post.html">지역별 이력서</a></li>
@@ -114,6 +114,7 @@
     <script src="/assets/js/slick.min.js"></script>
     <script src="/assets/js/jquery-te.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/common.js"></script>
 
 	<%-script %>
 

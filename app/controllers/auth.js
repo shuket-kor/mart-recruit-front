@@ -1,4 +1,5 @@
 const logger = require('../config/logger.js');
+const url = require('url');
 const authService = require('../services/auth.js');
 
 module.exports = {
@@ -46,8 +47,11 @@ module.exports = {
   },
 
   async redirectLogin(req, res, next) {
-    if (!req.user) res.redirect("/auth/login");
-    next();
+    if (!req.user) {
+      let loginUrl = "/auth/login?refer=" + ((req.route.path != 'login') ? req.originalUrl : '');
+      res.redirect(loginUrl);
+    } else 
+      next();
   },
 
   // 유저 로그인
