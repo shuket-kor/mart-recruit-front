@@ -1,6 +1,4 @@
-<%- contentFor('style') %>
-
-<%- contentFor('content') %>
+<%- contentFor('style') %> <%- contentFor('content') %>
 <div class="tr-breadcrumb bg-image section-before">
     <div class="container">
         <div class="breadcrumb-info text-center">
@@ -18,8 +16,8 @@
         <div class="user-account">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" ><a id='usertab' class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
-                <li role="presentation" ><a id='marttab' href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
+                <li role="presentation"><a id="usertab" class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
+                <li role="presentation"><a id="marttab" href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -39,9 +37,9 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="아이디" name="userid" id="user-loginid" />
                             </div>
-                            <button type='button' class="btn btn-primary idcheckbtn">아이디 중복 체크</button>
+                            <!-- <button type="button" class="btn btn-primary idcheckbtn">아이디 중복 체크</button> -->
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id='user-password'/>
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="user-password" />
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인">
@@ -55,7 +53,7 @@
                             <div>
                                 이메일 인증
                             </div> -->
-                            <button type="button" class="btn btn-primary" id='user-login' form="user-signup-form">가입하기</button>
+                            <button type="button" class="btn btn-primary" id="user-login" form="user-signup-form">가입하기</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면, <a href="../auth/login">로그인</a> </span>
@@ -75,22 +73,25 @@
                                 <p>기업 인증</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="사업자 등록번호" />
+                                <input type="text" class="form-control" placeholder="사업자 등록번호" name="bizno" id="bizno" name="bizno" maxlength="12" />
                             </div>
+                            <!-- <div>
+                                <button type="button" id="bizNocheck">사업자번호 체크</button>
+                            </div> -->
                             <div>
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="아이디" name="userid" id="mart-loginid" />
                             </div>
-                            <button type='button' class="btn btn-primary idcheckbtn" >아이디 중복 체크</button>
+                            <!-- <button type="button" class="btn btn-primary idcheckbtn">아이디 중복 체크</button> -->
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id='mart-password'/>
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="mart-password" />
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인" />
                             </div> -->
-                            <button type="submit" class="btn btn-primary" >회원가입</button>
+                            <button type="submit" id="mart-login" class="btn btn-primary">회원가입</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면. <a href="../auth/login">로그인</a> </span>
@@ -106,82 +107,179 @@
 
 <%- contentFor('script') %>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         // 아이디 중복 체크
-        var idcheckflag = false
-        var usermartflag = true
-        $("#marttab").click(function(){
-            // console.log("마트클릭");
-            usermartflag = false
-            // alert(usermartflag);
-        })
-        $("#usertab").click(function(){
-            // console.log("유저클릭");
-            usermartflag = true
-            // alert(usermartflag);
-        })
-        $(".idcheckbtn").click(function(){
-            // 아이디가 마트쪽 인지 유저쪽인지 체크
-            let loginId = (usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val());
-            if(loginId.length == 0){
-                alert("아이디를 입력해주세요.");
-                return
-            }
-            console.log(loginId);
-            doPostCallSync('/users/checkid',{
-                loginid: loginId
-            })
-            .success(function(json){
-                // 아이디 중복체크가 false 이면 가입이 불가능.
-                if (json.result == "success"){
-                    if(json.data.tf == false){
-                        alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
-                        idcheckflag = false
-                        location.reload();
-                    }else{
-                        alert("사용 가능한 아이디 입니다.");
-                        idcheckflag = true
-                        return
-                    }
-                }
-            })
-            .fail(function(){
-                alert("아이디 중복체크 오류...");
-            });
-        })
+        var idcheckflag = false;
+        var usermartflag = true;
+        $("#marttab").click(function () {
+            usermartflag = false;
+        });
+        $("#usertab").click(function () {
+            usermartflag = true;
+        });
+        // $(".idcheckbtn").click(function () {
+        //     // 아이디가 마트쪽 인지 유저쪽인지 체크
+        //     let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val();
+        //     if (loginId.length == 0) {
+        //         alert("아이디를 입력해주세요.");
+        //         return;
+        //     }
+        //     console.log(loginId);
+        //     doPostCallSync("/users/checkid", {
+        //         loginid: loginId,
+        //     })
+        //         .success(function (json) {
+        //             // 아이디 중복체크가 false 이면 가입이 불가능.
+        //             if (json.result == "success") {
+        //                 if (json.data.tf == false) {
+        //                     alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
+        //                     idcheckflag = false;
+        //                     location.reload();
+        //                 } else {
+        //                     alert("사용 가능한 아이디 입니다.");
+        //                     idcheckflag = true;
+        //                     return;
+        //                 }
+        //             }
+        //         })
+        //         .fail(function () {
+        //             alert("아이디 중복체크 오류...");
+        //         });
+        // });
 
         // 아이디 중복체크 불가능일때 회원가입 시도시
-        $("#user-login").click(function(){
+        $("#user-login").click(function () {
+            // 아이디 중복체크 먼저 시작.
+            loginIdCheck()
+
             if ($("#user-loginid").val().length == 0) {
                 alert("아이디를 입력하세요");
-                return
+                return;
             }
             if ($("#user-password").val().length == 0) {
                 alert("암호를 입력하세요");
-                return
+                return;
             }
-            if(idcheckflag == false){
+            if (idcheckflag == false) {
                 alert("아이디 중복체크를 해주세요.");
-                return
-            }else{
+                return;
+            } else {
                 $("#user-signup-form").submit();
             }
         });
-        $("#mart-login").click(function(){
+        $("#mart-login").click(function () {
+            // 아이디 중복체크 먼저 시작.
+            loginIdCheck();
+            // 사업자번호 정상인지 체크만 하는 부분.
+            var pBizno = $("#bizno").val(); //사업자번호
+            if (!checkCorporateRegistrationNumber(pBizno.replaceAll("-", ""))) {
+                alert("유효한 사업자번호를 입력하세요");
+                $("#bizno").focus();
+                $("#bizno").val("");
+                return;
+            }
+
             if ($("#mart-loginid").val().length == 0) {
                 alert("아이디를 입력하세요");
-                return
+                return;
             }
             if ($("#mart-password").val().length == 0) {
                 alert("암호를 입력하세요");
-                return
+                return;
             }
-            if(idcheckflag == false){
+            if (idcheckflag == false) {
                 alert("아이디 중복체크를 해주세요.");
-                return
-            }else{
+                return;
+            } else {
                 $("#mart-signup-form").submit();
             }
         });
-    })
+        $("#bizNocheck").click(function(){
+            // var pBizno = $("#bizno").val(); //사업자번호
+            // if (!checkCorporateRegistrationNumber(pBizno.replaceAll("-", ""))) {
+            //     alert("유효한 사업자번호를 입력하세요");
+            //     $("#bizno").focus();
+            //     $("#bizno").val("");
+            //     return;
+            // }
+
+            // let rgno = pBizno.replaceAll("-", "");
+            // console.log(rgno);
+            // let url = "https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=";
+            // let bodyData =
+            //     '<map id="ATTABZAA001R08"><pubcUserNo/><mobYn>N</mobYn><inqrTrgtClCd>1</inqrTrgtClCd><txprDscmNo>' +
+            //     '1348157936' +
+            //     '</txprDscmNo><dongCode>81</dongCode><psbSearch>Y</psbSearch><map id="userReqInfoVO"/></map>';
+
+            // doPostCall(url, bodyData, {
+            //     headers: {
+            //         "Content-Type": "application/xml;",
+                    
+            //     },
+            // })
+            // .success(function (json) {
+            //     alert("사업자등록번호 조회 성공..." + json);
+            // })
+            // .fail(function () {
+            //     alert("사업자등록번호 조회 오류...");
+            // });
+        })
+        
+        function loginIdCheck(){
+        let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val();
+            if (loginId.length == 0) {
+                alert("아이디를 입력해주세요.");
+                return;
+            }
+
+            console.log(loginId);
+            doPostCallSync("/users/checkid", {
+                loginid: loginId,
+            })
+                .success(function (json) {
+                    // 아이디 중복체크가 false 이면 가입이 불가능.
+                    if (json.result == "success") {
+                        if (json.data.tf == false) {
+                            alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
+                            idcheckflag = false;
+                            location.reload();
+                        } else {
+                            alert("사용 가능한 아이디 입니다.");
+                            idcheckflag = true;
+                            return;
+                        }
+                    }
+                })
+                .fail(function () {
+                    alert("아이디 중복체크 오류...");
+                });
+    }
+    });
+
+    // 사업자번호 체크하는 정규식.
+    function checkCorporateRegistrationNumber(value) {
+        var valueMap = value
+            .replace(/-/gi, "")
+            .split("")
+            .map(function (item) {
+                return parseInt(item, 10);
+            });
+
+        if (valueMap.length === 10) {
+            var multiply = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5);
+            var checkSum = 0;
+
+            for (var i = 0; i < multiply.length; ++i) {
+                checkSum += multiply[i] * valueMap[i];
+            }
+
+            checkSum += parseInt((multiply[8] * valueMap[8]) / 10, 10);
+            return Math.floor(valueMap[9]) === 10 - (checkSum % 10);
+        }
+
+        return false;
+    }
+
+    // 아이디 중복체크 함수
+    
 </script>

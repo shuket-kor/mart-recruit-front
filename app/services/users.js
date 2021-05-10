@@ -59,9 +59,6 @@ module.exports = class userService {
         }
     }
 
-
-
-
     // 유저 조회
     static async list(token, secretkey) {
         try {
@@ -98,9 +95,9 @@ module.exports = class userService {
 
             const {body} = await got.post(apiURL, {
                 json: {
-                    userid: userId,
+                    userId: userId,
                     password: password,
-                    usertype: userType,
+                    userType: userType,
                     active: active,
                 },
                 responseType: "json",
@@ -117,7 +114,35 @@ module.exports = class userService {
             logger.writeLog("error", `services/create: ${error}`);
         }
     }
-    
+
+    // 마트 생성
+    static async martCreate(seq, bizno) {
+        try {
+            var apiURL = "";
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/mart/create";
+            else apiURL = `http://localhost:3000/api/mart/create`;
+
+            const {body} = await got.post(apiURL, {
+                json: {
+                    userSeq: seq,
+                    regNo:bizno
+                },
+                responseType: "json",
+            });
+            // console.log(body)
+            if (body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `services/martCreate: `);
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/martCreate: ${error}`);
+        }
+    }
+
+    // 
     static async checkid(userId) {
         try {
             var apiURL = "";
@@ -126,7 +151,7 @@ module.exports = class userService {
 
             const {body} = await got.post(apiURL, {
                 json: {
-                    userid: userId
+                    userId: userId
                 },
                 responseType: "json",
             });
@@ -194,4 +219,32 @@ module.exports = class userService {
             logger.writeLog("error", `services/removeService/delete: ${error}`);
         }
     }
+
+    // 사업자 등록번호 조회
+    static async bizNoCheck(bodyData) {
+        try {
+            var apiURL = "";
+            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/users/bizNoCheck";
+            else apiURL = `http://localhost:3000/api/bizNoCheck/`;
+
+            const {body} = await got.post(apiURL,
+                    {
+                        xml: {
+                        bodyData: bodyData,
+                        }
+                    }
+            );
+            // if (body.result == "success") {
+            if (body) {
+                return body;
+            } else {
+                //실패
+                logger.writeLog("error", `services/bizNoCheck: ${body}`);
+                return body;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/bizNoCheck: ${error}`);
+        }
+    }
+    
 };

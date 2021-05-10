@@ -19,9 +19,22 @@ module.exports = {
         let password = req.body.password
         let userType = req.body.usertype
         let active = req.body.active
+        let bizno = req.body.bizno
+
         let userCreate = await userService.create(userId, password, userType, active);
+        console.log(userCreate);
+        if(userType == 'M'){
+            console.log("마트유저면 이게 보임");
+            let seq = userCreate.insertId
+            console.log(bizno);
+            let martCreate = await userService.martCreate(seq,bizno)
+        }
+        // if(userType == 'M'){
+        //     let martCreate = await userService.create()
+        // }
+
         // 유저 화면으로 리다이렉트.
-        res.redirect("auth/login");
+        res.redirect("../auth/login");
     },
 
     // 아이디 중복체크
@@ -57,6 +70,18 @@ module.exports = {
             info: userDelete,
         });
     },
+
+    // 사업자등록번호 조회
+    async bizNoCheck(req, res, next) {
+        let bodyData = req.body.bodyData
+        let bizNoCheck = await userService.bizNoCheck(bodyData);
+        // res.json({
+        //     result: (userCheckId == null) ? 'fail' : 'success',
+        //     data: bizNoCheck
+        // });
+        console.log(bizNoCheck)
+        return bizNoCheck;
+    },
     
     async index(req, res, next){
         res.render("index", {
@@ -73,7 +98,10 @@ module.exports = {
     },
 
     async mypage(req, res, next){
-        res.render("mypage", {
+        // 내 정보를 가져와야함.
+        
+
+        res.render("users/mypage", {
             layout: "layouts/default",
             title: '한국마트협회 구인구직',
             user: req.user
