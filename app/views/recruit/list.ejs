@@ -1,27 +1,112 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/recruit.css">
+
+<%- contentFor('content') %>
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="page-title">
+                <h1>Recruitment announcements by region</h1>
+            </div>		
+            <div class="banner-form">
+                <form action="#">
+                    <div class="dropdown tr-change-dropdown" id="searchType">
+                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">Search For</span><i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu tr-change" style="left:0 !important">
+                            <li><a href="#">마트 이름</a></li>
+                            <li><a href="#">공고 제목</a></li>
+                        </ul>								
+                    </div><!-- /.category-change -->
+                    <input type="text" class="form-control" placeholder="keyword" name="keyword" id="keyword">
+                    <button type="button" class="btn btn-primary button-search" value="Search">Search</button>
+                </form>
+            </div><!-- /.banner-form -->				
+        </div>
+    </div><!-- /.container -->
+</div><!-- tr-breadcrumb -->
+
+<div class="jobs-listing section-padding">
+    <div class="container">
+
         <div class="job-topbar">
-            <span class="pull-left">구직 가능한 마트</span>
+            <span class="pull-left">지역별 구인공고</span>
             <ul class="nav nav-tabs job-tabs" role="tablist">
-                <li>235개의 마트</li>
+                <li><%=numeral(totalCount).format('0,0') %> Total jobs</li>
             </ul>				
         </div>
-        
+        <div class="recruit clearfix">
+            <div class="area_section">
+                <div class="row">
+                    <div class="col-md-2">지역</div>
+                    <div class="col-md-8">
+                <% if (regionList) {
+                    regionList.forEach(item => {%>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="workingRegion" value="<%=item.SEQ %>" id="workingRegion_<%=item.SEQ %>" >
+                            <label class="form-check-label" for="workingRegion"><%=item.NAME %></label>
+                        </div>
+                <%}) } %>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-secondary button-search">검색</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">직종</div>
+                    <div class="col-md-8">
+                <% if (jobKindList) {
+                    jobKindList.forEach(item => {%>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="jobKind" value="<%=item.SEQ %>" id="jobKind_<%=item.SEQ %>" >
+                            <label class="form-check-label" for="jobKind"><%=item.NAME %></label>
+                        </div>
+                <%}) } %>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-dark button-search-reset">조건 리셋</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">근무형태</div>
+                    <div class="col-md-10">
+                <% if (workingTypeList) {
+                    workingTypeList.forEach(item => {%>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="workingType" value="<%=item.SEQ %>" id="workingType_<%=item.SEQ %>" >
+                            <label class="form-check-label" for="workingType"><%=item.NAME %></label>
+                        </div>
+                <%}) } %>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="job-topbar">
+            <span class="pull-left">최신 구인 공고</span>
+        </div>
+        
         <div class="tab-content tr-job-posted">
             <div role="tabpanel" class="tab-pane fade show active" id="four-colum">
                 <div class="row">
+        
+        <%
+            if (topList) {
+                topList.forEach(item => { %>
                     <div class="col-md-6 col-lg-3">
                         <div class="job-item">
                             <div class="item-overlay">
                                 <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀타임</a>
+                                    <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
                                     <span class="tr-title">
-                                        <a href="job-details.html">굿모님할인마트 효성점</a>
-                                        <span>정육 직원 모집</span>
+                                        <a href="job-details.html"><%=item.NAME %></a>
+                                        <span><%=item.SUBJECT %></span>
                                     </span>
                                     <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천광역시 계양구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>09:00 ~ 09:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 3,800,000 원</li>
+                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i><%=item.ADDRESS %></li>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i><%=item.WORKSHIFT %> <%=item.WORKSHIFTTIME %></li>
+                                        <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                     </ul>
                                     <ul class="job-social tr-list listing-2" > 
                                         <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
@@ -31,626 +116,173 @@
                             </div>
                             <div class="job-info">
                                 <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1607935677-4624.jpg" alt="images" class="img-fluid" >
+                                    <img src="<%=hostName %>/api/files/get/<%=item.LOGOFILE %>" alt="images" class="img-fluid" >
                                 </div>
                                 <span class="tr-title">
-                                    <a href="#">굿모님할인마트 효성점</a>
-                                    <span>정육 직원 모집</span>
+                                    <a href="#"><%=item.NAME %></a>
+                                    <span><%=item.SUBJECT %></span>
                                 </span>
                                 <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>인천광역시 계양구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>09:00 ~ 09:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 3,800,000 원</li>
+                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span><%=item.ADDRESS %></li>
+                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span><%=item.WORKSHIFT %><%=item.WORKSHIFTTIME %></li>
+                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                 </ul>
                                 <div class="time">
-                                    <a href="#"><span>풀 타임</span></a>
-                                    <span class="pull-right">채용시까지</span>
+                                    <a href="#"><span><%=item.CHARGE %></span></a>
+                                    <span class="pull-right"><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></td></span>
                                 </div>																				
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">아르바이트</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">하모니마트 시흥능곡역</a>
-                                        <span>카운터 여자알바 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기도 시흥시</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>07:00 ~ 22:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1614225895-1911 (1).jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">하모니마트 시흥능곡역</a>
-                                    <span>카운터 여자알바 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 시흥시</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>07:00 ~ 22:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">상시채용</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">단기</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">하모니마트 시흥능곡역</a>
-                                        <span>야채/청과 직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 시흥시</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>09:00 ~ 18:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 2,300,000 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1614225895-1911.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">하모니마트 시흥능곡역</a>
-                                    <span>야채/청과 직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 시흥시</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 2,300,000 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="freelance">단기</span></a>
-                                    <span class="pull-right">상시채용</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀타임</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">홈마트 상현점</a>
-                                        <span>농산직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 용인시</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>근무시간 협의가능</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>회사 내규</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1614934255-5373.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">홈마트 상현점</a>
-                                    <span>농산직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 용인시</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>근무시간 협의가능</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사 내규</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span>풀타임</span></a>
-                                    <span class="pull-right">~ 2021.04.17(토)</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">아르바이트</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">에이스마트 연희점</a>
-                                        <span>마트 오후계산원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천광역시 서구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>16:00 ~ 22:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 1,500,000 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1615255502-9157.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">에이스마트 연희점</a>
-                                    <span>마트 오후계산원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>인천광역시 서구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>16:00 ~ 22:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 1,500,000 원</li>
-                                </ul>	
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">채용시까지</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">단기</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">국민홈식자재마트</a>
-                                        <span>청정원대리점 여직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 서대문구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>09:00 ~ 18:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1615795434-5412 (1).jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">국민홈식자재마트</a>
-                                    <span>청정원대리점 여직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 서대문구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="freelance">단기</span></a>
-                                    <span class="pull-right">상시채용</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀 타임</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">국민홈식자재마트</a>
-                                        <span>직원대모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 서대문구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>근무시간 협의가능</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>회사내규</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1615795434-5412.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">국민홈식자재마트</a>
-                                    <span>직원대모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 서대문구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>근무시간 협의가능</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사내규</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span>풀 타임</span></a>
-                                    <span class="pull-right">~ 2021.06.01(화)</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#"><span class="btn btn-primary">아르바이트</span></a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">U-마트</a>
-                                        <span>판촉주부사원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 서대문구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>08:30 ~ 18:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 2,000,000 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1616660364-9656.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">U-마트</a>
-                                    <span>판촉주부사원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 서대문구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>08:30 ~ 18:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 2,000,000 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">~ 2021.04.17(토)</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀타임</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">굿모닝할인마트 효성점</a>
-                                        <span>매장관리/납품 직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천광역시 계양구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>근무시간 협의가능</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>회사내규</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1607935677-4624.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">굿모닝할인마트 효성점</a>
-                                    <span>매장관리/납품 직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>인천광역시 계양구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>근무시간 협의가능</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사내규</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span>풀타임</span></a>
-                                    <span class="pull-right">채용시까지</span>
-                                </div>																				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">아르바이트</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">하모니마트 시흥능곡역</a>
-                                        <span>포장,진열,판매직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 시흥시</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>08:00 ~ 18:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1614225895-1911.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">하모니마트 시흥능곡역</a>
-                                    <span>포장,진열,판매직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 시흥시</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>08:00 ~ 18:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">채용시까지</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">단기</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">홈마트 상현점</a>
-                                        <span>반찬 포장 및 판매 직원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 용인시</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>09:00 ~ 15:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 2,700,000 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1614934255-5373.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">홈마트 상현점</a>
-                                    <span>반찬 포장 및 판매 직원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 용인시</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>09:00 ~ 15:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 2,700,000 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="freelance">단기</span></a>
-                                    <span class="pull-right">~ 2021.05.06(목)</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀타임</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">에이스마트 연희점</a>
-                                        <span>반찬코너 주방보조 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천광역시 서구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>08:00 ~ 12:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1615255502-9157.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">에이스마트 연희점</a>
-                                    <span>반찬코너 주방보조 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>인천광역시 서구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>08:00 ~ 12:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span>풀타임</span></a>
-                                    <span class="pull-right">채용시까지</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">아르바이트</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">국민홈식자재마트</a>
-                                        <span>계산원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 서대문구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>18:00 ~ 23:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>회사내규</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1615795434-5412.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">국민홈식자재마트</a>
-                                    <span>계산원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 서대문구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>18:00 ~ 23:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사내규</li>
-                                </ul>	
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">상시채용</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">단기</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">U-마트</a>
-                                        <span>오전카운터 및 진열사원 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 서대문구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>09:00 ~ 21:00</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>회사내규</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1616660364-9656.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">U-마트</a>
-                                    <span>오전카운터 및 진열사원 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 서대문구 </li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>09:00 ~ 21:00</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사내규</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="freelance">단기</span></a>
-                                    <span class="pull-right">채용시까지</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#" class="btn btn-primary">풀타임</a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">한국유통 신촌점</a>
-                                        <span>open 직원 대모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>서울 마포구</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>시간협의 가능</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1616991100-4198.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">한국유통 신촌점</a>
-                                    <span>open 직원 대모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>서울 마포구</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>시간협의 가능</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span>풀타임</span></a>
-                                    <span class="pull-right">상시채용</span>
-                                </div>				
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="job-item">
-                            <div class="item-overlay">
-                                <div class="job-info">
-                                    <a href="#"><span class="btn btn-primary">아르바이트</span></a>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">한국유통 예산점</a>
-                                        <span>야채팀장 모집</span>
-                                    </span>
-                                    <ul class="tr-list job-meta">
-                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i>충청남도 예산군</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>07:30 ~ 19:30</li>
-                                        <li><i class="fa fa-money" aria-hidden="true"></i>월급 3,000,000 원</li>
-                                    </ul>
-                                    <ul class="job-social tr-list listing-2">
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>										
-                            </div>								
-                            <div class="job-info">
-                                <div class="company-logo">
-                                    <img src="images/martlogo/mr-logo-1616991279-4963.jpg" alt="images" class="img-fluid">
-                                </div>
-                                <span class="tr-title">
-                                    <a href="#">한국유통 예산점</a>
-                                    <span>야채팀장 모집</span>
-                                </span>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>충청남도 예산군</li>
-                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>07:30 ~ 19:30</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 3,000,000 원</li>
-                                </ul>
-                                <div class="time">
-                                    <a href="#"><span class="part-time">아르바이트</span></a>
-                                    <span class="pull-right">~ 2021.05.20(목)</span>
-                                </div>			
-                            </div>
-                        </div>
-                    </div>
+        
+                <% })
+            }
+        %>
+                </div>
+            </div>
+        </div>
+        
+        <div class="job-topbar">
+            <span class="pull-left">지원 가능한 구인 공고</span>
+            <ul class="nav nav-tabs job-tabs" role="tablist">
+                <li></li>
+            </ul>				
+        </div>
+        
+        <div class="tab-content tr-job-posted">
+            <div role="tabpanel" class="tab-pane fade show active" id="four-colum">
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">마트명</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">업무</th>
+                            <th scope="col">자격</th>
+                            <th scope="col">근무조건</th>
+                            <th scope="col">근무지역</th>
+                            <th scope="col">마감일/등록일</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if (list) {
+                            list.forEach(item => { %>
+                            <tr>
+                                <th scope="row"><%=item.NAME %></th>
+                                <td><%=item.SUBJECT %></td>
+                                <td><%=item.CHARGE %><br><small>(<%=item.JOBKIND_NAME %>)</small></td>
+                                <td>경력 <%=item.CAREER_NAME %><br>학력 <%=item.EDUCATION %></td>
+                                <td><%=item.WORKINGTYPE_NAME %><br><small><%=item.SALARYTYPE %> <%=item.SALARY %></small></td>
+                                <td><%=item.WORKREGION_NAME %></td>
+                                <td><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %><br><small><%=moment(item.STARTDATE).format('YY.MM.DD') %> 등록</small></td>
+                            </tr>
+                
+                            <% })
+                        }%>
+                        </tbody>
+                    </table>
                 </div><!-- /.row -->										
-            </div><!-- /.tab-pane -->
+                <div class="m-t-40">
+                    <div class="row">
+                        <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
+                            <ul class="pagination justify-content-center" id="recruit-page"></ul>
+                        </nav>
+                    </div><!--row-->
+                </div>
+        </div><!-- /.tab-pane -->
             
         </div><!-- /.tab-content -->		
+        
+    </div><!-- /.container -->		
+</div><!-- /.jobs-listing -->
+
+<%- contentFor('script') %>
+
+<script>
+let totalCount =<%=totalCount %>; 
+let page = <%=page %>;
+let rowCount = <%=rowCount %>;
+let regions = [<%=regions %>];
+let jobKinds = [<%=jobKinds %>];
+let workingTypes = [<%=workingTypes %>];
+let searchType = '<%=searchType %>';
+let keyword = '<%=keyword %>';
+
+$(document).ready(function() {
+    // 페이저 만들기
+    if (totalCount <= rowCount) {
+        $('#recruit-page').hide();
+    } else {
+        createPagination('recruit-page', totalCount, rowCount, page, 10, `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`);
+    }
+    // 검색 조건 설정
+    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
+    $("#keyword").val(keyword);
+    regions.forEach(item => {
+        $('input:checkbox[id="workingRegion_' + item + '"]').prop("checked", true);
+    });
+    jobKinds.forEach(item => {
+        $('input:checkbox[id="jobKind_' + item + '"]').prop("checked", true);
+    });
+    workingTypes.forEach(item => {
+        $('input:checkbox[id="workingType_' + item + '"]').prop("checked", true);
+    });
+    $("#keyword").keypress(function(e) {
+        if (e.keyCode == 13 && $(this).val().length > 0) search();
+    });
+    //검색 버튼 설정
+    $(".button-search").click(function() { search(); })
+    $(".button-search-reset").click(function() {
+        $('input:checkbox[name="workingRegion"]').prop("checked", false);
+        $('input:checkbox[name="jobKind"]').prop("checked", false);
+        $('input:checkbox[name="workingType"]').prop("checked", false);
+        $("#searchType > a > span").html("Search For");
+        $('#keyword').val('');
+    })
+});
+
+function getRegions() {
+    let checkRegion = "";
+    $('input:checkbox[name="workingRegion"]').each(function() {
+        if(this.checked){
+            checkRegion += this.value + ","; 
+        }
+    });
+    if (checkRegion.length > 0) checkRegion = checkRegion.substring(0, checkRegion.length - 1);
+    return checkRegion;
+}
+
+function getJobKinds() {
+    let checkJobKind = "";
+    $('input:checkbox[name="jobKind"]').each(function() {
+        if(this.checked){
+            checkJobKind += this.value + ","; 
+        }
+    });
+    if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 1);
+    return checkJobKind;
+}
+
+function getWorkingTypes() {
+    let checkWorkingType = "";
+    $('input:checkbox[name="workingType"]').each(function() {
+        if(this.checked){
+            checkWorkingType += this.value + ","; 
+        }
+    });
+    if (checkWorkingType.length > 0) checkWorkingType = checkWorkingType.substring(0, checkWorkingType.length - 1);
+    return checkWorkingType;
+}
+
+function search() {
+    let regions = getRegions();
+    let jobKinds = getJobKinds();
+    let workingTypes = getWorkingTypes();
+    let searchType = ($("#searchType > a > span").html() == "마트 이름") ? "m" : ($("#searchType > a > span").html() == "공고 제목") ? "r" : "";
+    let keyword = $('#keyword').val();
+
+    self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
+}
+
+</script>

@@ -46,37 +46,6 @@ function doGetCall(url, data) { // here the data and url are not hardcoded anymo
      });
  }
  
- createPager = function (pagerId, totalCount, rowPerPage, currentPage, pageBlockCount, url) {
-    var totalPage = Math.floor(totalCount / rowPerPage);  //전체 페이지 개수: 전체 개시물 개수/row카운트 +1
-    if (totalCount % rowPerPage > 0) totalPage++;
-    var startPage = pageBlockCount * Math.floor((currentPage - 1) / pageBlockCount) + 1; //페이저의 시작 페이지
-    var currentBlock= Math.floor((currentPage - 1) / pageBlockCount) + 1;     //현재 페이지 블락
-    var lastBlock= Math.floor((totalPage - 1) / pageBlockCount) + 1;    //마지막 페이지 블락
-    var hasBeforeBlock = (currentBlock <= 1 ? false : true);    //이전 블락 존부
-    var hasNextBlock = (currentBlock >= lastBlock ? false : true);  //다음 블락 존부
-    var linkLiteral = (url.indexOf("?") == -1) ? "?" : "&";
-    
-    var pageHtml = '';
-    if (hasBeforeBlock)  {
-        $("#" + pagerId).append('<li><a href="' + url + linkLiteral + 'page=' + (startPage - 1)  + '"><i class="fa fa-angle-left"></i></a></li>');
-    }
-    else
-        $("#" + pagerId).append('<li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>');
-    for (var pg = 0; pg < pageBlockCount; pg++) {
-        if (startPage + pg > totalPage) break;
-        var bpage = startPage + pg;
-        if (currentPage == bpage) {
-            pageHtml = '<li class="active"><a>' + bpage + '</a></li>';
-        } else {
-            pageHtml = '<li><a href="' + url + linkLiteral + 'page=' + bpage + '">' + bpage + '</a></li>';
-        }
-        $("#" + pagerId).append(pageHtml);
-    }
-    if (hasNextBlock) 
-        $("#" + pagerId).append('<li><a href="' + url + linkLiteral + 'page=' + (startPage + pageBlockCount) + '"><i class="fa fa-angle-right"></i></a></li>');
-    else
-        $("#" + pagerId).append('<li class="disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li>');
-}
 // YDH 새로 만듦
 createPagination = function (pagerId, totalCount, rowPerPage, currentPage, pageBlockCount, url) {
     var totalPage = Math.floor(totalCount / rowPerPage);  //전체 페이지 개수: 전체 개시물 개수/row카운트 +1

@@ -3,7 +3,7 @@ const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
 
 module.exports = class recruitService {
-    static async getWorkingRegion() {
+    static async listWorkingRegion() {
         try {
             var apiURL = `${process.env.APIHOST}/api/workingRegion/list`;
 
@@ -12,20 +12,51 @@ module.exports = class recruitService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog('error', `services/commonService/getWorkingRegion: ${body.result}`);           
+                logger.writeLog('error', `services/recruitService/listWorkingRegion: ${body.result}`);           
                 return body.data;
             }
         } catch (error) {
-            logger.writeLog('error', `services/commonService/getWorkingRegion: ${error}`);
+            logger.writeLog('error', `services/recruitService/listWorkingRegion: ${error}`);
             return null;
         }
     } 
-
-    static async list(token, regions, name, page, rowCount) {
+    static async listJobKind() {
         try {
-            name = (name) ? name : '';
+            var apiURL = `${process.env.APIHOST}/api/jobKind/list`;
 
-            var apiURL = `${process.env.APIHOST}/api/recruit/listForAdmin`;
+            const {body} = await got.post(apiURL, {responseType: 'json'});
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/listJobKind: ${body.result}`);           
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/listJobKind: ${error}`);
+            return null;
+        }
+    } 
+    static async listWorkingType() {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/workingType/list`;
+
+            const {body} = await got.post(apiURL, {responseType: 'json'});
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/listWorkingType: ${body.result}`);           
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/listWorkingType: ${error}`);
+            return null;
+        }
+    } 
+    static async list(token, regions, jobKinds, workingTypes, searchType, keyword, page, rowCount) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/list`;
 
             const {body} = await got.post(apiURL, {
                 headers: {
@@ -35,7 +66,10 @@ module.exports = class recruitService {
                     'Authorization': token
                 }, json: {
                     regions: regions,
-                    name: name,
+                    jobKinds: jobKinds,
+                    workingTypes: workingTypes,
+                    name: (searchType == 'm') ? keyword : '',
+                    subject: (searchType == 'r') ? keyword : '',
                     page: page,
                     rowCount: rowCount,
                     key: secretKey

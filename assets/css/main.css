@@ -160,7 +160,7 @@ select:focus,
 }
 
 .section-padding {
-    padding: 80px 0;
+    padding: 40px 0;
 }
 
 .page-content {
@@ -324,7 +324,7 @@ select:focus,
 
 .tr-breadcrumb {
     color: #fff;
-    padding: 50px 0;
+    padding: 90px 0;
     overflow: hidden;
     background-image: url(../images/bg/banner.jpg);
 }
@@ -1262,6 +1262,11 @@ select:focus,
     color: #000;
     overflow: hidden;
     padding: 40px 25px 20px;
+}
+
+.job-item > .job-info {
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .job-info .company-logo {
