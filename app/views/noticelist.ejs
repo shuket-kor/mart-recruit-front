@@ -61,13 +61,13 @@
                     <div class="tab-pane open-role" id="open-role">
 
                         <h1 style="text-align: center; margin:0">공지 사항</h1>
-                        <% list.forEach(item => {%>
+                        <div class="accordion" id="accordionExample">
+                            <% list.forEach(item => {%>
 
-                            <div class="accordion" id="accordionExample">
                                 <div class="card">
                                     <div class="card-header" id="headingOne">
                                         <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left collapsed" onclick="test()" type="button"  data-toggle="collapse"  data-target="#collapse_<%=item.SEQ %>"  aria-controls="collapse_<%=item.SEQ %>">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button"  data-toggle="collapse"  data-target="#collapse_<%=item.SEQ %>"  aria-controls="collapse_<%=item.SEQ %>">
                                             <%=item.SUBJECT %>
                                         </button>
                                         </h2>
@@ -81,9 +81,9 @@
                                         </div><!-- card-body -->
                                     </div><!-- .collapse -->
                                 </div><!-- card -->
-                            </div><!-- accordion -->
 
                         <% }) %>
+                    </div><!-- accordion -->
 
                     </div><!--tab-pane open-role-->
                 </div><!--col-md-9-->
@@ -146,12 +146,12 @@
         }
         
         // collapse open
-        $('.collapse').collapse('show');
+        // $('.collapse').collapse('show');
 	    
         // collapse 한개씩만 열도록 하기
-         $(".collapsed").click(function () {
-            $(".collapse").collapse('hide');
-        }); 
+        //  $(".collapsed").click(function () {
+        //     $(".collapse").collapse('hide');
+        // }); 
 
         
     });
