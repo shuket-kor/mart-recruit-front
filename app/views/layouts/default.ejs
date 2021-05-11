@@ -47,13 +47,15 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="nav navbar-nav">
 					<% if (!user || user.Type == 'U') { %>
-						<li class="m-l-30"><a href="/recruit/listRegion?a=1&p=1">지역별 공고</a></li>
-						<li class="m-l-30"><a href="/recruit/listJobType?a=1&p=1">직종별 공고</a></li>
-						<li class="m-l-30"><a href="/recruit/listJobType?a=1&p=1">추천 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listRegion">지역별 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listJobType">직종별 공고</a></li>
+						<li class="m-l-30"><a href="/recruit/listJobType">추천 공고</a></li>
+						<li class="m-l-30"><a href="/notice/list">공지사항</a></li>
 					<%} else { %>
 						<li class="m-l-30"><a href="job-post.html">지역별 이력서</a></li>
 						<li class="m-l-30"><a href="listing.html">직종별 이력서</a></li>
 						<li class="m-l-30"><a href="listing.html">추천 이력서</a></li>
+						<li class="m-l-30"><a href="/notice/list">공지사항</a></li>
 					<% } %>
 					</ul>
 				</div>
