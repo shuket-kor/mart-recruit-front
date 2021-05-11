@@ -4,7 +4,7 @@ const got = require('got');
 module.exports = class noticeService {
     
         // 공지사항 리스트
-        static async list(page, rowCount) {
+        static async list(seq, page, rowCount) {
             try {
 
                 var apiURL = "";
@@ -13,15 +13,18 @@ module.exports = class noticeService {
                 } else {
                     apiURL = 'http://localhost:3000/api/notice/list';
                 }
-                var {body} = await got.get(apiURL + "?page=" + page + "&offset=" + rowCount, { responseType: 'json' });
-    
+                var {body} = await got.post(apiURL + "?page=" + page + "&offset=" + rowCount, { json : {
+                    SEQ:seq
+                },
+                responseType: 'json'});
+                
                 if (body.result == 'success'){
                     console.log('response.result === success 확인');
-                    //console.log(body.data);
+                    
                     return body.data;
                 } else {
                     console.log('response.result !== success');
-                    logger.writeLog('error', `services/noticeService/list (확인!!!): ${error}`);
+                    logger.writeLog('error', `services/noticeService/list : ${error}`);
                     return null;
                 }
             } catch (error) {

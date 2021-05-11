@@ -1,5 +1,5 @@
 <%- contentFor('style') %>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
 
 <%- contentFor('header') %>
 <header class="tr-header">
@@ -61,35 +61,39 @@
                     <div class="tab-pane open-role" id="open-role">
 
                         <h1 style="text-align: center; margin:0">공지 사항</h1>
-                    
                         <% list.forEach(item => {%>
-                            <div class="role remove-item" style="margin-top: 20px;">
-                                <form class="left-content">
-                                        <div>
-                                            <div class="clearfix">
-                                                <span class="tr-title">
-                                                    <a href="/notice/view?seq=<%= item.SEQ %>"><%=item.SUBJECT %></a>
-                                                </span>
-                                            </div>
-                                            <span class="deadline"><%=item.CONTENT %></span>
-                                            <ul class="tr-list job-meta">
-                                                <li>No. <%=item.SEQ %></li>
-                                                <li>작성자 : <%=item.USER_SEQ %></li>
-                                                <li>작성일 : <%=item.CREATED %></li>
-                                            </ul>
-                                        </div>									
-                                </form><!--left-content-->
-                            </div><!--role remove-item-->
+
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" onclick="test()" type="button"  data-toggle="collapse"  data-target="#collapse_<%=item.SEQ %>"  aria-controls="collapse_<%=item.SEQ %>">
+                                            <%=item.SUBJECT %>
+                                        </button>
+                                        </h2>
+                                    </div><!-- card-header #headingOne -->
+                                    
+                                    <div id="collapse_<%=item.SEQ %>" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p>제목 : <br /> <%=item.SUBJECT %></p>
+                                            <div id="content-text">내용 : <br /> <%- item.CONTENT %></div>
+                                            <p>작성일 : <%= moment(item.CREATED).format('YYYY-MM-DD hh:mm:ss') %></p>
+                                        </div><!-- card-body -->
+                                    </div><!-- .collapse -->
+                                </div><!-- card -->
+                            </div><!-- accordion -->
+
                         <% }) %>
+
                     </div><!--tab-pane open-role-->
                 </div><!--col-md-9-->
             </div><!--row-->
         </div><!--panel-->
-
-        <div class="panel">
+        <!-- 페이지 네이션 -->
+        <div class="panel" style="margin-top: 50px;">
             <div class="row" style="width: 100%;">
                 <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
-                    <ul class="pagination justify-content-center" id="mart-page"></ul>
+                    <ul class="pagination justify-content-center" id="notice-page"></ul>
                 </nav>
             </div><!--row-->
         </div>
@@ -97,6 +101,8 @@
         
     </div><!--container-->
 </div><!--tr-profile-->
+
+
 <%- contentFor('footer') %>
       <div class="footer">
           <div class="footer-top" style="padding: 40px 0">
@@ -125,18 +131,30 @@
       </div>
       <!-- /.footer -->
       
+      
 <%- contentFor('script') %>
 <script>
     var totalCount = <%= totalCount %>; 
     var page = <%= page %>;
     var rowCount = <%= rowCount %>;   
-
+    
     $(document).ready(function() {
         if (totalCount <= rowCount) {
-            $('#mart-page').hide();
+            $('#notice-page').hide();
         } else {
-            createPagination('mart-page', totalCount, rowCount, page, 5, `/notice/list?`);
+            createPagination('notice-page', totalCount, rowCount, page, 5, `/notice/list?`);
         }
+        
+        // collapse open
+        $('.collapse').collapse('show');
+	    
+        // collapse 한개씩만 열도록 하기
+         $(".collapsed").click(function () {
+            $(".collapse").collapse('hide');
+        }); 
+
+        
     });
+    
 </script>
 
