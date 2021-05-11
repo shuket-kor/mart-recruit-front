@@ -4,7 +4,7 @@ module.exports = {
     
     // 유저 페이지
     async userpage(req, res, next) {
-        let title = '유저 페이지';
+        let title = '마이 페이지';
         
         // const userData = await mypageService.user();
 
@@ -18,23 +18,67 @@ module.exports = {
         
     },
 
-    async userEdit(req, res, next){
-
-    },
     async create(req, res, next){
-        let title = '이력서 생성';
-        
+        let title = '마이 페이지';
+
         res.render('mypage/userpagecreate', {
             layout: 'layouts/default',
             title: title,
             user: req.user
         })
     },
-    async edit(req, res, next){
 
+    async userEdit(req, res, next){
+        
     },
-    async resumeList(req, res, next){
 
+    async edit(req, res, next){
+        let title = '마이 페이지';
+
+        res.render('mypage/userpageresumeedit', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user
+        })
+    },
+    
+    
+    async resumeList(req, res, next){
+        let title = '마이 페이지';
+
+        res.render('mypage/userpageresume', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user
+        })
+    },
+
+    async bookmark(req, res, next){
+        let title = '마이 페이지';
+
+        res.render('mypage/userpagebookmark', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user
+        })
+    },
+    async support(req, res, next){
+        let title = '마이 페이지';
+
+        res.render('mypage/userpagesupport', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user
+        })
+    },
+    async remove(req, res, next){
+        let title = '마이 페이지';
+
+        res.render('mypage/userpageremove', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user
+        })
     },
     // 마트페이지
     async martpage(req, res, next) {

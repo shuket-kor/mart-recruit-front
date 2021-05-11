@@ -1,4 +1,6 @@
-<%- contentFor('style') %> <%- contentFor('content') %>
+<%- contentFor('style') %>
+
+<%- contentFor('content') %>
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
@@ -8,11 +10,11 @@
                         <li role="presentation"><a href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
                         <li role="presentation"><a href="/mypage/user/create"><span><i class="fa fa-plus" aria-hidden="true"></i></span> 이력서 생성</a></li>
                         <li role="presentation"><a href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
-                        <li role="presentation"><a class="active" href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
-                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
+                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
+                        <li role="presentation"><a class="active" href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
                         <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
                         <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
-                    </ul>
+                    </ul>	
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
@@ -35,8 +37,12 @@
                                                 <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
                                             </ul>
                                             <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
                                             </ul>
-                                        </div>
+                                        </div>										
                                     </div>
                                     <div class="job-info">
                                         <div class="company-logo">
@@ -74,6 +80,10 @@
                                                 <li><i class="fa fa-money" aria-hidden="true"></i>월급 3,800,000 원</li>
                                             </ul>
                                             <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -112,7 +122,8 @@
                                                 <li><i class="fa fa-briefcase" aria-hidden="true"></i>근무시간 협의가능</li>
                                                 <li><i class="fa fa-money" aria-hidden="true"></i>회사 내규</li>
                                             </ul>
-                                            <ul class="job-social tr-list"></ul>
+                                            <ul class="job-social tr-list">
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="job-info">
@@ -151,7 +162,10 @@
                                                 <li><i class="fa fa-money" aria-hidden="true"></i>월급 1,500,000 원</li>
                                             </ul>
                                             <ul class="job-social tr-list">
-
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -191,7 +205,10 @@
                                                 <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
                                             </ul>
                                             <ul class="job-social tr-list">
-
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -215,17 +232,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.tab-pane -->
+                        </div><!-- /.row -->					
+                    </div><!-- /.tab-pane -->
                 </div>
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.tr-profile -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
 
-    <%- contentFor('script') %>
-</div>
+<%- contentFor('script') %>

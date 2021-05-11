@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { martpage, userpage, create, edit, userCreate, userEdit, resumeList} = require('../app/controllers/mypage.js');
+const { martpage, userpage, create, edit, userCreate, userEdit, resumeList,support, bookmark, remove} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
 router.get('/user', verify, userpage);
@@ -16,14 +16,16 @@ router.get('/user/edit', verify, edit);
 router.patch('/user/edit', verify, userEdit);
 
 // 이력서 리스트
-router.get('/user/list', verify, resumeList);
+router.get('/user/resume', verify, resumeList);
 
 // 북마크
-// router.get('/user/bookmark', verify, userpage);
+router.get('/user/bookmark', verify, bookmark);
 
 // 지원 현황
-// router.get('/user/support', verify, userpage);
+router.get('/user/support', verify, support);
 
+// 북마크
+router.get('/user/remove', verify, remove);
 //////////////////////////////////////////////// 
 
 // 마트 > 내정보
