@@ -63,7 +63,13 @@
 						<li><i class="fa fa-user"></i></li>
 						<% if (user) { %>
 							<li><a href="/auth/logout">로그아웃 </a></li>
-							<li><a href="/users/mypage">정보관리</a></li>
+							<% if (user.Type == 'U') { %>
+							<li><a href="/mypage/user">유저 정보관리</a></li>
+							<%} else if(user.Type == 'M'){ %>
+							<li><a href="/mypage/mart">마트 정보관리</a></li>
+							<% }else{ %>
+							<li><a href="/notpage">어드민 정보관리</a></li>
+							<% } %>
 						<%} else { %>
 							<li><a href="/auth/login">로그인 </a></li>
 							<li><a href="/users/signup">회원 가입</a></li>

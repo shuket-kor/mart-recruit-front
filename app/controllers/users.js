@@ -24,16 +24,16 @@ module.exports = {
         let userCreate = await userService.create(userId, password, userType, active);
         console.log(userCreate);
         if(userType == 'M'){
-            console.log("마트유저면 이게 보임");
+            // console.log("마트유저면 이게 보임");
             let seq = userCreate.insertId
-            console.log(bizno);
+            // console.log(bizno);
             let martCreate = await userService.martCreate(seq,bizno)
         }
         // if(userType == 'M'){
         //     let martCreate = await userService.create()
         // }
 
-        // 유저 화면으로 리다이렉트.
+        // 로그인 화면으로 리다이렉트.
         res.redirect("../auth/login");
     },
 
@@ -98,13 +98,14 @@ module.exports = {
     },
 
     async mypage(req, res, next){
-        // 내 정보를 가져와야함.
+        let refer = (req.query.refer) ? req.query.refer : ''; 
         
-
+        // 내 정보를 가져와야함.
         res.render("users/mypage", {
             layout: "layouts/default",
             title: '한국마트협회 구인구직',
-            user: req.user
+            user: req.user,
+            refer: refer
         });
     },
     
