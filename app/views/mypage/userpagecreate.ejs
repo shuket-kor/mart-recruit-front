@@ -1,0 +1,243 @@
+<%- contentFor('style') %> <%- contentFor('content') %>
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <ul class="nav nav-tabs profile-tabs section" role="tablist">
+                        <li role="presentation"><a href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
+                        <li role="presentation"><a class="active" href="/mypage/user/create"><span><i class="fa fa-plus" aria-hidden="true"></i></span> 이력서 생성</a></li>
+                        <li role="presentation"><a href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
+                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
+                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
+                        <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
+                        <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <form action="">
+                    <div style="display: none;">
+                        <% console.log(user) %>)
+                        <input id="seqseq" value="<% user %>)" name="user-seq">
+                    </div>
+                    <div role="tabpanel" class="tab-pane edit-resume section">
+                        <ul class="tr-list resume-info">
+                            <li class="personal-deatils code-edit-small">
+                                <div class="media-body">
+                                    <span class="tr-title">이력서</span>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>제목<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit" name="subject"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="personal-deatils code-edit-small">
+                                <!-- <div class="icon">
+                                    <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                </div> -->
+                                <div class="media-body">
+                                    <span class="tr-title">개인정보</span>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>이름<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit" name="name"></input>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>연락처<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit" name="contact"></input>
+                                            <!-- <div class="calendar">
+                                                <input type="date" class="form-control" value="1982-01-26" />
+                                            </div> -->
+                                            <!-- calendar -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>이메일<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit" name="email"></input>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>성별<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit" name="gender"></input>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>주소 API 활용 예정<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="code-edit"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="education-background code-edit-small">
+                                <div class="media-body additem-edu">
+                                    <span class="tr-title">학력 사항</span>
+                                    <div class="media-body additem-edu">
+
+                                        <div class="code-edit-small">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label>학위</label>
+                                                </div>
+                                                <div class="col-sm-8">    
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        선택하세요.
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="#">초등학교 졸업</a>
+                                                            <a class="dropdown-item" href="#">중학교 졸업</a>
+                                                            <a class="dropdown-item" href="#">고등학교 졸업</a>
+                                                            <a class="dropdown-item" href="#">대학교 졸업</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>최종학력<span class="pull-right">:</span> </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="code-edit" name="EDUCATIONSCHOOL"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /.additem -->
+                            </li>
+                            <!-- /.education-background -->
+                            <li class="qualification code-edit-small">
+                                <div class="media-body">
+                                <span class="tr-title">보유기술 및 자격증</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>보유기술<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="code-edit" name="TECHNICAL"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>자격증<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="code-edit" name="LICENSE"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            </li>
+                            <!-- /.qualification -->
+                            <li class="findjob code-edit-small">
+                                <div class="media-body">
+                                <span class="tr-title">취업 우대사항</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>보훈대상<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="code-edit" name="ISWELFARE"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>병역<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="code-edit" name="ISMILITALY"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            </li>
+                            <li class="career-objective">
+                                <div class="icon">
+                                    <i class="fa fa-black-tie" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">경력 증명 서류</span>
+                                    <div class="code-edit"></div>
+                                </div>
+                            </li>
+                            <li class="personal-deatils">
+                                <div class="icon">
+                                    <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">하고싶은말</span>
+                                    <input class="code-edit" name=""></input>
+                                </div>
+                            </li>
+                            <li class="work-history">
+                                <div class="media-body additem-work">
+                                    <span class="tr-title">경력</span>
+                                    <div id="addhistory" class="additem">
+                                        <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <div class="code-edit-small">
+                                            <label>직업</label>
+                                            <div class="code-edit"><span>마트 매니저</span></div>
+                                            <label>마트 이름</label>
+                                            <div class="code-edit"><span>홈마트 부천</span></div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>시작</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="2015-01-15" />
+                                                    </div>
+                                                    <!-- calendar -->
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>끝</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="2016-01-13" />
+                                                    </div>
+                                                    <!-- calendar -->
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox">
+                                                        <label for="logged-1"><input type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- /.work-history -->
+                        </ul>
+                        <div class="buttons pull-right">
+                            <a href="#" class="btn button-cancle">취소</a>
+                            <a href="#" class="btn btn-primary">생성</a>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /.tr-profile -->
+
+<%- contentFor('script') %>

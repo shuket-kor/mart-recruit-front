@@ -81,7 +81,7 @@ module.exports = {
         if (loginbody) {
           // 인증용 토큰 보관
             res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-            console.log(refer);
+            
             if (refer != '') 
                 res.redirect(refer);
             else 

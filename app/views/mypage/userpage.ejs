@@ -1,0 +1,65 @@
+<%- contentFor('style') %>
+
+<%- contentFor('content') %>
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <ul class="nav nav-tabs profile-tabs section" role="tablist">
+                        <li role="presentation"><a class="active" href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
+                        <li role="presentation"><a href="/mypage/user/create"><span><i class="fa fa-plus" aria-hidden="true"></i></span> 이력서 생성</a></li>
+                        <li role="presentation"><a href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
+                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
+                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
+                        <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
+                        <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
+                    </ul>	
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in show active account-info" id="account-info">	
+                        <div class="section resume-last-updated">
+                            <span class="icon pull-left"><img src="assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
+                            <div class="updated-info">
+                                <span class="pull-left">마지막 업데이트</span>
+                                <span class="pull-right">이력서 업데이트 날자</span>
+                            </div>
+                        </div><!-- /.resume-last-updated -->
+
+                        <div class="section display-information">
+                            <div class="title title-after">
+                                <div class="icon"><img src="assets/images/icons/2.png" alt="Icon" class="img-fluid"></div> 
+                                <span>내 정보</span>
+                            </div>
+
+                            <div class="change-photo">
+                                <div class="user-image">
+                                    <img src="assets/images/test/test1.png" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="upload-photo">
+                                    <label class="btn btn-primary" for="upload-photo">
+                                        <input type="file" id="upload-photo">
+                                        사진 선택
+                                    </label>
+                                    <span class="max-size">Max 20 MB</span>
+                                </div>
+                            </div>
+                            <ul class="tr-list account-details">
+                                <li>이름<span>홍 길동</span></li>
+                                <li>주소<span>서울특별시 금천구</span></li>
+                                <li>핸드폰<span>+0123456789</span></li>
+                                <li>이메일<span><a href="#">jhondoe@gmail.com</a></span></li>
+                                <li>직무<span>매니저</span></li>
+                                <li>4대보험 확인증<span><input type="file"></span></li>
+                            </ul>								
+                        </div><!-- /.display-information -->
+                    </div><!-- /.tab-pane -->
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
+
+<%- contentFor('script') %>

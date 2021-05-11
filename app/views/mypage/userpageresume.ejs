@@ -1,0 +1,757 @@
+<%- contentFor('style') %>
+
+<%- contentFor('content') %>
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <ul class="nav nav-tabs profile-tabs section" role="tablist">
+                        <li role="presentation"><a href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
+                        <li role="presentation"><a href="/mypage/user/create"><span><i class="fa fa-plus" aria-hidden="true"></i></span> 이력서 생성</a></li>
+                        <li role="presentation"><a class="active" href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
+                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
+                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
+                        <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
+                        <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
+                    </ul>	
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in show active account-info" id="account-info">	
+                        <!-- <div class="tr-fun-fact">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="fun-fact">
+                                        <div class="fun-fact-icon">
+                                            <img src="assets/images/icons/fun-fact4.png" alt="images" class="img-fluid">
+                                        </div>
+                                        <div class="media-body">
+                                            <h1 class="counter">329</h1>
+                                            <span>Viewed my resume</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="fun-fact">
+                                        <div class="fun-fact-icon">
+                                            <img src="assets/images/icons/fun-fact5.png" alt="images" class="img-fluid">
+                                        </div>
+                                        <div class="media-body">
+                                            <h1 class="counter">32</h1>
+                                            <span>Application submit</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="fun-fact">
+                                        <div class="fun-fact-icon">
+                                            <img src="assets/images/icons/fun-fact6.png" alt="images" class="img-fluid">
+                                        </div>
+                                        <div class="media-body">
+                                            <h1 class="counter">27</h1>
+                                            <span>Call for interview</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="section resume-last-updated">
+                            <span class="icon pull-left"><img src="assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
+                            <div class="updated-info">
+                                <span class="pull-left">마지막 업데이트</span>
+                                <span class="pull-right">이력서 업데이트 날자</span>
+                            </div>
+                        </div><!-- /.resume-last-updated -->
+
+                        <div class="section display-information">
+                            <div class="title title-after">
+                                <div class="icon"><img src="assets/images/icons/2.png" alt="Icon" class="img-fluid"></div> 
+                                <span>내 정보</span>
+                            </div>
+
+                            <div class="change-photo">
+                                <div class="user-image">
+                                    <img src="assets/images/test/test1.png" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="upload-photo">
+                                    <label class="btn btn-primary" for="upload-photo">
+                                        <input type="file" id="upload-photo">
+                                        사진 선택
+                                    </label>
+                                    <span class="max-size">Max 20 MB</span>
+                                </div>
+                            </div>
+                            <ul class="tr-list account-details">
+                                <li>이름<span>홍 길동</span></li>
+                                <li>주소<span>서울특별시 금천구</span></li>
+                                <li>핸드폰<span>+0123456789</span></li>
+                                <li>이메일<span><a href="#">jhondoe@gmail.com</a></span></li>
+                                <li>직무<span>매니저</span></li>
+                                <li>4대보험 확인증<span><input type="file"></span></li>
+                            </ul>								
+                        </div><!-- /.display-information -->
+                    </div><!-- /.tab-pane -->
+
+                    <div role="tabpanel" class="tab-pane section" id="resume">
+                        <ul class="tr-list resume-info">
+                            <li class="career-objective media">
+                                <div class="icon">
+                                    <i class="fa fa-black-tie" aria-hidden="true"></i>
+                                </div>  
+                                <div class="media-body">
+                                    <span class="tr-title">목표</span>
+                                    <p>목표입니다.</p> <br>
+                                    <p>목표입니다.</p>
+                                </div>
+                            </li><!-- /.career-objective -->
+                            <li class="work-history media">
+                                <div class="icon">
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">경력</span>
+                                    <ul class="tr-list">
+                                        <li>
+                                            <span>태백마트</span>
+                                            <span class="present">2016 - 현재</span>
+                                            <p>배달 및 재고관리</p>
+                                        </li>
+                                        <li>
+                                            <span>청와대</span>
+                                            <span class="present">2015 - 2016</span>
+                                            <p>요리사</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li><!-- /.work-history -->	
+                            <li class="education-background media">
+                                <div class="icon">
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">학력</span>
+                                    <ul class="tr-list">
+                                        <li>
+                                            <span>서울대학교</span>
+                                            <ul class="tr-list">
+                                                <li>재학 년도: 1999 - 2003</li>
+                                                <li>전공: 자연과학</li>
+                                                <li>과정 기간: 4 Years</li>
+                                                <li>학점: 4.00</li>
+                                            </ul>
+                                            <p>설명.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li><!-- /.education-background -->
+                            <li class="qualification media">
+                                <div class="icon">
+                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">자격증:</span>
+                                    <ol>
+                                        <li> 1종보통 운전면허증</li>
+                                    </ol>
+                                </div>
+                            </li><!-- /.qualification -->
+
+                            <li class="personal-deatils media">
+                                <div class="icon">
+                                    <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">개인정보</span>
+                                    <ul class="tr-list">
+                                        <li><span class="left">이름</span><span class="middle">:</span> <span class="right">홍 길동</span></li>
+                                        <li><span class="left">생일</span><span class="middle">:</span> <span class="right">26/01/1982</span></li>
+                                        <li><span class="left">태어난 곳</span><span class="middle">:</span> <span class="right">서울특별시 금천구</span></li>
+                                        <li><span class="left">국적</span><span class="middle">:</span> <span class="right">한국</span></li>
+                                        <li><span class="left">성별</span><span class="middle">:</span> <span class="right">남자</span> </li>
+                                        <li><span class="left">주소</span><span class="middle">:</span> <span class="right">서울특별시 금천구</span></li>
+                                    </ul>							    	
+                                </div>
+                            </li><!-- /.personal-deatils -->
+                            <li class="personal-deatils media">
+                                <div class="icon">
+                                    <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">하고싶은말</span>
+                                    <p>점심</p> <br>
+                                    <p>저녁 </p>
+                                </div>
+                            </li><!-- /.personal-deatils -->							
+                        </ul>
+                        <div class="buttons pull-right">
+                            <a href="#" class="btn button-cancle">취소</a>
+                            <a href="#" class="btn btn-primary">수정</a>
+                        </div>								
+                    </div><!-- /.tab-pane -->
+
+                    <div role="tabpanel" class="tab-pane edit-resume section" id="edit-resume">
+                        <ul class="tr-list resume-info">
+                            <li class="career-objective">
+                                <div class="icon">
+                                    <i class="fa fa-black-tie" aria-hidden="true"></i>
+                                </div>  
+                                <div class="media-body">
+                                    <span class="tr-title">목표</span>
+                                    <div class="code-edit">
+                                        <p>샘플 목표입니다. </p> <br>
+                                        <p>샘플 목표입니다. </p>		
+                                    </div>
+                                </div>
+                            </li><!-- /.career-objective -->
+                            <li class="work-history">
+                                <div class="icon">
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body additem-work">
+                                    <span class="tr-title">경력</span>
+                                    <div id="addhistory" class="additem">
+                                        <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <div class="code-edit-small">
+                                            <label>직업</label>
+                                            <div class="code-edit"><span>마트 매니저</span></div>
+                                            <label>마트 이름</label>
+                                            <div class="code-edit"><span>홈마트 부천</span></div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>시작</label>
+                                                    <div class="calendar">
+                                                         <input type="date" class="form-control" value="2015-01-15"/>
+                                                    </div><!-- calendar -->
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>끝</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="2016-01-13">
+                                                    </div><!-- calendar -->
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox">
+                                                        <label for="logged-1"><input type="checkbox" name="logged-1" id="logged-1">재직중입니다.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>						    	
+                                </div>
+                            </li><!-- /.work-history -->
+                            <li class="education-background">
+                                <div class="icon">
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body additem-edu">
+                                    <span class="tr-title">학력</span>
+                                    <div id="add-edu" class="additem">
+                                        <span id="edu-clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        
+                                        <div class="code-edit-small">
+                                            <label>학위</label>
+                                            <div class="code-edit"><span>전공</span></div>
+                                            <label>학교 명</label>
+                                            <div class="code-edit"><span>서울대학교</span></div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>입학 일자</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="2012-01-01">
+                                                    </div><!-- calendar -->
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>졸업 일자</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="2017-01-13">
+                                                    </div><!-- calendar -->
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>학점</label>
+                                                    <div class="code-edit"><span>4.00/5.00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="code-edit">
+                                            <p>설명.</p>
+                                        </div>		
+                                    </div><!-- /.additem -->
+                                </div>
+                            </li><!-- /.education-background -->	
+                            <li class="qualification">
+                                <div class="icon">
+                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">자격증:</span>
+                                    <div class="code-edit">
+                                        <ol>
+                                            <li>1종보통 운전면허 자격증</li>
+                                            <!-- <li>Passion for people-centered design, solid intuition.</li>
+                                            <li>Skilled at any Kind Design Tools. </li>
+                                            <li>Hard Worker &amp; Quick Lerner.</li> -->
+                                        </ol>								    		
+                                    </div>
+                                </div>
+                            </li><!-- /.qualification -->	
+                            
+                            <li class="personal-deatils code-edit-small">
+                                <div class="icon">
+                                    <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">개인정보</span>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>이름<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="code-edit">홍 길동</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>생일<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="calendar">
+                                                <input type="date" class="form-control" value="1982-01-26">
+                                            </div><!-- calendar -->
+                                        </div>
+                                    </div>	
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>태어난 곳<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="code-edit">울릉도</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>국적<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="code-edit">한국인</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>성별<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="code-edit">남자</span>
+                                        </div>
+                                    </div>	
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>주소<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="code-edit">서울특별시 금천구 벚꽃로 8</span>
+                                        </div>
+                                    </div>   	
+                                </div>
+                            </li><!-- /.personal-deatils -->
+                            <li class="personal-deatils">
+                                <div class="icon">
+                                    <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="media-body">
+                                    <span class="tr-title">하고싶은말</span>
+                                    <div class="code-edit">
+                                        <p>점심</p> <br>
+                                        <p>저녁 </p>
+                                    </div>
+                                </div>
+                            </li><!-- /.personal-deatils -->				
+                        </ul>
+                        <div class="buttons pull-right">
+                            <a href="#" class="btn button-cancle">취소</a>
+                            <a href="#" class="btn btn-primary">수정</a>
+                        </div>								
+                    </div><!-- /.tab-pane -->
+
+                    <div role="tabpanel" class="tab-pane bookmark" id="bookmark">
+                        <div class="row">
+                            <div class="col-md-4 remove-item">
+                                <div class="job-item">
+                                    <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="item-overlay">
+                                        <div class="job-info">
+                                            <a href="#" class="btn btn-primary">풀 타임</a>
+                                            <span class="tr-title">
+                                                <a href="job-details.html">굿모닝할인마트 효성점</a>
+                                                <span><a href="#">정육 직원 모집</a></span>
+                                            </span>
+                                            <ul class="tr-list job-meta">
+                                                <li><i class="fa fa-map-signs" aria-hidden="true"></i>충남 아산 / 충북 오창</li>
+                                                <li><i class="fa fa-briefcase" aria-hidden="true"></i>07:00 ~ 22:00</li>
+                                                <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
+                                            </ul>
+                                            <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
+                                            </ul>
+                                        </div>										
+                                    </div>
+                                    <div class="job-info">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1607935677-4624.jpg" alt="images" class="img-fluid" />
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="#">굿모닝할인마트 효성점</a>
+                                            <span><a href="#">정육 직원 모집</a></span>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i>충남 아산 / 충북 오창</li>
+                                            <li><i class="fa fa-briefcase" aria-hidden="true"></i>07:00 ~ 22:00</li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
+                                        </ul>
+                                        <div class="time">
+                                            <a href="#"><span>풀 타임</span></a>
+                                            <span class="pull-right">23시간 전 북마크</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 remove-item">
+                                <div class="job-item">
+                                    <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="item-overlay">
+                                        <div class="job-info">
+                                            <a href="#" class="btn btn-primary">아르바이트</a>
+                                            <span class="tr-title">
+                                                <a href="job-details.html">하모니마트 시흥능곡역</a>
+                                                <span><a href="#">카운터 여자알바 모집</a></span>
+                                            </span>
+                                            <ul class="tr-list job-meta">
+                                                <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 이천시 경충대로</li>
+                                                <li><i class="fa fa-briefcase" aria-hidden="true"></i>09:00 ~ 09:00</li>
+                                                <li><i class="fa fa-money" aria-hidden="true"></i>월급 3,800,000 원</li>
+                                            </ul>
+                                            <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="job-info">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1614225895-1911.jpg" alt="images" class="img-fluid" />
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="#">하모니마트 시흥능곡역</a>
+                                            <span><a href="#">카운터 여자알바 모집</a></span>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i>경기 이천시 경충대로</li>
+                                            <li><i class="fa fa-briefcase" aria-hidden="true"></i>09:00 ~ 09:00</li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i>월급 3,800,000 원</li>
+                                        </ul>
+                                        <div class="time">
+                                            <a href="#"><span class="part-time">아르바이트</span></a>
+                                            <span class="pull-right">하루 전 북마크</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 remove-item">
+                                <div class="job-item">
+                                    <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="item-overlay">
+                                        <div class="job-info">
+                                            <a href="#" class="btn btn-primary">풀 타임</a>
+                                            <span class="tr-title">
+                                                <a href="job-details.html">에이스마트 연희점</a>
+                                                <span><a href="#">농산직원 모집</a></span>
+                                            </span>
+                                            <ul class="tr-list job-meta">
+                                                <li><i class="fa fa-map-signs" aria-hidden="true"></i>대구 달성군</li>
+                                                <li><i class="fa fa-briefcase" aria-hidden="true"></i>근무시간 협의가능</li>
+                                                <li><i class="fa fa-money" aria-hidden="true"></i>회사 내규</li>
+                                            </ul>
+                                            <ul class="job-social tr-list">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="job-info">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1615255502-9157.jpg" alt="images" class="img-fluid" />
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="#">에이스마트 연희점</a>
+                                            <span><a href="#">농산직원 모집</a></span>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i>대구 달성군</li>
+                                            <li><i class="fa fa-briefcase" aria-hidden="true"></i>근무시간 협의가능</li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i>회사 내규</li>
+                                        </ul>
+                                        <div class="time">
+                                            <a href="#"><span>풀 타임</span></a>
+                                            <span class="pull-right">2021.03.05 북마크</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 remove-item">
+                                <div class="job-item">
+                                    <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="item-overlay">
+                                        <div class="job-info">
+                                            <a href="#" class="btn btn-primary">아르바이트</a>
+                                            <span class="tr-title">
+                                                <a href="job-details.html">국민홈식자재마트</a>
+                                                <span><a href="#">마트 오후계산원 모집</a></span>
+                                            </span>
+                                            <ul class="tr-list job-meta">
+                                                <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천 연수구</li>
+                                                <li><i class="fa fa-briefcase" aria-hidden="true"></i>16:00 ~ 22:00</li>
+                                                <li><i class="fa fa-money" aria-hidden="true"></i>월급 1,500,000 원</li>
+                                            </ul>
+                                            <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="job-info">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1615795434-5412.jpg" alt="images" class="img-fluid" />
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="#">국민홈식자재마트</a>
+                                            <span><a href="#">마트 오후계산원 모집</a></span>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i>인천 연수구</li>
+                                            <li><i class="fa fa-briefcase" aria-hidden="true"></i>16:00 ~ 22:00</li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i>월급 1,500,000 원</li>
+                                        </ul>
+                                        <div class="time">
+                                            <a href="#"><span class="part-time">아르바이트</span></a>
+                                            <span class="pull-right">하루 전 북마크</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 remove-item">
+                                <div class="job-item">
+                                    <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="item-overlay">
+                                        <div class="job-info">
+                                            <a href="#" class="btn btn-primary">단기</a>
+                                            <span class="tr-title">
+                                                <a href="job-details.html">유-마트</a>
+                                                <span><a href="#">청정원대리점 여직원 모집</a></span>
+                                            </span>
+                                            <ul class="tr-list job-meta">
+                                                <li><i class="fa fa-map-signs" aria-hidden="true"></i>경남 양산시</li>
+                                                <li><i class="fa fa-briefcase" aria-hidden="true"></i>09:00 ~ 18:00</li>
+                                                <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
+                                            </ul>
+                                            <ul class="job-social tr-list">
+                                                <!-- <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="job-info">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1616660364-9656.jpg" alt="images" class="img-fluid" />
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="#">유-마트</a>
+                                            <span><a href="#">청정원대리점 여직원 모집</a></span>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i>경남 양산시</li>
+                                            <li><i class="fa fa-briefcase" aria-hidden="true"></i>09:00 ~ 18:00</li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i>시급 8,720 원</li>
+                                        </ul>
+                                        <div class="time">
+                                            <a href="#"><span class="freelance">단기</span></a>
+                                            <span class="pull-right">23시간 전 북마크</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.row -->					
+                    </div><!-- /.tab-pane -->
+                    
+                    <div role="tabpanel" class="tab-pane apply-job" id="archived">
+                        <div class="job-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1607935677-4624.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="job-details.html">굿모닝할인마트 효성점</a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>충남 아산 / 충북 오창</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>07:00 ~ 22:00<</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-item remove-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1614225895-1911.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="job-details.html">하모니마트 시흥능곡역</a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 이천시 경충대로</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 3,800,000 원</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-item remove-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1614934255-5373.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="job-details.html">홈마트 상현점</a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경기 안양시</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 2,300,000 원</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="job-item remove-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1615255502-9157.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span class="tr-title">
+                                            <a href="job-details.html">대백마트</a><span>
+                                        </span>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>대구 달성군</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>회사 내규</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="job-item remove-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1615795434-5412.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="job-details.html">국민홈식자재마트</a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>인천 연수구</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>월급 1,500,000 원</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-item remove-item">
+                            <div class="job-info">
+                                <div class="left-content">
+                                    <div class="clearfix">
+                                        <div class="company-logo">
+                                            <img src="assets/images/martlogo/mr-logo-1616660364-9656.jpg" alt="images" class="img-fluid">
+                                        </div>
+                                        <span><a href="#" class="btn btn-primary">아르바이트</a></span>
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="job-details.html">유-마트</a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>경남 양산시</li>
+                                        <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>09:00 ~ 18:00</li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span>시급 8,720 원</li>
+                                    </ul>										
+                                </div>
+                                <div class="right-content">
+                                    <a href="#" class="btn button-cancle">지원 취소</a>
+                                    <span class="applied">3주 전 지원</span>
+                                </div>
+                            </div>
+                        </div>					
+                    </div><!-- /.tab-pane -->
+
+                    <div role="tabpanel" class="tab-pane section close-account" id="close-account">
+                        <h1>Delete Your Account</h1>
+                        <span>Are you sure, you want to delete your account?</span>
+                        <div class="buttons">
+                            <a href="#" class="btn btn-primary">Delete Account</a>
+                            <a href="#" class="btn button-cancle">Cancle</a>
+                        </div>
+                    </div><!-- /.tab-pane -->
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
+
+<%- contentFor('script') %>

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { list, create, index, signup, mypage, checkid, bizNoCheck } = require("../app/controllers/users")
-
+const { verify, redirectLogin } = require('../app/controllers/auth.js');
 /* GET home page. */
 // 인덱스페이지, 첫 접속화면
 router.get('/', index);
@@ -11,7 +11,7 @@ router.get('/signup', signup);
 router.post('/usercreate', create);
 
 // 마이페이지
-router.get('/mypage', mypage);
+router.get('/mypage',verify,  mypage);
 
 // 로그인 페이지
 // router.get('/login', login);
