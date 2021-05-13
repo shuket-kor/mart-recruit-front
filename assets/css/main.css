@@ -50,7 +50,7 @@
     float: right;
 }
 .tr-title a {
-    font-size: 18px !important;
+    font-size: 14px !important;
     line-height: 2 !important;
 }
 .tr-title span a {
@@ -167,6 +167,9 @@ select:focus,
     margin: 80px 0;
 }
 
+.breadcrumb-info .buttons a {
+    color: white;
+}
 /* .btn {
     /* color: #fff;
     padding: 8px 20px 5px;
@@ -183,13 +186,13 @@ select:focus,
     background-color: #008def;
     border-color: #008def;
 }
-
+*/
 .btn i {
     float: left;
     font-size: 20px;
     margin-right: 10px;
 }
-
+/*
 .btn.button-send {
     margin-right: 10px;
     background-color: #8322cb;
@@ -254,7 +257,7 @@ select:focus,
     color: #000;
     display: block;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
@@ -373,13 +376,18 @@ select:focus,
     display: inline-block;
 }
 
-.user-image,
-.breadcrumb-logo {
+.user-image {
     width: 130px;
     height: 130px;
     overflow: hidden;
     display: inline-block;
     border-radius: 100%;
+    margin-bottom: 30px;
+}
+
+.breadcrumb-logo {
+    overflow: hidden;
+    display: inline-block;
     margin-bottom: 30px;
 }
 
@@ -1278,7 +1286,8 @@ select:focus,
 }
 
 .job-info .tr-title span {
-    font-size: 14px;
+    color: #888;
+    font-size: 10pt;
     display: block;
 }
 

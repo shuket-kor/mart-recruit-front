@@ -6,7 +6,7 @@
     <div class="container">
         <div class="breadcrumb-info text-center">
             <div class="page-title">
-                <h1>Recruitment announcements by region</h1>
+                <h1>Recruitment announcements</h1>
             </div>		
             <div class="banner-form">
                 <form action="#">
@@ -29,13 +29,13 @@
     <div class="container">
 
         <div class="job-topbar">
-            <span class="pull-left">지역별 구인공고</span>
+            <span class="pull-left">Search Conditions</span>
             <ul class="nav nav-tabs job-tabs" role="tablist">
                 <li><%=numeral(totalCount).format('0,0') %> Total jobs</li>
             </ul>				
         </div>
         <div class="recruit clearfix">
-            <div class="area_section">
+            <div class="area-section">
                 <div class="row">
                     <div class="col-md-2">지역</div>
                     <div class="col-md-8">
@@ -100,29 +100,29 @@
                                 <div class="job-info">
                                     <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
                                     <span class="tr-title">
-                                        <a href="job-details.html"><%=item.NAME %></a>
-                                        <span><%=item.SUBJECT %></span>
+                                        <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
                                     </span>
                                     <ul class="tr-list job-meta">
+                                        <li><i class="fa fa-home" aria-hidden="true"></i><%=item.NAME %></li>
                                         <li><i class="fa fa-map-signs" aria-hidden="true"></i><%=item.ADDRESS %></li>
                                         <li><i class="fa fa-clock-o" aria-hidden="true"></i><%=item.WORKSHIFT %> <%=item.WORKSHIFTTIME %></li>
                                         <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                     </ul>
                                     <ul class="job-social tr-list listing-2" > 
                                         <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="job-details.html"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                        <li><a href='/recruit/detail?seq=<%=item.SEQ %>' target="_blank"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>										
                             </div>
                             <div class="job-info">
                                 <div class="company-logo">
-                                    <img src="<%=hostName %>/api/files/get/<%=item.LOGOFILE %>" alt="images" class="img-fluid" >
+                                    <%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h5>${item.NAME}</h5>` %> 
                                 </div>
                                 <span class="tr-title">
-                                    <a href="#"><%=item.NAME %></a>
-                                    <span><%=item.SUBJECT %></span>
+                                    <a href="#"><%=item.SUBJECT %></a>
                                 </span>
                                 <ul class="tr-list job-meta">
+                                    <li><span><i class="fa fa-home" aria-hidden="true"></i></span><%=item.NAME %></li>
                                     <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span><%=item.ADDRESS %></li>
                                     <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span><%=item.WORKSHIFT %><%=item.WORKSHIFTTIME %></li>
                                     <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
@@ -170,7 +170,7 @@
                             list.forEach(item => { %>
                             <tr>
                                 <th scope="row"><%=item.NAME %></th>
-                                <td><%=item.SUBJECT %></td>
+                                <td><a href='/recruit/detail?seq=<%=item.SEQ %>' target="_blank"><%=item.SUBJECT %></a></td>
                                 <td><%=item.CHARGE %><br><small>(<%=item.JOBKIND_NAME %>)</small></td>
                                 <td>경력 <%=item.CAREER_NAME %><br>학력 <%=item.EDUCATION %></td>
                                 <td><%=item.WORKINGTYPE_NAME %><br><small><%=item.SALARYTYPE %> <%=item.SALARY %></small></td>
@@ -283,6 +283,10 @@ function search() {
     let keyword = $('#keyword').val();
 
     self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
+}
+
+function showDetail(seq) {
+    self.location = `/recruit/detail?seq=${seq}&regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
 }
 
 </script>

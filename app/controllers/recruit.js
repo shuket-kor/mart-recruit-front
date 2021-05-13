@@ -5,6 +5,40 @@ const recruitService = require('../services/recruit.js');
 const rowCount = 10;
 
 module.exports = {
+    async get(req, res, next) {
+        const seq = req.query.seq;
+        if (!seq) res.redirect("/recruit/list");
+
+        const currentPage = (req.query.page) ? req.query.page : 1;
+        const regions = (req.query.regions) ? req.query.regions : '';
+        const jobKinds = (req.query.jobKinds) ? req.query.jobKinds : '';
+        const workingTypes = (req.query.workingTypes) ? req.query.workingTypes : '';
+        const searchType = (req.query.searchType) ? req.query.searchType : ''; //m: 마트이름, r: 공고명
+        const keyword = (req.query.keyword) ? req.query.keyword : '';
+
+        // 최신 4개의 리스트를 따로 얻는다
+        const returnData_Top = await recruitService.list(req.cookies.xToken, regions, jobKinds, workingTypes, searchType, keyword, 1, 4);
+        // 공고 상세를 얻는다
+        const recruitInfo = await recruitService.get(req.cookies.xToken, seq);
+
+        res.render('recruit/detail', {
+            layout: 'layouts/default',
+            title: req.app.get('baseTitle') + ' 지역별공고',
+            user: req.user,
+            moment: moment,
+            numeral: numeral,
+            hostName: process.env.APIHOST,
+            regions: regions,
+            jobKinds: jobKinds,
+            workingTypes: workingTypes,
+            searchType: searchType,
+            keyword: keyword,
+            topList: (returnData_Top) ? returnData_Top.list : null,
+            page: currentPage,
+            recruitInfo: (recruitInfo) ? recruitInfo : null
+        })
+    },
+
     async list(req, res, next) {
         const currentPage = (req.query.page) ? req.query.page : 1;
         const regions = (req.query.regions) ? req.query.regions : '';

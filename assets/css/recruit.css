@@ -1,7 +1,15 @@
-.recruit .area_section {   
+.recruit .area-section {   
     padding: 20px;
     background-color: white;
     border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.job-summary .area-section {   
+    padding: 20px;
+    background-color: white;
+    /* border: 1px solid #ddd; */
     border-radius: 4px;
     margin-bottom: 30px;
 }
@@ -19,4 +27,33 @@
     border: 1px solid #DDD;
     border-radius: 5px;
     color: #949494;
+}
+
+.recruit-detail-info {
+    border: 1px solid #ebebeb;
+    border-top-color: #999;
+}
+
+.widget.short-info {
+    border: 1px solid #ebebeb;
+    border-top-color: #999;
+}
+
+.btn-apply {
+    color: #fff;
+    background-color: #ff8d5a;
+    border-color: #ff8d5a;
+}
+
+.button-recruit-apply {
+    width: 100%;
+    border: 1px solid #ff8d5a;
+    color: #fff;
+    background: #ff8d5a;
+    font-family: "Malgun Gothic",sans-serif !important;
+    font-size: 20px !important;
+    font-weight: bold;
+    letter-spacing: -2px;
+    line-height: 54px;
+    cursor:pointer;
 }

@@ -54,6 +54,33 @@ module.exports = class recruitService {
             return null;
         }
     } 
+    static async get(token, seq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/get`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    seq: seq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/get: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/get: ${error}`);
+            return null;
+        }
+    }  
     static async list(token, regions, jobKinds, workingTypes, searchType, keyword, page, rowCount) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/list`;

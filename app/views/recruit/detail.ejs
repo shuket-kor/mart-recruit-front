@@ -1,0 +1,193 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/recruit.css">
+
+<%- contentFor('content') %>
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="breadcrumb-logo">
+                <%-(recruitInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${recruitInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${recruitInfo.NAME}</h2>` %> 
+            </div>
+            <div class="page-title">
+                <h1><%-recruitInfo.SUBJECT %></h1>
+            </div>
+            <ul class="tr-list job-meta list-inline">
+                <li><i class="fa fa-map-signs" aria-hidden="true"></i><%-recruitInfo.WORKREGION_NAME %> </li>
+                <li><i class="fa fa-map-marker" aria-hidden="true"></i><%-recruitInfo.WORKSHIFT %></li>
+                <li><i class="fa fa-money" aria-hidden="true"></i><%-recruitInfo.SALARYTYPE %> <%-recruitInfo.SALARY %></li>
+                <li><i class="fa fa-tags" aria-hidden="true"></i><%-recruitInfo.JOBKIND_NAME %></li>
+                <li><i class="fa fa-hourglass-start" aria-hidden="true"></i><%=(recruitInfo.ENDDATE) ? '~' + moment(recruitInfo.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
+            </ul>	
+            <div class="buttons">
+                <a href="#" class="btn btn-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>입사 지원하기</a>
+                <a href="#" class="btn button-bookmark"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 등록</a>
+            </div>		
+        </div>
+    </div><!-- /.container -->
+</div><!-- /.tr-breadcrumb -->
+<div class="job-details section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+                <div class="job-summary section recruit-detail-info">
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 공고 내용</span>
+                        <div><%-(recruitInfo.CONTENT) ? recruitInfo.CONTENT : '등록된 내용이 없습니다' %></div>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 담당 업무</span>
+                        <ul class="tr-list">
+                            <li>담당 업무: <%-(recruitInfo.CHARGE) ? recruitInfo.CHARGE : '등록된 내용이 없습니다' %></li>
+                            <li>직종: <%=recruitInfo.JOBKIND_NAME %></li>
+                            <li>경력 여부: <%=recruitInfo.CAREER_NAME %></li>
+                            <li>직급/직책: <%=recruitInfo.JOBRANK %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i>지원 자격 및 조건</span>
+                        <ul class="tr-list">
+                            <li>필수 우대 조건: <%=recruitInfo.PREFERENTIAL %></li>
+                            <li>학력: <%=recruitInfo.EDUCATION %></li>
+                            <li>성별: <%=recruitInfo.GENDER %></li>
+                            <li>나이: <%=recruitInfo.AGE %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 근무 조건</span>
+                        <ul class="tr-list">
+                            <li>급여: <%=recruitInfo.SALARYTYPE %> <%=recruitInfo.SALARY %></li>
+                            <li>근무 형태: <%=recruitInfo.WORKINGTYPE_NAME %></li>
+                            <li>수습 기간: <%=recruitInfo.PROBATIONTERM %></li>
+                            <li>근무 요일: <%=recruitInfo.WORKSHIFT %></li>
+                            <li>근무 시간: <%=recruitInfo.WORKSHIFTTIME %></li>
+                            <li>근무 지역: <%=recruitInfo.WORKREGION_NAME %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 채용 절차</span>
+                        <ul class="tr-list">
+                            <li>접수 기간: <%=moment(recruitInfo.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(recruitInfo.ENDDATE) ? '~' + moment(recruitInfo.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
+                            <li>전형 절차: <%=recruitInfo.HIRINGSTEP %></li>
+                            <li>제출 서류: <%=recruitInfo.REQUIREDOCS %></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <div class="widget-area">
+                        <div class="widget short-info">
+                            <h3 class="widget_title">이 공고는...</h3>
+                            <ul class="tr-list">
+                                <%
+                                    var sdt = new Date();
+                                    var edt = new Date(recruitInfo.CREATED);
+                                    var dateDiff = Math.abs(Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24)));
+                                %>
+                                <li class="media"><div class="pull-left"><i class="fa fa-calendar" aria-hidden="true"></i></div> <div class="media-body"><span><%=dateDiff%>일 전에 등록</span></div></li>
+                                <li class="media"><div class="pull-left"><i class="fa fa-user-plus" aria-hidden="true"></i></div> <div class="media-body"><span><%=recruitInfo.APPLYCOUNT %>명의 지원자</span></div></li>
+                            </ul>
+                        </div><!-- /.widger -->
+                        <div class="widget short-info">
+                            <h3 class="widget_title">인사 담당자</h3>
+                            <span><%=recruitInfo.NAME %></span>
+                            <ul class="tr-list">
+                                <li><span></span> (<%=recruitInfo.POSTCODE %>) <%=recruitInfo.ADDRESS %> <%=recruitInfo.ADDRESSEXTRA %></li>
+                                <li><span></span>  <%=recruitInfo.HRONAME %></li>
+                                <li><span></span>  <%=recruitInfo.HROCONTACT %></li>
+                                <li><span></span>  <%=recruitInfo.HROEMAIL %></li>
+                            </ul>
+                        </div><!-- /.widger -->
+                        <button type="button" class="button-recruit-apply">입사지원</button>
+                    </div><!-- /.widget-area -->
+                </div><!-- /.tr-sidebar -->
+            </div>
+        </div><!-- row -->
+       
+        <div class="tr-job-posted similar-jobs">
+            <span class="tr-title">유사한 구인 공고</span>
+            <div class="row">
+                <%
+                if (topList) {
+                    topList.forEach(item => { %>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="job-item">
+                                <div class="item-overlay">
+                                    <div class="job-info">
+                                        <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
+                                        <span class="tr-title">
+                                            <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
+                                        </span>
+                                        <ul class="tr-list job-meta">
+                                            <li><i class="fa fa-home" aria-hidden="true"></i><%=item.NAME %></li>
+                                            <li><i class="fa fa-map-signs" aria-hidden="true"></i><%=item.ADDRESS %></li>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><%=item.WORKSHIFT %> <%=item.WORKSHIFTTIME %></li>
+                                            <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                        </ul>
+                                        <ul class="job-social tr-list listing-2" > 
+                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a href='#' onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </div>										
+                                </div>
+                                <div class="job-info">
+                                    <div class="company-logo">
+                                        <%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h5>${item.NAME}</h5>` %> 
+                                    </div>
+                                    <span class="tr-title">
+                                        <a href="#"><%=item.SUBJECT %></a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><span><i class="fa fa-home" aria-hidden="true"></i></span><%=item.NAME %></li>
+                                        <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span><%=item.ADDRESS %></li>
+                                        <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span><%=item.WORKSHIFT %><%=item.WORKSHIFTTIME %></li>
+                                        <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                    </ul>
+                                    <div class="time">
+                                        <a href="#"><span><%=item.CHARGE %></span></a>
+                                        <span class="pull-right"><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></td></span>
+                                    </div>																				
+                                </div>
+                            </div>
+                        </div>
+                    <% })
+                }
+            %>
+                </div>
+        </div><!-- /.tr-job-posted -->		
+    </div><!-- /.container -->
+</div><!-- /.tr-details -->	
+
+<%- contentFor('script') %>
+
+<script>
+let page = <%=page %>;
+let regions = [<%=regions %>];
+let jobKinds = [<%=jobKinds %>];
+let workingTypes = [<%=workingTypes %>];
+let searchType = '<%=searchType %>';
+let keyword = '<%=keyword %>';
+
+$(document).ready(function() {
+    // 검색 조건 설정
+    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
+    $("#keyword").val(keyword);
+    $("#keyword").keypress(function(e) {
+        if (e.keyCode == 13 && $(this).val().length > 0) search();
+    });
+    //검색 버튼 설정
+    $(".button-search").click(function() { search(); })
+});
+
+function search() {
+    let searchType = ($("#searchType > a > span").html() == "마트 이름") ? "m" : ($("#searchType > a > span").html() == "공고 제목") ? "r" : "";
+    let keyword = $('#keyword').val();
+
+    self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
+}
+
+</script>
