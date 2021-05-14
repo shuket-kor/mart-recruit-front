@@ -18,62 +18,32 @@
                 <li><i class="fa fa-tags" aria-hidden="true"></i><%-recruitInfo.JOBKIND_NAME %></li>
                 <li><i class="fa fa-hourglass-start" aria-hidden="true"></i><%=(recruitInfo.ENDDATE) ? '~' + moment(recruitInfo.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
             </ul>	
+            <% if (!user || user.Type == "U") {%>
             <div class="buttons">
-                <a href="#" class="btn btn-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>입사 지원하기</a>
-                <a href="#" class="btn button-bookmark"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 등록</a>
-            </div>		
+                <% if (status && status.ISAPPLY){ %>
+                    <a class="btn btn-danger button-cancel-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>지원 취소</a>
+                <%} else {%> 
+                    <a class="btn btn-apply button-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>입사 지원하기</a>
+                <%}%> 
+                <% if (status && status.ISSCRAP){ %>
+                    <a class="btn btn-seconday button-cancel-scrap" onclick="cancelScrap(<%=recruitInfo.SEQ %>)"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 제거</a>
+                <%} else {%> 
+                    <a class="btn button-bookmark button-scrap" onclick="scrap(<%=recruitInfo.SEQ %>)"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 등록</a>
+                <%}%> 
+                </div>		
+            <%} %>
         </div>
     </div><!-- /.container -->
 </div><!-- /.tr-breadcrumb -->
 <div class="job-details section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-lg-9">
-                <div class="job-summary section recruit-detail-info">
-                    <div class="area-section">
-                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 공고 내용</span>
-                        <div><%-(recruitInfo.CONTENT) ? recruitInfo.CONTENT : '등록된 내용이 없습니다' %></div>
-                    </div>
+            <div class="col-md-8 col-lg-9">                
+                    <%-include('./detailRecruit') %>
 
                     <div class="area-section">
-                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 담당 업무</span>
-                        <ul class="tr-list">
-                            <li>담당 업무: <%-(recruitInfo.CHARGE) ? recruitInfo.CHARGE : '등록된 내용이 없습니다' %></li>
-                            <li>직종: <%=recruitInfo.JOBKIND_NAME %></li>
-                            <li>경력 여부: <%=recruitInfo.CAREER_NAME %></li>
-                            <li>직급/직책: <%=recruitInfo.JOBRANK %></li>
-                        </ul>
-                    </div>
-
-                    <div class="area-section">
-                        <span class="tr-title"><i class="fa fa-check text-secondary"></i>지원 자격 및 조건</span>
-                        <ul class="tr-list">
-                            <li>필수 우대 조건: <%=recruitInfo.PREFERENTIAL %></li>
-                            <li>학력: <%=recruitInfo.EDUCATION %></li>
-                            <li>성별: <%=recruitInfo.GENDER %></li>
-                            <li>나이: <%=recruitInfo.AGE %></li>
-                        </ul>
-                    </div>
-
-                    <div class="area-section">
-                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 근무 조건</span>
-                        <ul class="tr-list">
-                            <li>급여: <%=recruitInfo.SALARYTYPE %> <%=recruitInfo.SALARY %></li>
-                            <li>근무 형태: <%=recruitInfo.WORKINGTYPE_NAME %></li>
-                            <li>수습 기간: <%=recruitInfo.PROBATIONTERM %></li>
-                            <li>근무 요일: <%=recruitInfo.WORKSHIFT %></li>
-                            <li>근무 시간: <%=recruitInfo.WORKSHIFTTIME %></li>
-                            <li>근무 지역: <%=recruitInfo.WORKREGION_NAME %></li>
-                        </ul>
-                    </div>
-
-                    <div class="area-section">
-                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 채용 절차</span>
-                        <ul class="tr-list">
-                            <li>접수 기간: <%=moment(recruitInfo.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(recruitInfo.ENDDATE) ? '~' + moment(recruitInfo.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
-                            <li>전형 절차: <%=recruitInfo.HIRINGSTEP %></li>
-                            <li>제출 서류: <%=recruitInfo.REQUIREDOCS %></li>
-                        </ul>
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 유의사항</span>
+                        <p>입사지원 서류에 허위사실이 발견될 경우, 채용확정 이후라도 채용이 취소될 수 있습니다.</p>
                     </div>
                 </div>
             </div>
@@ -91,6 +61,11 @@
                                 <li class="media"><div class="pull-left"><i class="fa fa-calendar" aria-hidden="true"></i></div> <div class="media-body"><span><%=dateDiff%>일 전에 등록</span></div></li>
                                 <li class="media"><div class="pull-left"><i class="fa fa-user-plus" aria-hidden="true"></i></div> <div class="media-body"><span><%=recruitInfo.APPLYCOUNT %>명의 지원자</span></div></li>
                             </ul>
+                            <% if (status && status.ISAPPLY){ %>
+                                <div class="alert alert-danger" role="alert">
+                                    이 공고는 <%=moment(status.APPLYDATE).format('YYYY.MM.DD HH:mm:ss') %>에 지원했습니다
+                                  </div>                                
+                            <% } %>
                         </div><!-- /.widger -->
                         <div class="widget short-info">
                             <h3 class="widget_title">인사 담당자</h3>
@@ -102,7 +77,11 @@
                                 <li><span></span>  <%=recruitInfo.HROEMAIL %></li>
                             </ul>
                         </div><!-- /.widger -->
-                        <button type="button" class="button-recruit-apply">입사지원</button>
+                        <% if (status && status.ISAPPLY){ %>
+                            <button type="button" class="button-cancel-apply button-recruit-apply-cancel">지원 취소</button>
+                        <%} else {%> 
+                            <button type="button" class="button-apply button-recruit-apply">입사 지원</button>
+                        <%}%> 
                     </div><!-- /.widget-area -->
                 </div><!-- /.tr-sidebar -->
             </div>
@@ -129,8 +108,8 @@
                                             <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                         </ul>
                                         <ul class="job-social tr-list listing-2" > 
-                                            <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                            <li><a href='#' onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                            <li><a onclick="cancelScrap(<%=item.SEQ %>)"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                                         </ul>
                                     </div>										
                                 </div>
@@ -165,29 +144,81 @@
 <%- contentFor('script') %>
 
 <script>
-let page = <%=page %>;
-let regions = [<%=regions %>];
-let jobKinds = [<%=jobKinds %>];
-let workingTypes = [<%=workingTypes %>];
-let searchType = '<%=searchType %>';
-let keyword = '<%=keyword %>';
+let seq = <%=recruitInfo.SEQ %>;
+let applyResult = '<%=applyResult %>';
 
 $(document).ready(function() {
-    // 검색 조건 설정
-    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
-    $("#keyword").val(keyword);
-    $("#keyword").keypress(function(e) {
-        if (e.keyCode == 13 && $(this).val().length > 0) search();
-    });
-    //검색 버튼 설정
-    $(".button-search").click(function() { search(); })
+    $(".button-apply").click(apply);
+    $(".button-cancel-apply").click(cancelApply);
+    ShowMessage();
 });
 
-function search() {
-    let searchType = ($("#searchType > a > span").html() == "마트 이름") ? "m" : ($("#searchType > a > span").html() == "공고 제목") ? "r" : "";
-    let keyword = $('#keyword').val();
-
-    self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
+function apply() {
+    if (confirm("이 구인 공고에 지원하시겠습니까?")) {
+        doGetCallSync(`/recruit/apply?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("구인 공고에 지원하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("구인 공고에 지원하는 도중에 오류가 발생했습니다.");
+        });
+    }
 }
 
+function cancelApply() {
+    if (confirm("지원을 취소하시겠습니까?")) {
+        doGetCallSync(`/recruit/cancelApply?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("지원한 구인 공고에서 지원을 취소하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("지원한 구인 공고에서 지원을 취소하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+function scrap(recruitSeq) {
+    doGetCallSync(`/recruit/scrap?seq=${recruitSeq}`)
+    .success(function(json){
+        if (json.result == "success") 
+            self.location.reload();
+        else
+            alert("구인 공고를 즐겨찾기에 등록하는 도중에 오류가 발생했습니다.");
+    })
+    .fail(function(sender, message, details){
+        alert("구인 공고를 즐겨찾기에 등록하는 도중에 오류가 발생했습니다.");
+    });
+}
+
+function cancelScrap(recruitSeq) {
+    doGetCallSync(`/recruit/cancelScrap?seq=${recruitSeq}`)
+    .success(function(json){
+        if (json.result == "success") 
+            self.location.reload();
+        else
+            alert("즐겨찾기에서 제거하는 도중에 오류가 발생했습니다.");
+    })
+    .fail(function(sender, message, details){
+        alert("즐겨찾기에서 제거하는 도중에 오류가 발생했습니다.");
+    });
+}
+
+function ShowMessage()
+{
+    switch (applyResult) {
+        case "userNotMatch" : 
+            alert("구인 공고에는 구직자만 지원이 가능합니다.");
+            break;
+    } 
+}
+
+function showDetail(seq) {
+    window.open(`/recruit/detail?seq=${seq}`);
+}
 </script>
