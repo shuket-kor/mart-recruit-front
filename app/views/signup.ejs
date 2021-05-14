@@ -231,29 +231,28 @@
                 alert("아이디를 입력해주세요.");
                 return;
             }
-
             console.log(loginId);
             doPostCallSync("/users/checkid", {
                 loginid: loginId,
             })
-                .success(function (json) {
-                    // 아이디 중복체크가 false 이면 가입이 불가능.
-                    if (json.result == "success") {
-                        if (json.data.tf == false) {
-                            alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
-                            idcheckflag = false;
-                            location.reload();
-                        } else {
-                            alert("사용 가능한 아이디 입니다.");
-                            idcheckflag = true;
-                            return;
-                        }
+            .success(function (json) {
+                // 아이디 중복체크가 false 이면 가입이 불가능.
+                if (json.result == "success") {
+                    if (json.data.tf == false) {
+                        alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
+                        idcheckflag = false;
+                        location.reload();
+                    } else {
+                        alert("사용 가능한 아이디 입니다.");
+                        idcheckflag = true;
+                        return;
                     }
-                })
-                .fail(function () {
-                    alert("아이디 중복체크 오류...");
-                });
-    }
+                }
+            })
+            .fail(function () {
+                alert("아이디 중복체크 오류...");
+            });
+        }
     });
 
     // 사업자번호 체크하는 정규식.
