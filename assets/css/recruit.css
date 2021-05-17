@@ -45,6 +45,12 @@
     border-color: #ff8d5a;
 }
 
+.btn-apply:hover{
+    color:#fff;
+    background-color:#ff7535;
+    border-color:#ff7535
+}
+
 .button-recruit-apply {
     width: 100%;
     border: 1px solid #ff8d5a;
@@ -56,4 +62,27 @@
     letter-spacing: -2px;
     line-height: 54px;
     cursor:pointer;
+}
+
+.button-recruit-apply:hover {
+    background-color:#ff7535;
+    border-color:#ff7535
+}
+
+.button-recruit-apply-cancel {
+    width: 100%;
+    border: 1px solid #dc3545;
+    color: #fff;
+    background: #dc3545;
+    font-family: "Malgun Gothic",sans-serif !important;
+    font-size: 20px !important;
+    font-weight: bold;
+    letter-spacing: -2px;
+    line-height: 54px;
+    cursor:pointer;
+}
+
+.button-recruit-apply-cancel:hover {
+    background-color:#c82333;
+    border-color:#c82333
 }

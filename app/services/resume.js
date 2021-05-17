@@ -1,6 +1,6 @@
-const logger = require("../config/logger.js");
+const logger = require('../config/logger.js');
+const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
-const secretKey = require("../config/secretKey").secretKey;
 
 module.exports = class resumeService {
     static async get(user_seq) {

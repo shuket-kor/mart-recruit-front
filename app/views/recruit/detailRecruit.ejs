@@ -1,0 +1,50 @@
+
+                <div class="job-summary section recruit-detail-info">
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 공고 내용</span>
+                        <div><%-(recruitInfo.CONTENT) ? recruitInfo.CONTENT : '등록된 내용이 없습니다' %></div>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 담당 업무</span>
+                        <ul class="tr-list">
+                            <li>담당 업무: <%-(recruitInfo.CHARGE) ? recruitInfo.CHARGE : '등록된 내용이 없습니다' %></li>
+                            <li>직종: <%=recruitInfo.JOBKIND_NAME %></li>
+                            <li>경력 여부: <%=recruitInfo.CAREER_NAME %></li>
+                            <li>직급/직책: <%=recruitInfo.JOBRANK %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i>지원 자격 및 조건</span>
+                        <ul class="tr-list">
+                            <li>필수 우대 조건: <%=recruitInfo.PREFERENTIAL %></li>
+                            <li>학력: <%=recruitInfo.EDUCATION %></li>
+                            <li>성별: <%=recruitInfo.GENDER %></li>
+                            <li>나이: <%=recruitInfo.AGE %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 근무 조건</span>
+                        <ul class="tr-list">
+                            <li>급여: <%=recruitInfo.SALARYTYPE %> <%=recruitInfo.SALARY %></li>
+                            <li>근무 형태: <%=recruitInfo.WORKINGTYPE_NAME %></li>
+                            <li>수습 기간: <%=recruitInfo.PROBATIONTERM %></li>
+                            <li>근무 요일: <%=recruitInfo.WORKSHIFT %></li>
+                            <li>근무 시간: <%=recruitInfo.WORKSHIFTTIME %></li>
+                            <li>근무 지역: <%=recruitInfo.WORKREGION_NAME %></li>
+                        </ul>
+                    </div>
+
+                    <div class="area-section">
+                        <span class="tr-title"><i class="fa fa-check text-secondary"></i> 채용 절차</span>
+                        <ul class="tr-list">
+                            <li>접수 기간: <%=moment(recruitInfo.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(recruitInfo.ENDDATE) ? '~' + moment(recruitInfo.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
+                            <li>전형 절차: <%=recruitInfo.HIRINGSTEP %></li>
+                            <li>제출 서류: <%=recruitInfo.REQUIREDOCS %></li>
+                        </ul>
+                    </div>
+
+
+                    

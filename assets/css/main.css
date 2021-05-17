@@ -1725,12 +1725,14 @@ select:focus,
 }
 
 .btn.button-bookmark {
+    color: #fff;
     border-color: #89c040;
     background-color: #89c040;
 }
 
 .btn.button-bookmark:hover {
-    color: #89c040;
+    border-color: #77a738;
+    background-color: #77a738;
 }
 
 .btn.button-share:before {

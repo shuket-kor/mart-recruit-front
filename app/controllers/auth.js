@@ -42,7 +42,7 @@ module.exports = {
                 Type: authData[2]
             }
             req.user = userData;
-        }     
+        }
         next();
     },
 
