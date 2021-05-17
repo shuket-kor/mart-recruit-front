@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { martpage, userpage, create, edit, userCreate, userEdit, resumeList,support, bookmark, remove, updateImage} = require('../app/controllers/mypage.js');
+const { martpage, userpage, create, edit, userCreate, userEdit, resumeList,support, bookmark, remove, updateImage, updatecertificate} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
 router.get('/user', verify, userpage);
@@ -17,6 +17,9 @@ router.post('/user/edit', verify, userEdit);
 
 // 이미지 업데이트
 router.post('/user/updateimage', updateImage)
+
+// 증명서 업로드
+router.post('/user/updatecertificate', updatecertificate)
 
 // 이력서 리스트
 router.get('/user/resume', verify, resumeList);

@@ -81,9 +81,25 @@ module.exports = {
     async updateImage(req, res, next){
         const SEQ = req.body.SEQ;
         const location = req.body.location;
-        const LOGOFILE = location + "/" + req.body.LOGOFILE;
-        
-        const returnData = await martService.updateLogo(req.cookies.xToken, SEQ, LOGOFILE);
+        const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
+        console.log(SEQ);
+        console.log(location);
+        console.log(RESUMEFILE);
+        const returnData = await resumeService.updateImage(req.cookies.xToken, SEQ, RESUMEFILE);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+    async updatecertificate(req, res, next){
+        const SEQ = req.body.SEQ;
+        const location = req.body.location;
+        const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
+        console.log(SEQ);
+        console.log("로케이션 " +location);
+        console.log("래줌 " + RESUMEFILE);
+        const returnData = await resumeService.updatecertificate(req.cookies.xToken, SEQ, RESUMEFILE);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -91,6 +107,7 @@ module.exports = {
         });
     },
     
+
     async resumeList(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;

@@ -37,7 +37,7 @@
                                     <div class="user-image">
                                         <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
                                     </div>
-                                    <div class="btn btn-primary" id="imageuploadbotton">이미지 업로드</div>
+                                    <div class="btn btn-primary" id="imageuploadbtn">이미지 업로드</div>
                                     <!-- <div class="upload-photo">
                                         <label class="btn btn-primary" for="upload-photo" >사진 업로드</label>
                                         <input type="file" id="upload-photo">
@@ -178,10 +178,11 @@
                         <li class="career-objective">
                             <div class="media-body">
                                 <span class="tr-title">4대보험 증명 서류</span>
-                                <div class="upload-photo">
-                                    <!-- <label class="btn btn-primary" for="upload-certificate" >업로드</label> -->
+                                <div class="btn btn-primary" id="certificateUploadBtn">증명서 업로드</div>
+                                <!-- <div class="upload-photo">
                                     <input type="file" id="upload-certificate">
-                                </div>
+                                </div> -->
+                                <!-- <label class="btn btn-primary" for="upload-certificate" >업로드</label> -->
                             </div>
                         </li>
                         <li class="personal-deatils">
@@ -190,7 +191,20 @@
                                 <div class="code-edit" name="" id="introduce"></div>
                             </div>
                         </li>
-                        <li class="work-history">
+                        <!-- 경력 부분 체크안되면 display none  -->
+                        <!-- 디폴트 신입 , 경력 클릭시에 추가폼 생성. -->
+                        <div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-primary active" id="option1">
+                                    <input type="radio" name="carrerSeq"  value="2" autocomplete="off" checked> 신입
+                                </label>
+                                <label class="btn btn-primary" id="option2">
+                                    <input type="radio" name="carrerSeq"  value="3" autocomplete="off"> 경력
+                                </label>
+                            </div>
+                        </div>
+
+                        <li class="work-history" style="display: none;" id="work-history">
                             <div class="media-body additem-work">
                                 <span class="tr-title">경력</span>
                                 <div id="addhistory" class="additem">
@@ -205,7 +219,7 @@
                                             <div class="col-sm-6 col-md-4">
                                                 <label>시작</label>
                                                 <div class="calendar">
-                                                    <input type="date" class="form-control" value="2015-01-15" />
+                                                    <input type="date" name="" class="form-control" value="2015-01-15" />
                                                 </div>
                                                 <!-- calendar -->
                                             </div>
@@ -222,29 +236,30 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <div class="row">
-                                            <div class="col-sm-4 col-md-3">
-                                                <label>경력기간</label>
-                                                <div class="code-edit"><span></span></div>
-                                            </div>
-                                            <div class="col-sm-4 col-md-3">
-                                                <label>직종</label>
-                                                <div class="code-edit"><span></span></div>
-                                            </div>
-                                            <div class="col-sm-4 col-md-3">
-                                                <label>직급</label>
-                                                <div class="code-edit"><span></span></div>
-                                            </div>
-                                            <div class="col-sm-4 col-md-3">
-                                                <label>담당 업무</label>
-                                                <div class="code-edit"><span></span></div>
-                                            </div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>경력기간</label>
+                                            <div class="code-edit"><span>Test</span></div>
                                         </div>
-                                        <label>근무 지역</label>
-                                        <div class="code-edit"><span>경기</span></div>
-                                        <label>최종 연봉</label>
-                                        <div class="code-edit"><span>9,700 만원</span></div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>직종</label>
+                                            <div class="code-edit"><span>Test</span></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>직급</label>
+                                            <div class="code-edit"><span>Test</span></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>담당 업무</label>
+                                            <div class="code-edit"><span>Test</span></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>근무 지역</label>
+                                            <div class="code-edit"><span>경기</span></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3">
+                                            <label>최종 연봉</label>
+                                            <div class="code-edit"><span>9,700 만원</span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +305,40 @@
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-info waves-effect waves-light" id="button-actionUpload">저장</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="imgUploadBtn">저장</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- 4대보험 증명서 모달창 -->
+<!-- certificate-upload-btn -->
+<input type="hidden" id="createType" />
+<div id="certificateUploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="certificateUploadModal" aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="certificateUploadModal-Title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="upload-certificate">
+                                <!-- <label class="btn btn-primary" for="upload-photo" >사진 업로드</label> -->
+                                <input type="file" id="upload-certificate">
+                                <span class="max-size">Max 20 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="ctfUploadBtn">저장</button>
                 </div>
             </div>
             
@@ -301,12 +349,33 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     $(document).ready(function(){
-        $("#imageuploadbotton").click(function(){
+        var hostName = `<%= hostName%>`
+        // 이미지 업로드 모달 클릭
+        $("#imageuploadbtn").click(function(){
             $('#imgUploadModal').modal();
         });
-        $("#button-actionUpload").click(function(){
+        // 4대보험 증명서류 업로드 모달 클릭
+        $("#certificateUploadBtn").click(function(){
+            $('#certificateUploadModal').modal();
+        });
+        // 이미지 업로드 모달안의 완료버튼 클릭
+        $("#imgUploadBtn").click(function(){
             uploadImage();
-        })
+        });
+        // 4대보험 증명서류 모달안의 완료버튼 클릭
+        $("#ctfUploadBtn").click(function(){
+            uploadCertificate();
+        });
+        // 신입 버튼 클릭시
+        $("#option1").click(function(){
+            $("#work-history").css('display','none');
+        });
+        // 경력 버튼 클릭시
+        $("#option2").click(function(){
+            $("#work-history").css('display','block');
+        });
+
+
         $("#resume-update-btn").click(function(){
             let userseq = user.Seq;
             // 수정 완료 클릭시 > api로 호출하는 front 로직 수행(body) >  POST로 (body) api로 전송하여 이력서 seq로 업데이트
@@ -351,8 +420,11 @@
                         });
         })
     })
+    // 이력서수정 >> 이미지 업로드 
     function uploadImage(){
-        var logoImage = null;
+        var resumeseq = <%= get.SEQ%>
+        console.log(resumeseq);
+        var resumeImage = null;
         var titleImage = null;
         // 파일이 있으면 먼저 업로드한다 
         if ($("#upload-photo").val() != "") {
@@ -360,25 +432,27 @@
             formData.append("location", 'resume');
             formData.append("uploadFile", $('#upload-photo')[0].files[0]);
             $.ajax({
-                url: hostName + '/api/files/uploadSingle',  
+                url: 'http://localhost:3000' + '/api/files/uploadSingle',  
                 type: 'POST',
                 dataType: "json",
                 data: formData,
                 async: false,
                 success:function(json){
+                    // alert("에이작스는 성공함.");
+                    console.log(json.data.fieldname);
                     // 업로드가 성공했으면 정보를 업데이트
                     if (json.result == "success") {
-                    logoImage = json.data.filename;
-                    doPostCallSync("/mypage/updateimage", {
-                        SEQ: $("#SEQ").val(),
-                        location: 'martlogo',
-                        LOGOFILE: logoImage
+                        resumeImage = json.data.filename;
+                    doPostCallSync("/mypage/user/updateimage", {
+                        SEQ: resumeseq,
+                        location: 'resume',
+                        RESUMEFILE: resumeImage
                     })
                     .success(function(json){
                         if (json.result == "success") location.reload();
                     })
                     .fail(function(sender, message, details){
-                        alert("로고 이미지를 변경하는 도중에 오류가 발생했습니다.");
+                        alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
                     });                         
                 }
                 },
@@ -388,6 +462,50 @@
             }); 
         }
     }
+    
+    // 4대보험 증명 서류
+    function uploadCertificate(){
+        var resumeseq = <%= get.SEQ%>
+        console.log(resumeseq);
+        var certificate = null;
+        var titleImage = null;
+        // 파일이 있으면 먼저 업로드한다 
+        if ($("#upload-certificate").val() != "") {
+            var formData = new FormData();
+            formData.append("location", 'certificate');
+            formData.append("uploadFile", $('#upload-certificate')[0].files[0]);
+            $.ajax({
+                url: 'http://localhost:3000' + '/api/files/uploadSingle',  
+                type: 'POST',
+                dataType: "json",
+                data: formData,
+                async: false,
+                success:function(json){
+                    // alert("에이작스는 성공함.");
+                    // console.log(json.data.fieldname);
+                    // 업로드가 성공했으면 정보를 업데이트
+                    if (json.result == "success") {
+                        certificate = json.data.filename;
+                    doPostCallSync("/mypage/user/updatecertificate", {
+                        SEQ: resumeseq,
+                        location: 'certificate',
+                        RESUMEFILE: certificate
+                    })
+                    .success(function(json){
+                        if (json.result == "success") location.reload();
+                    })
+                    .fail(function(sender, message, details){
+                        alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
+                    });                         
+                }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            }); 
+        }
+    }
+    // 주소 API 적용
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {

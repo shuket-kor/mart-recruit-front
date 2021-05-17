@@ -61,4 +61,62 @@ module.exports = class resumeService {
             return null;
         }
     }
+    static async updateImage(token, SEQ, RESUMEFILE) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/updateImage`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    SEQ: SEQ,
+                    RESUMEFILE: RESUMEFILE,
+                    key: secretKey
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService/updateImage: 이력서 이미지 파일 업데이트 실패 SEQ: ${SEQ}`);
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/updateImage: ${error}`);
+        }
+    }  
+    static async updatecertificate(token, SEQ, RESUMEFILE) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/updatecertificate`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    SEQ: SEQ,
+                    RESUMEFILE: RESUMEFILE,
+                    key: secretKey
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService/updatecertificate: 이력서 인증 파일 업데이트 실패 SEQ: ${SEQ}`);
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/updatecertificate: ${error}`);
+        }
+    }  
+    
+    
 };
