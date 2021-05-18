@@ -13,9 +13,10 @@ module.exports = class noticeService {
                 } else {
                     apiURL = 'http://localhost:3000/api/notice/list';
                 }
-                var {body} = await got.post(apiURL + "?page=" + page + "&offset=" + rowCount, { json : {
-                    SEQ:seq
-                },
+                const {body} = await got.post(apiURL + "?page=" + page + "&offset=" + rowCount, { json : {
+                    SEQ:seq,
+                    page: page,
+                    rowCount: rowCount },
                 responseType: 'json'});
                 
                 if (body.result == 'success'){
@@ -34,7 +35,7 @@ module.exports = class noticeService {
         }
 
     // 공지사항 자세히 보기
-    static async views(seq) {
+    /*static async views(seq) {
 
         try {
             var apiURL = "";
@@ -57,7 +58,7 @@ module.exports = class noticeService {
             logger.writeLog('error',`serives/noticeService/views: ${error}`)
             return null;
         }
-    }
+    }*/
 
     
 };
