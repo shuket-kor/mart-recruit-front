@@ -41,6 +41,7 @@ app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
 app.use('/recruit', require('./routes/recruit'));
 app.use('/mypage', require('./routes/mypage'));
+app.use('/mart', require('./routes/mart'));
 
 app.use(
   morgan('combined', 

@@ -1,3 +1,45 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<%- contentFor('style') %>
+
+<%- contentFor('content') %>
+<div class="page-content">
+    <div class="container">
+        <div class="tr-found section">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="found-image">
+                        <img src="/assets/images/others/500.jpg" alt="Image" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="found-info">
+                        <h1>ERROR</h1>
+                        <h3 id="message">어이쿠!</h3>
+                        <p>마트협회에서 운영하는 구인구직 서비스는 등급에 따라 사용할 수 있는 기능이 구분됩니다</p>
+                        <a href="/" class="btn btn-dark">첫 화면으로 돌아가기</a>
+                    </div>
+                </div>
+            </div><!-- /.row -->				
+        </div><!-- /.section -->
+    </div><!-- /.container -->		
+</div><!-- /.page-content -->	
+
+
+<%- contentFor('script') %>
+<script>
+    let messageCode = '<%=message %>';
+
+    $(document).ready(function() {
+        let message = "어이쿠!";
+
+        switch (messageCode) {
+            case "NoMatchUserGrade":
+                message = "등급에 맞지 않습니다";
+                break;
+            case "NoMartInfo":
+                message = "마트회원이지만 마트 정보가 없습니다";
+                break;
+        }
+        $("#message").html(message);
+    });
+
+</script>

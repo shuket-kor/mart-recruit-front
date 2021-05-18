@@ -1,6 +1,7 @@
 const logger = require('../config/logger.js');
 const url = require('url');
 const authService = require('../services/auth.js');
+const { ConsoleTransportOptions } = require('winston/lib/winston/transports');
 
 module.exports = {
   // async login(req, res, next) {
@@ -82,10 +83,16 @@ module.exports = {
           // 인증용 토큰 보관
             res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
             
-            if (refer != '') 
-                res.redirect(refer);
-            else 
-            res.redirect('/users/mypage');
+            console.log(loginbody.data);
+            if (loginbody.data.USERTYPE === 'M') {
+                res.redirect("/mart/recruit");
+            } else {
+                if (refer != '') {
+                    res.redirect(refer);
+                } else {
+                    res.redirect('/users/mypage');
+                }
+            }                
         } else {
             res.redirect(`/auth/login?refer=${refer}&result=1`);
         }    
