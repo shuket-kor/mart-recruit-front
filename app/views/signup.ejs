@@ -91,7 +91,7 @@
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인" />
                             </div> -->
-                            <button type="submit" id="mart-login" class="btn btn-primary">회원가입</button>
+                            <button type="button" id="mart-login" class="btn btn-primary" form="mart-signup-form">회원가입</button>
                         </form>
                         <div class="new-user text-center">
                             <span>이미 회원가입을 했다면. <a href="../auth/login">로그인</a> </span>
@@ -111,65 +111,71 @@
         // 아이디 중복 체크
         var idcheckflag = false;
         var usermartflag = true;
+        // 특수문자 구분하는 정규식
+        var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+        var userIdCheck = RegExp(/^[A-Za-z0-9_\-]{4,15}$/);
+        // 탭 클릭시 플래그 변경, 유저 및 마트 구분
         $("#marttab").click(function () {
             usermartflag = false;
         });
         $("#usertab").click(function () {
             usermartflag = true;
         });
-        // $(".idcheckbtn").click(function () {
-        //     // 아이디가 마트쪽 인지 유저쪽인지 체크
-        //     let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val();
-        //     if (loginId.length == 0) {
-        //         alert("아이디를 입력해주세요.");
-        //         return;
-        //     }
-        //     console.log(loginId);
-        //     doPostCallSync("/users/checkid", {
-        //         loginid: loginId,
-        //     })
-        //         .success(function (json) {
-        //             // 아이디 중복체크가 false 이면 가입이 불가능.
-        //             if (json.result == "success") {
-        //                 if (json.data.tf == false) {
-        //                     alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
-        //                     idcheckflag = false;
-        //                     location.reload();
-        //                 } else {
-        //                     alert("사용 가능한 아이디 입니다.");
-        //                     idcheckflag = true;
-        //                     return;
-        //                 }
-        //             }
-        //         })
-        //         .fail(function () {
-        //             alert("아이디 중복체크 오류...");
-        //         });
-        // });
 
-        // 아이디 중복체크 불가능일때 회원가입 시도시
         $("#user-login").click(function () {
             // 아이디 중복체크 먼저 시작.
-            loginIdCheck()
+            loginIdCheck();
+            // 아이디 유효성 체크
+            if ($("#user-loginid").val() == null || $("#user-loginid").val() == "") {
+                alert("아이디 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
+                $("#user-loginid").focus();
+                return;
+            } else if ($("#user-loginid").val().length > 15 || $("#user-loginid").val().length < 4) {
+                alert("아이디는 4~15 글자로 맞추어주세요. ");
+                $("#user-loginid").focus();
+                $("#user-loginid").val("");
+                return;
+            } else if (specialCheck.test($("#user-loginid").val())) {
+                alert("아이디는 특수문자를 포함 할 수 없습니다.");
+                $("#user-loginid").focus();
+                $("#user-loginid").val("");
+                return;
+            }else if(userIdCheck.test($("#user-loginid").val())== false){
+                alert("아이디는 영어 대/소문자와 숫자, - _ 로 구성 가능합니다.");
+                $("#user-loginid").focus();
+                $("#user-loginid").val("");
+                return;
+            } else if (checkSpace($("#user-loginid").val())) {
+                alert("아이디는 공백이 들어올 수 없습니다.");
+                $("#user-loginid").focus();
+                $("#user-loginid").val("");
+                return;
+            }
+            // 페스워드체크
+            if ($("#user-password").val() == null || $("#user-password").val() == "") {
+                alert("페스워드 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
+                $("#user-password").focus();
+                return;
+            } else if ($("#user-password").val().length > 10 || $("#user-password").val().length < 4) {
+                alert("페스워드는 4~10 글자로 맞추어주세요.  ");
+                $("#user-password").focus();
+                $("#user-password").val("");
+                return;
+            } else if (checkSpace($("#user-password").val())) {
+                alert("페스워드는 공백이 들어올 수 없습니다.");
+                $("#user-password").focus();
+                $("#user-password").val("");
+                return;
+            }
 
-            if ($("#user-loginid").val().length == 0) {
-                alert("아이디를 입력하세요");
-                return;
-            }
-            if ($("#user-password").val().length == 0) {
-                alert("암호를 입력하세요");
-                return;
-            }
             if (idcheckflag == false) {
-                alert("아이디 중복체크를 해주세요.");
+                alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
                 return;
             } else {
                 $("#user-signup-form").submit();
             }
         });
         $("#mart-login").click(function () {
-            // 아이디 중복체크 먼저 시작.
-            loginIdCheck();
             // 사업자번호 정상인지 체크만 하는 부분.
             var pBizno = $("#bizno").val(); //사업자번호
             if (!checkCorporateRegistrationNumber(pBizno.replaceAll("-", ""))) {
@@ -179,22 +185,59 @@
                 return;
             }
 
-            if ($("#mart-loginid").val().length == 0) {
-                alert("아이디를 입력하세요");
+            // 아이디 중복체크 먼저 시작.
+            loginIdCheck();
+
+            // 아이디 유효성 체크
+            if ($("#mart-loginid").val() == null || $("#mart-loginid").val() == "") {
+                alert("아이디 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
+                $("#mart-loginid").focus();
+                return;
+            } else if ($("#mart-loginid").val().length > 15 || $("#mart-loginid").val().length < 4) {
+                alert("아이디는 4~15 글자로 맞추어주세요.  ");
+                $("#mart-loginid").focus();
+                $("#mart-loginid").val("");
+                return;
+            } else if (specialCheck.test($("#mart-loginid").val())) {
+                alert("아이디는 특수문자를 포함 할 수 없습니다.");
+                $("#mart-loginid").focus();
+                $("#mart-loginid").val("");
+                return;
+            }else if(userIdCheck.test($("#mart-loginid").val())== false){
+                alert("아이디는 영어 대/소문자와 숫자, - _ 로 구성 가능합니다.");
+                $("#mart-loginid").focus();
+                $("#mart-loginid").val("");
+                return;
+            } else if (checkSpace($("#mart-loginid").val())) {
+                alert("아이디는 공백이 들어올 수 없습니다.");
+                $("#mart-loginid").focus();
+                $("#mart-loginid").val("");
                 return;
             }
-            if ($("#mart-password").val().length == 0) {
-                alert("암호를 입력하세요");
+            // 페스워드체크
+            if ($("#mart-password").val() == null || $("#mart-password").val() == "") {
+                alert("페스워드 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
+                return;
+            } else if ($("#mart-password").val().length > 10 || $("#mart-password").val().length < 4) {
+                alert("페스워드는 4~10 글자로 맞추어주세요.  ");
+                $("#mart-password").focus();
+                $("#mart-password").val("");
+                return;
+            }else if (checkSpace($("#mart-password").val())) {
+                alert("페스워드는 공백이 들어올 수 없습니다.");
+                $("#mart-password").focus();
+                $("#mart-password").val("");
                 return;
             }
             if (idcheckflag == false) {
-                alert("아이디 중복체크를 해주세요.");
+                alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
                 return;
             } else {
                 $("#mart-signup-form").submit();
             }
         });
-        $("#bizNocheck").click(function(){
+        // 사업자번호 체크
+        $("#bizNocheck").click(function () {
             // var pBizno = $("#bizno").val(); //사업자번호
             // if (!checkCorporateRegistrationNumber(pBizno.replaceAll("-", ""))) {
             //     alert("유효한 사업자번호를 입력하세요");
@@ -202,7 +245,6 @@
             //     $("#bizno").val("");
             //     return;
             // }
-
             // let rgno = pBizno.replaceAll("-", "");
             // console.log(rgno);
             // let url = "https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=";
@@ -210,11 +252,9 @@
             //     '<map id="ATTABZAA001R08"><pubcUserNo/><mobYn>N</mobYn><inqrTrgtClCd>1</inqrTrgtClCd><txprDscmNo>' +
             //     '1348157936' +
             //     '</txprDscmNo><dongCode>81</dongCode><psbSearch>Y</psbSearch><map id="userReqInfoVO"/></map>';
-
             // doPostCall(url, bodyData, {
             //     headers: {
             //         "Content-Type": "application/xml;",
-                    
             //     },
             // })
             // .success(function (json) {
@@ -223,62 +263,64 @@
             // .fail(function () {
             //     alert("사업자등록번호 조회 오류...");
             // });
-        })
-        
-        function loginIdCheck(){
-        let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val();
-            if (loginId.length == 0) {
-                alert("아이디를 입력해주세요.");
-                return;
-            }
-            console.log(loginId);
+        });
+
+        function loginIdCheck() {
+            let loginId = usermartflag ? $("#user-loginid").val() : $("#mart-loginid").val();
+            // 아이디 중복체크
             doPostCallSync("/users/checkid", {
                 loginid: loginId,
             })
-            .success(function (json) {
-                // 아이디 중복체크가 false 이면 가입이 불가능.
-                if (json.result == "success") {
-                    if (json.data.tf == false) {
-                        alert("중복되는 아이디입니다. 다른 아이디를 입력해 주세요.");
-                        idcheckflag = false;
-                        location.reload();
-                    } else {
-                        alert("사용 가능한 아이디 입니다.");
-                        idcheckflag = true;
-                        return;
+                .success(function (json) {
+                    // 아이디 중복체크가 false 이면 가입이 불가능.
+                    if (json.result == "success") {
+                        if (json.data.tf == false) {
+                            idcheckflag = false;
+                        } else {
+                            // alert("사용 가능한 아이디 입니다.");
+                            idcheckflag = true;
+                            return;
+                        }
                     }
-                }
-            })
-            .fail(function () {
-                alert("아이디 중복체크 오류...");
-            });
+                })
+                .fail(function () {
+                    alert("아이디 중복체크 오류...");
+                });
         }
-    });
 
-    // 사업자번호 체크하는 정규식.
-    function checkCorporateRegistrationNumber(value) {
-        var valueMap = value
-            .replace(/-/gi, "")
-            .split("")
-            .map(function (item) {
-                return parseInt(item, 10);
-            });
+        // 사업자번호 체크하는 정규식.
+        function checkCorporateRegistrationNumber(value) {
+            var valueMap = value
+                .replace(/-/gi, "")
+                .split("")
+                .map(function (item) {
+                    return parseInt(item, 10);
+                });
 
-        if (valueMap.length === 10) {
-            var multiply = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5);
-            var checkSum = 0;
+            if (valueMap.length === 10) {
+                var multiply = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5);
+                var checkSum = 0;
 
-            for (var i = 0; i < multiply.length; ++i) {
-                checkSum += multiply[i] * valueMap[i];
+                for (var i = 0; i < multiply.length; ++i) {
+                    checkSum += multiply[i] * valueMap[i];
+                }
+
+                checkSum += parseInt((multiply[8] * valueMap[8]) / 10, 10);
+                return Math.floor(valueMap[9]) === 10 - (checkSum % 10);
             }
 
-            checkSum += parseInt((multiply[8] * valueMap[8]) / 10, 10);
-            return Math.floor(valueMap[9]) === 10 - (checkSum % 10);
+            return false;
         }
 
-        return false;
-    }
+        // 공백문자 찾기
+        function checkSpace(str) {
+            if (str.search(/\s/) != -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-    // 아이디 중복체크 함수
-    
+
+    });
 </script>

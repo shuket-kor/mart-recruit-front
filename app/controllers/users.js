@@ -22,15 +22,9 @@ module.exports = {
         let bizno = req.body.bizno
 
         let userCreate = await userService.create(userId, password, userType, active);
-        console.log(userCreate);
-        if(userType == 'M'){
-            // console.log("마트유저면 이게 보임");
-            let seq = userCreate.insertId
-            // console.log(bizno);
-            let martCreate = await userService.martCreate(seq,bizno)
-        }
         // if(userType == 'M'){
-        //     let martCreate = await userService.create()
+        // let seq = userCreate.insertId
+        // let martCreate = await userService.martCreate(seq,bizno)
         // }
 
         // 로그인 화면으로 리다이렉트.

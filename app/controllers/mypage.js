@@ -56,11 +56,12 @@ module.exports = {
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
+        
         const userEdit = await resumeService.update(seq, subject, photo, name, contact, email,
             postCode, address, addressExtra, education, educcationSchool, carrerSeq, technical, license,
             isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary);
-
-
+        
+        res.redirect('/mypage/user/resume');
     },
 
     async edit(req, res, next){

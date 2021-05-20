@@ -82,10 +82,12 @@ module.exports = {
           // 인증용 토큰 보관
             res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
             
-            if (refer != '') 
-                res.redirect(refer);
-            else 
-            res.redirect('/users/mypage');
+            if (refer != '') {
+                // console.log("여기서 잘못되고있음");
+                // res.redirect(refer);
+                res.redirect('/');
+            }else 
+            res.redirect('/mypage/user');
         } else {
             res.redirect(`/auth/login?refer=${refer}&result=1`);
         }    

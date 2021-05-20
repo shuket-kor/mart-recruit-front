@@ -116,31 +116,31 @@ module.exports = class userService {
     }
 
     // 마트 생성
-    static async martCreate(seq, bizno) {
-        try {
-            var apiURL = "";
-            if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/mart/create";
-            else apiURL = `http://localhost:3000/api/mart/create`;
+    // static async martCreate(seq, bizno) {
+    //     try {
+    //         var apiURL = "";
+    //         if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/mart/create";
+    //         else apiURL = `http://localhost:3000/api/mart/create`;
 
-            const {body} = await got.post(apiURL, {
-                json: {
-                    userSeq: seq,
-                    regNo:bizno
-                },
-                responseType: "json",
-            });
-            // console.log(body)
-            if (body.result === "success") {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog("error", `services/martCreate: `);
-                return body.data;
-            }
-        } catch (error) {
-            logger.writeLog("error", `services/martCreate: ${error}`);
-        }
-    }
+    //         const {body} = await got.post(apiURL, {
+    //             json: {
+    //                 userSeq: seq,
+    //                 regNo:bizno
+    //             },
+    //             responseType: "json",
+    //         });
+    //         // console.log(body)
+    //         if (body.result === "success") {
+    //             return body.data;
+    //         } else {
+    //             //실패
+    //             logger.writeLog("error", `services/martCreate: `);
+    //             return body.data;
+    //         }
+    //     } catch (error) {
+    //         logger.writeLog("error", `services/martCreate: ${error}`);
+    //     }
+    // }
 
     // 
     static async checkid(userId) {
