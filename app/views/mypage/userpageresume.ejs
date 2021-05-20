@@ -40,52 +40,64 @@
                             <div class="media-body">
                                 <p class="tr-title">개인정보</p>
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        <label class="pull-left">이름</label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <label class="pull-left">이름</label>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span name="name"><%= get.NAME %></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <label class="pull-left">연락처</label>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span name="contact"><%= get.CONTACT %></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <label class="pull-left">이메일</label>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span name="email"><%= get.EMAIL %></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <label class="pull-left">성별</label>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span name="gender"><%= get.GENDER %></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <label>주소</label>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span ><%= get.ADDRESS %> <%= get.ADDRESSEXTRA %></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <span name="name"><%= get.NAME %></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label class="pull-left">연락처</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="contact"><%= get.CONTACT %></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label class="pull-left">이메일</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="email"><%= get.EMAIL %></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label class="pull-left">성별</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="gender"><%= get.GENDER %></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label>주소</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span ></span>
+                                    <div class="col-sm-3">
+                                        <div class="change-photo">
+                                            <div class="user-image">
+                                                <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                                                <!-- <img src="/assets/images/test/test1.png" alt="Image" class="img-fluid"> -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         
                         <li class="education-background code-edit-small">
-                            <div class="media-body additem-edu">
+                            <div class="media-body">
                                 <div class="tr-title">학력 사항</div>
-                                <div class="media-body additem-edu">
+                                <div class="media-body">
                                     <div class="code-edit-small">
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -107,29 +119,31 @@
                                 </div>
                             </div><!-- /.additem -->
                         </li>
-                        <!-- /.education-background -->
+                        <br>
                         <li class="qualification code-edit-small">
                             <div class="media-body">
                             <div class="tr-title">보유기술 및 자격증</div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>보유기술</label>
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>보유기술</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <span name="TECHNICAL"><%= get.TECHNICAL %></span>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <span name="TECHNICAL"><%= get.TECHNICAL %></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>자격증 </label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <span name="LICENSE"><%= get.LICENSE %></span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>자격증 </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <span name="LICENSE"><%= get.LICENSE %></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         </li>
-                        <!-- /.qualification -->
+                        <br>
                         <li class="findjob code-edit-small">
                             <div class="media-body">
                             <div class="tr-title">취업 우대사항</div>
@@ -151,45 +165,85 @@
                             </div>
                         </div>
                         </li>
-                        <li class="career-objective">
+                        <br>
+                        <li class="career-objective code-edit-small">
                             <div class="media-body">
-                                <label class="tr-title">경력 증명 서류</label>
-                                <span ><%= get.CAREERCERTIFICATE %></span>
-                            </div>
-                        </li>
-                        <li class="career-objective media">
-                            <div class="media-body">
-                                <label class="tr-title">소개</label>
-                                <span  name=""><%= get.INTRODUCE %></span>
-                            </div>
-                        </li>
-                        
-                        <li class="work-history" id="work-history">
-                            <div class="media-body">
-                                <label class="tr-title">경력</label>
-                                <div class="code-edit-small">
-                                    <label>직업</label>
-                                    <div ></div>
-                                    <label>마트 이름</label>
-                                    <div ></div>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-4">
-                                            <label>시작</label>
-                                            <div >
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <label>끝</label>
-                                            <div >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <div class="checkbox">
-                                                <label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
-                                            </div> -->
-                                        </div>
+                                <div class="tr-title">경력 증명 서류</div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>업로드 유무</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <span ><%if (get.CAREERCERTIFICATE )%> 파일업로드 완료</span>
                                     </div>
                                 </div>
+                            </div>
+                        </li>
+                        <li class="career-objective media code-edit-small">
+                            <div class="media-body">
+                                <label class="tr-title">소개</label>
+                                <span><%= get.INTRODUCE %></span>
+                            </div>
+                        </li>
+                        <br>
+                        <li class="work-history" id="work-history">
+                            <div class="media-body">
+                                <label class="tr-title">경력</label> 
+                                <% if(listCareer){ var now = new Date(); %>
+                                <% var nowYear = now.getFullYear(); %>
+                                <% var startYear = parseInt(moment(listCareer[0].WOKSTART).format('YYYY')); %>
+                                    <% if(listCareer[listCareer.length-1].WORKEND == null){ %> 
+                                        총 <%= nowYear - startYear %>
+                                    <% }else {%>
+                                        총  <% parseInt(moment(listCareer[listCareer.length-1].WORKEND).foramt('YYYY')) - startYear %>
+                                    <% }%>
+                                    년
+                                <% } %>
+                                    
+                                <table class="table table-hover" style="background-color: #eee">
+                                    <tr style="background-color: #fff">
+                                        <td>
+                                            <font size="2pt"
+                                                ><strong><center>근무기간</center></strong></font
+                                            >
+                                        </td>
+                                        <td>
+                                            <font size="2pt"
+                                                ><strong><center>마트명</center></strong></font
+                                            >
+                                        </td>
+                                        <td>
+                                            <font size="2pt"
+                                                ><strong><center>직책</center></strong></font
+                                            >
+                                        </td>
+                                        <td>
+                                            <font size="2pt"
+                                                ><strong><center>지역</center></strong></font
+                                            >
+                                        </td>
+                                        <td>
+                                            <font size="2pt"
+                                                ><strong><center>최종연봉</center></strong></font
+                                            >
+                                        </td>
+                                    </tr>
+                                    <% if(listCareer){listCareer.forEach(item => { %>
+                                        <tr>
+                                            <td><center><%= moment(item.WOKSTART).format('YYYY-MM-DD') %> ~ 
+                                            <% if(item.WORKEND != null) { %>
+                                                <%= moment(item.WORKEND).format('YYYY-MM-DD') %>
+                                            <% }else{%>
+                                                재직중
+                                            <% } %>
+                                            </center></td>
+                                            <td><center><%= item.COMPANY %></center></td>
+                                            <td><center><%= item.POSITION %></center></td>
+                                            <td><center><%= item.WORKREGION %></center></td>
+                                            <td><center><%= item.SALARY %></center></td>
+                                        </tr>
+                                        <% })} %>
+                                </table>
                             </div>
                         </li>
                         <!-- /.work-history -->

@@ -26,23 +26,18 @@
                                 <span class="tr-title">이력서</span>
                                 <div class="row">
                                     <div class="col-sm-4">
+                                        <label>제목<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="code-edit" name="subject" id="subject"><%= get.SUBJECT %></div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <div class="change-photo">
                                             <div class="user-image">
                                                 <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
                                             </div>
                                             <div class="btn btn-primary" id="imageuploadbtn">이미지 업로드</div>
-                                            <!-- <div class="upload-photo">
-                                                <label class="btn btn-primary" for="upload-photo" >사진 업로드</label>
-                                                <input type="file" id="upload-photo">
-                                                <span class="max-size">Max 20 MB</span>
-                                            </div> -->
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>제목<span class="pull-right">:</span> </label>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="code-edit" name="subject" id="subject"><%= get.SUBJECT %></div>
                                     </div>
                                 </div>
                                 
@@ -208,10 +203,6 @@
                             <div class="media-body">
                                 <span class="tr-title">4대보험 증명 서류</span>
                                 <div class="btn btn-primary" id="certificateUploadBtn">증명서 업로드</div>
-                                <!-- <div class="upload-photo">
-                                    <input type="file" id="upload-certificate">
-                                </div> -->
-                                <!-- <label class="btn btn-primary" for="upload-certificate" >업로드</label> -->
                             </div>
                         </li>
                         <li class="personal-deatils">
@@ -221,7 +212,10 @@
                             </div>
                         </li>
                         <!-- 경력 부분 체크안되면 display none  -->
-                        <!-- 디폴트 신입 , 경력 클릭시에 추가폼 생성. -->
+                        <!-- 디폴트 신입 , 경력 클릭시에 가려져있던 디브 보이게. -->
+                        <!-- 하지만 경력으로 저장된 기록이 확인되면 경력으로 바뀌고, 저장된 row 카운트만큼 폼이 생성되고 데이터가 들어가있어야한다. -->
+                        <!-- or 조회가 된다면, 경력탭에 다 기록하고 라디오 버튼 X (신입을 없애고, 경력에 값이 있으면 Career_Seq 를 3으로 전송?) -->
+
                         <div>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-primary active" id="option1">
@@ -232,7 +226,6 @@
                                 </label>
                             </div>
                         </div>
-
                         <li class="work-history" style="display: none;" id="work-history">
                             <div class="media-body additem-work">
                                 <span class="tr-title">경력</span>
@@ -257,7 +250,6 @@
                                                 <div class="calendar">
                                                     <input type="date" class="form-control" value="2016-01-13" />
                                                 </div>
-                                                <!-- calendar -->
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="checkbox">
@@ -413,9 +405,6 @@
             doPostCallSync("/mypage/user/edit/", {
                             seq: userseq,
                             subject: $("#subject").val(),
-                            // 모달을 만들어서 업로드하게할지 ???
-                            // 모달 만들어서 처리 완료. 여기서 빠져도 됨.
-                            // photo: $("#").val(),
                             name: $("#name").val(),
                             contact: $("#contact").val(),
                             email: $("#email").val(),
@@ -431,9 +420,6 @@
                             license: $("#license").val(),
                             isWelfare: $("#isWelfare").val(),
                             isMilitaly: $("#isMilitaly").val(),
-                            // 모달로 할지, 그리고 파일 업로드가되면 업로드된 파일의 DB seq 가 들어가야함.
-                            // 모달로 처리하고 업로드 완료
-                            // carrerCertificate: $("#").val(),
                             introduce: $("#introduce").val(),
                             // 1, 2, 3      ||||||||| 정규직, 계약직, 일용직
                             // 선택하는곳 만들어야함. 해결

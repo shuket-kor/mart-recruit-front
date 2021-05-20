@@ -32,13 +32,21 @@
                             <div class="title title-after">
                                 <img src="/assets/images/icons/2.png" alt="Icon" class="img-fluid">
                                 <span>내 정보</span>
+                                <% if(get.CERTIFICATE == 'Y'){ %>
+                                <div class="bg-icon bg-icon-success pull-right">
+                                    <i class="fa fa-check"> 인증완료</i>
+                                </div>
+                                <% }else { %>
+                                    <div class="bg-icon bg-icon-success pull-right">
+                                        <i class="fa fa-exit"> 인증 대기</i>
+                                    </div>
+                                <% } %>
                             </div>
 
-                            <div class="change-photo">
+                            <!-- <div class="change-photo">
                                 <div class="user-image">
-                                    <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
-                                    <!-- <img src="/assets/images/test/test1.png" alt="Image" class="img-fluid"> -->
-                                </div>
+                                    이프 이미지 겟.포토 ~~~~
+                                </div> -->
                                 <!-- <div class="upload-photo">
                                     <label class="btn btn-primary" for="upload-photo">
                                         <input type="file" id="upload-photo">
@@ -51,15 +59,46 @@
                                     <input type="file" id="upload-photo">
                                     <span class="max-size">Max 20 MB</span>
                                 </div> -->
-                            </div>
+                            <!-- </div> -->
                             
                             <ul class="tr-list account-details">
-                                <li>이름<span><%= get.NAME %></span></li>
-                                <li>주소<span><%= get.ADDRESS %> <%= get.ADDRESSEXTRA %></span></li>
-                                <li>핸드폰<span><%= get.CONTACT %></span></li>
-                                <li>이메일<span><a href="#"><%= get.EMAIL %></a></span></li>
-                                <li>직무<span><%= get.JOBKIND_NAME %></span></li>
-                                <li>4대보험 확인증<span><%= get.CERTIFICATE=='Y'? '인증 완료' : '미인증' %></span></li>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <li>이름<span><%= get.NAME %></span></li>
+                                    </div>
+                                    <div class="col-sm-4" style="text-align : center;">
+                                        <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <li>주소<span><%= get.ADDRESS %> <%= get.ADDRESSEXTRA %></span></li>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <li>핸드폰<span><%= get.CONTACT %></span></li>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <li>이메일<span><a href="#"><%= get.EMAIL %></a></span></li>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <li>직무<span><%= get.JOBKIND_NAME %></span></li>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <li>4대보험 확인증<span><%= get.CERTIFICATE=='Y'? '인증 완료' : '미인증' %></span></li>
+                                    </div>
+                                </div>
                             </ul>								
                         </div><!-- /.display-information -->
                     </div><!-- /.tab-pane -->

@@ -14,8 +14,6 @@ router.post('/usercreate', create);
 router.get('/mypage',verify,  mypage);
 
 // 로그인 페이지
-// router.get('/login', login);
-// router.post('/login', loginProcess);
 
 // router.get('/logout', logout)
 router.get('/userlist', list);

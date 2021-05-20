@@ -118,5 +118,20 @@ module.exports = class resumeService {
         }
     }  
     
-    
+    static async listCareer(resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listCareer`;
+            const { body } = await got.post(apiURL, { json: { resumeSeq: resumeSeq },responseType: "json" });
+            if (body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `services/resumeService/getCareer: ${body.result}`);
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/resumeService/getCareer: ${error}`);
+            return null;
+        }
+    }
 };

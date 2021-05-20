@@ -7,7 +7,6 @@ module.exports = {
     async userpage(req, res, next) {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        console.log(req.user.Seq);
         const get = await resumeService.get(user_seq);
 
         res.render('mypage/userpage', {
@@ -68,14 +67,17 @@ module.exports = {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
         const getByUserSeq = await resumeService.get(user_seq);
-
+        let resumeSeq = getByUserSeq.SEQ;
+        const listCareer = await resumeService.listCareer(resumeSeq);
         res.render('mypage/userpageresumeedit', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
             get: getByUserSeq,
             moment: moment,
-            hostName: process.env.APIHOST
+            hostName: process.env.APIHOST,
+            listCareer: listCareer
+            
         })
     },
 
@@ -83,9 +85,6 @@ module.exports = {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
-        console.log(SEQ);
-        console.log(location);
-        console.log(RESUMEFILE);
         const returnData = await resumeService.updateImage(req.cookies.xToken, SEQ, RESUMEFILE);
 
         res.json({
@@ -97,9 +96,6 @@ module.exports = {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
-        console.log(SEQ);
-        console.log("로케이션 " +location);
-        console.log("래줌 " + RESUMEFILE);
         const returnData = await resumeService.updatecertificate(req.cookies.xToken, SEQ, RESUMEFILE);
 
         res.json({
@@ -113,15 +109,16 @@ module.exports = {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
         const get = await resumeService.get(user_seq);
-        
-        console.log(get)
+        let resumeSeq = get.SEQ;
+        const listCareer = await resumeService.listCareer(resumeSeq);
         res.render('mypage/userpageresume', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
             get: get,
             moment: moment,
-            hostName: process.env.APIHOST
+            hostName: process.env.APIHOST,
+            listCareer: listCareer
         })
     },
 
