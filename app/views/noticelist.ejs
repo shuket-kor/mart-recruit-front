@@ -1,136 +1,69 @@
-<%- contentFor('style') %>
-
-
-<%- contentFor('header') %>
-<header class="tr-header">
-    <img src="images/ico/logo1.png" style="display: none;">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"><i class="fa fa-align-justify"></i></span>
-                </button>
-                <a class="navbar-brand" href="/"><img class="img-fluid" src="assets/images/martlogo.png" style="margin-bottom: 30px" alt="Logo" /></a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="nav navbar-nav">
-                    <li class="tr-dropdown active"><a href="user">홈</a></li>
-                    <li><a href="locationlist">지역별</a></li>
-                    <li><a href="joblist">직종별</a></li>
-                    <!-- <li class="tr-dropdown">
-                        <a href="#">기타</a>
-                        <ul class="tr-dropdown-menu tr-list fadeInUp" role="menu">
-                            <li>
-                                <a href="employee-profile.html">구직자 프로필</a>
-                            </li>
-                            <li>
-                                <a href="employer-profile.html">고용주 프로필</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                </ul>
-            </div>
-
-            <div class="navbar-right">
-                <ul class="sign-in tr-list">
-                    <li><i class="fa fa-user"></i></li>
-                    <li><a href="logout">로그아웃</a></li>
-                    <li><a href="mypage">마이 페이지</a></li>
-                </ul>
-            </div>
-            <!-- /.nav-right -->
-        </div>
-        <!-- /.container -->
-    </nav>
-    <!-- /.navbar -->
-</header>
-<!-- /.tr-header -->
-
 <%- contentFor('title') %>
 
+<%- contentFor('style') %>
+
 <%- contentFor('content') %>
+    <div class="tr-breadcrumb bg-image section-before"><!-- 상단 배너 예시 -->
+        <div class="container">
+            <div class="breadcrumb-info text-center">
+                <div class="breadcrumb-logo">
+                </div>
+                <div class="page-title">
+                    <h1></h1>
+                </div>		
+                <ul class="job-meta tr-list list-inline">
+                </ul>
+                <ul class="breadcrumb-social social-icon-bg  tr-list">
+                </ul>			
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /.tr-breadcrumb -->
 
-<div class="tr-profile section-padding">
-    <div class="container">
 
-        <div class="panel">
-            <div class="row">
-                <div class="col-md-9 col-lg-12">
-                    <div class="tab-pane open-role" id="open-role">
 
-                        <h1 style="text-align: center; margin:0">공지 사항</h1>
-                        <div class="accordion" id="accordionExample">
-                            <% list.forEach(item => {%>
+    <div class="tr-profile section-padding" >
+        <div class="container">
+            <div class="all-view" style="padding:15px 0;">
+                <div class="container">
+                    <div class="section-title">
+                        <h1>공지사항</h1>
+                    </div><!-- /.section-title -->
+                    <div class="section">
+                        <% if(list){list.forEach(item => {%>
+                        <ul class="tr-list resume-info" style="padding-bottom: 35px !important;">
+                            <li class="career-objective media" >
+                                <div class="icon">
+                                    <i class="fa fa-black-tie" aria-hidden="true"></i>
+                                </div>  <!-- /.icon -->
+                                
+                                <div class="media-body">
+                                    <span class="tr-title" style="margin-bottom: 35px !important;"><%=item.SUBJECT %></span>
+                                    <p><%- item.CONTENT %></p> <br>
+                                    <p>작성일 : <%= moment(item.CREATED).format('YYYY-MM-DD HH:mm:ss') %></p>
+                                </div><!-- /.media-body -->
+                            </li><!-- /.career-objective -->                                                   
+                        </ul>
+                        <% })} %>					
+                    </div><!-- /.section -->
+                </div><!-- /.container -->
+            </div><!-- /.all-view -->
 
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left collapsed" type="button"  data-toggle="collapse"  data-target="#collapse_<%=item.SEQ %>"  aria-controls="collapse_<%=item.SEQ %>">
-                                            <%=item.SUBJECT %>
-                                        </button>
-                                        </h2>
-                                    </div><!-- card-header #headingOne -->
-                                    
-                                    <div id="collapse_<%=item.SEQ %>" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <p>제목 : <br /> <%=item.SUBJECT %></p>
-                                            <div id="content-text">내용 : <br /> <%- item.CONTENT %></div>
-                                            <p>작성일 : <%= moment(item.CREATED).format('YYYY-MM-DD hh:mm:ss') %></p>
-                                        </div><!-- card-body -->
-                                    </div><!-- .collapse -->
-                                </div><!-- card -->
 
-                        <% }) %>
-                    </div><!-- accordion -->
-
-                    </div><!--tab-pane open-role-->
-                </div><!--col-md-9-->
-            </div><!--row-->
-        </div><!--panel-->
-        <!-- 페이지 네이션 -->
-        <div class="panel" style="margin-top: 50px;">
-            <div class="row" style="width: 100%;">
-                <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
-                    <ul class="pagination justify-content-center" id="notice-page"></ul>
-                </nav>
-            </div><!--row-->
-        </div>
-    
+            <!-- 페이지 네이션 -->
+            <div class="panel">
+                <div class="row" style="width: 100%;">
+                    <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
+                        <ul class="pagination justify-content-center" id="notice-page"></ul>
+                    </nav>
+                </div><!--row-->
+            </div><!-- /.panel -->
         
-    </div><!--container-->
-</div><!--tr-profile-->
+        </div><!-- /.container -->
+    </div><!-- /.tr-profile section-padding -->
 
 
 <%- contentFor('footer') %>
-      <div class="footer">
-          <div class="footer-top" style="padding: 40px 0">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-sm-3 center-block">
-                          <img src="assets/images/others/ft_logo.png" style="padding-top: 15%" />
-                      </div>
-                      <!-- /.col-sm-3 -->
-                      <div class="col-sm-9">
-                          <div class="footer-widget">
-                              <ul class="tr-list" style="font-size: 12px; padding-left: 5%">
-                                  <li>개인정보처리방침 협회소개 서비스이용약관</li>
-                                  <li>사단법인 한국마트협회 | 서울시 강서구 발산로40 식품종합상가 3층(외발산동, 강서농산물시장)</li>
-                                  <li>TEL: 02-305-6100, 6110 | FAX: 02-2640-6400 | email : koreamart6100@gmail.com | 회장 : 김성민</li>
-                                  <li>COPYRIGHT by 사단법인 한국마트협회. ALL RIGHTS RESERVED.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- /.row -->
-              </div>
-              <!-- /.container -->
-          </div>
-          <!-- /.footer-top -->
-      </div>
-      <!-- /.footer -->
-      
+
       
 <%- contentFor('script') %>
 <script>
@@ -144,14 +77,6 @@
         } else {
             createPagination('notice-page', totalCount, rowCount, page, 5, `/notice/list?`);
         }
-        
-        // collapse open
-        // $('.collapse').collapse('show');
-	    
-        // collapse 한개씩만 열도록 하기
-        //  $(".collapsed").click(function () {
-        //     $(".collapse").collapse('hide');
-        // }); 
 
         
     });

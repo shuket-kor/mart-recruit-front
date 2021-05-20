@@ -175,7 +175,7 @@
                                 <td>경력 <%=item.CAREER_NAME %><br>학력 <%=item.EDUCATION %></td>
                                 <td><%=item.WORKINGTYPE_NAME %><br><small><%=item.SALARYTYPE %> <%=item.SALARY %></small></td>
                                 <td><%=item.WORKREGION_NAME %></td>
-                                <td><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %><br><small><%=moment(item.STARTDATE).format('YY.MM.DD') %> 등록</small></td>
+                                <td><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %><br><small><%=moment(item.CREATED).format('YY.MM.DD') %> 등록</small></td>
                             </tr>
                 
                             <% })

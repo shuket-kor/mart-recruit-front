@@ -327,7 +327,7 @@ select:focus,
 
 .tr-breadcrumb {
     color: #fff;
-    padding: 90px 0;
+    padding: 40px 0;
     overflow: hidden;
     background-image: url(../images/bg/banner.jpg);
 }
@@ -3112,7 +3112,7 @@ select:focus,
 }
 
 .found-info h1 {
-    color: #008def;
+    color: #e0a800;
     font-size: 110px;
     margin-bottom: 0;
 }

@@ -1,0 +1,98 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/mart.css">
+
+<%- contentFor('content') %>
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="breadcrumb-logo">
+                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
+            </div>
+            <div class="page-title">
+                <h1><%=martInfo.NAME %></h1>
+            </div>		
+            <ul class="job-meta tr-list list-inline">
+                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=martInfo.POSTCODE %>) <%=martInfo.ADDRESS %> <%=martInfo.ADDRESSEXTRA %></li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i><%=martInfo.CONTACT %></li>
+            </ul>
+        </div>
+    </div><!-- /.container -->
+</div><!-- /.tr-breadcrumb -->	
+
+<div class="all-view section-padding">
+    <div class="container">
+        <div class="section" style="padding-top: 0px !important;">
+            <div id="tab_main" class="tab_main">
+                <ul class="tabListBar" data-fixed="fixed">
+                    <li class="">
+                        <a type="button" class="inTab" onclick=""><span>구인 중 (<%=(activeInfo) ? activeInfo.ACTIVE : '0' %>)</span></a>
+                    </li>
+                    <li class="">
+                        <a type="button" class="inTab" onclick=""><span>마감 (<%=(activeInfo) ? activeInfo.INACTIVE : '0' %>)</span></a>
+                    </li>
+                    <li class="select">
+                        <a type="button" class="inTab" onclick=""><span>전체 (<%=(activeInfo) ? activeInfo.ACTIVE * 1.0 + activeInfo.INACTIVE * 1.0 : '0' %>)</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="recruit-list">
+                <ul>
+                    <% if (list) {
+                        list.forEach(item => { %>
+                            <li class="recruit-list-row">
+                            <div class="info_recruit">
+                                <a href="/zf_user/applicant/manage?rec_idx=40230355#rec_idx=40230355&amp;action_code=LIST_APPLICANT&amp;hiring_process_idx=0" class="title">
+                                    <%=item.SUBJECT %>
+                                </a>
+                                <div class="date">
+                                    <dl>
+                                        <dd><%=moment(item.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(item.ENDDATE) ? moment(item.ENDDATE).format('YYYY.MM.DD') : '채용시까지' %></dd>
+                                        <dd><%=moment(item.MODIFIED).format('YYYY.MM.DD') %>  수정</dd>
+                                        <dd><%=item.CHARGE %></dd>
+                                    </dl>
+                                </div>
+                                <div class="area_status">
+                                    <div class="box_status">
+                                        <strong class="txt_status point_color"><%=(item.ACTIVE == 'Y') ? '진행 중' : '마감' %></strong>
+                                        <div class="area_link">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm">복사</button>
+                                            <button type="button" class="btn btn-warning btn-sm">마감</button>
+                                        </div>
+                                    </div>
+                                <div class="status_type">
+                                    지원 <%=item.APPLYCOUNT %>
+                                    열람 <%=item.VIEWCOUNT %>
+                                    미열람 <%=(item.APPLYCOUNT * 1.0 - item.VIEWCOUNT * 1.0) %>
+                                </div>
+                            </div>
+                        </li>                                            
+                        <%})
+                    } %>
+                </ul>
+            
+                <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
+                    <ul class="pagination justify-content-center" id="recruit-page"></ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>	
+</div>
+
+<%- contentFor('script') %>
+<script>
+let totalCount =<%=totalCount %>; 
+let page = <%=page %>;
+let rowCount = <%=rowCount %>;
+
+$(document).ready(function() {
+    // 페이저 만들기
+    if (totalCount <= rowCount) {
+        $('#recruit-page').hide();
+    } else {
+        createPagination('recruit-page', totalCount, rowCount, page, 10, `/mart/recruit`);
+    }
+})
+
+</script>

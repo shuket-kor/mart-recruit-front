@@ -115,6 +115,36 @@ module.exports = class recruitService {
             return null;
         }
     }  
+    static async listByMart(token, martSeq, page, rowCount) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/list`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    martSeq: martSeq,
+                    page: page,
+                    rowCount: rowCount,
+                    key: secretKey
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/listByMart: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/listByMart: ${error}`);
+            return null;
+        }
+    }  
     static async getUserStatus(token, recruitSeq, userSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/getUserStatus`;

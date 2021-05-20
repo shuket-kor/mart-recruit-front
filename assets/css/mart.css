@@ -1,0 +1,220 @@
+
+.tab_main .tabListBar {
+    background-color: #f2f6f9;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+.tab_main {
+    width: 100%;
+    height: 61px;
+}
+
+.tab_main .tabListBar>li {
+    width: 33.3%;
+}
+
+.tabListBar>li {
+    float: left;
+    position: relative;
+    width: 20%;
+    height: 60px;
+    box-sizing: border-box;
+    color: #222;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.tabListBar>li .inTab {
+    display: block;
+    position: relative;
+    padding: 19px 30px 17px;
+    width: 100%;
+    height: 60px;
+    box-sizing: border-box;
+    color: #444;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.tabListBar>li.select {
+    position: relative;
+    z-index: 1;
+    border-bottom: 2px solid #2365f2;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.tabListBar>li.select .inTab {
+    color: #2365f2;
+}
+
+.recruit-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.recruit-list {
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 15%);
+}
+
+.recruit-list-row {
+    position: relative;
+    padding: 20px 20px 34px 20px;
+    border-bottom: 1px solid #ebebeb;
+    box-sizing: border-box;
+    display: block;
+}
+
+.recruit-list .row .badge_status {
+    position: absolute;
+    top: 32px;
+    left: 30px;
+    padding: 4px 10px;
+    width: 78px;
+    height: 28px;
+    border: 1px solid #d9d9d9;
+    border-radius: 14px;
+    box-sizing: border-box;
+    color: #555;
+    font-size: 12px;
+    letter-spacing: -1px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.recruit-list .info_recruit {
+    padding-bottom: 28px;
+    min-height: 95px;
+}
+
+.area_message {
+    clear: both;
+    width: 100%;
+    min-height: 45px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+}
+
+.recruit-list .info_recruit .title {
+    display: inline-block;
+    max-width: 60%;
+    color: #222;
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 28px;
+}
+
+.recruit-list .info_recruit .date {
+    overflow: hidden;
+    margin-top: 10px;
+    max-width: 60%;
+    color: #666;
+    font-size: 14px;
+    letter-spacing: -0.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.info_recruit .area_status {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    min-width: 290px;
+    text-align: right;
+}
+
+.recruit-list .info_recruit .date>dl>dd {
+    display: inline-block;
+    position: relative;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+.info_recruit .area_status .box_status {
+    position: relative;
+    height: 35px;
+    text-align: right;
+}
+
+.info_recruit .area_status .box_status .area_link {
+    padding-right: 12px;
+}
+
+.info_recruit .area_status .box_status .area_link .link_status {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 17px;
+    color: #666;
+    letter-spacing: -1px;
+    vertical-align: top;
+}
+
+.info_recruit .area_status .status_type {
+    display: inline-block;
+    padding: 11px 14px;
+    width: 294px;
+    height: 62px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #888;
+    font-size: 14px;
+    letter-spacing: -1px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.info_recruit .area_status .status_type a.division, .info_recruit .area_status .status_type span.division {
+    float: left;
+    display: inline-block;
+    color: #222;
+    font-size: 14px;
+    letter-spacing: -1px;
+    line-height: 17px;
+    text-align: center;
+}
+
+.info_recruit .area_status .txt_status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #888;
+    font-size: 15px;
+    letter-spacing: -1px;
+    line-height: 19px;
+}
+
+.info_recruit .area_status .box_status .area_link .link_status:after {
+    display: inline-block;
+    margin: 4px 3px 0 9px;
+    width: 1px;
+    height: 12px;
+    background: #ddd;
+    vertical-align: top;
+    content: "";
+}
+
+.info_recruit .date>dl>dd:after {
+    display: inline-block;
+    margin: 0 4px 0 8px;
+    width: 1px;
+    height: 10px;
+    background-color: #ccc;
+    content: "";
+}
+
+.info_recruit .date>dl>dd:last-child:after {
+    display: none;
+}
+
