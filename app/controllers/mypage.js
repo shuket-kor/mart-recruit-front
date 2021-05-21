@@ -3,7 +3,7 @@ const resumeService = require('../services/resume.js');
 const moment = require('moment');
 module.exports = {
     
-    // 유저 페이지
+    // 유저 정보 페이지
     async userpage(req, res, next) {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
@@ -18,9 +18,6 @@ module.exports = {
             hostName: process.env.APIHOST
         });
     },
-    async userCreate(req, res, next){
-        
-    },
 
     async create(req, res, next){
         let title = '마이 페이지';
@@ -32,6 +29,7 @@ module.exports = {
         })
     },
 
+    // POST 로 이력서 수정
     async userEdit(req, res, next){
         let seq = req.body.seq
         let subject = req.body.subject;
@@ -66,7 +64,7 @@ module.exports = {
     async edit(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        const getByUserSeq = await resumeService.get(user_seq);
+        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
         let resumeSeq = getByUserSeq.SEQ;
         const listCareer = await resumeService.listCareer(resumeSeq);
         let careerCnt = listCareer.length;
@@ -83,6 +81,7 @@ module.exports = {
         })
     },
 
+    // 이력서 수정 > 사진 업로드 모달에서 사진 업로드
     async updateImage(req, res, next){
         const SEQ = req.body.SEQ;
         const location = req.body.location;
@@ -94,6 +93,7 @@ module.exports = {
             data: returnData
         });
     },
+    // 이력서 수정 > 증명서 업로드 모달에서 증명서 업로드
     async updatecertificate(req, res, next){
         const SEQ = req.body.SEQ;
         const location = req.body.location;

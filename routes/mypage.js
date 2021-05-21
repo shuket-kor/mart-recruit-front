@@ -2,14 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { martpage, userpage, create, edit, userCreate, userEdit, resumegetByUserSeq,support, bookmark, remove, updateImage, updatecertificate} = require('../app/controllers/mypage.js');
+const { martpage, userpage,  edit, userEdit, resumegetByUserSeq,support, bookmark, remove, updateImage, updatecertificate} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
 router.get('/user', verify, userpage);
-
-// 이력서 생성 table RESUME 
-router.get('/user/create', verify, create);
-router.post('/user/create', verify, userCreate);
 
 // 이력서 수정
 router.get('/user/edit', verify, edit);
