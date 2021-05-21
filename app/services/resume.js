@@ -3,6 +3,22 @@ const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
 
 module.exports = class resumeService {
+    static async get(seq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/get`;
+            const { body } = await got.post(apiURL, { json: { seq: seq },responseType: "json" });
+            if (body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `services/resumeService/get: ${body.result}`);
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/resumeService/get: ${error}`);
+            return null;
+        }
+    }
     static async getByUserSeq(user_seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/getByUserSeq`;
@@ -162,4 +178,30 @@ module.exports = class resumeService {
             logger.writeLog('error', `services/resumeService/listForRecruit: ${error}`);
         }
     } 
+    static async increaseViewCount(seq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/increaseView`;
+
+            const {body} = got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    seq: seq,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService/increaseViewCount: 이력서 뷰 카운트 증가 실패 SEQ: ${SEQ}`);
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/increaseViewCount: ${error}`);
+        }
+    }  
+
 };
