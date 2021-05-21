@@ -19,19 +19,27 @@
     </div><!-- /.container -->
 </div><!-- /.tr-breadcrumb -->	
 
-<div class="all-view section-padding">
+<div class="all-view section-padding" style="padding-top: 20px;">
     <div class="container">
+        <div class="row" style="padding-bottom: 20px;">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary pull-right" id="create">새 공고 등록</button>
+            </div>
+        </div>
         <div class="section" style="padding-top: 0px !important;">
             <div id="tab_main" class="tab_main">
                 <ul class="tabListBar" data-fixed="fixed">
-                    <li class="">
-                        <a type="button" class="inTab" onclick=""><span>구인 중 (<%=(activeInfo) ? activeInfo.ACTIVE : '0' %>)</span></a>
+                    <li class="<%=(active == 'Y') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruit?active=Y"><span>진행 중 (<%=(activeInfo) ? activeInfo.ACTIVE : '0' %>)</span></a>
                     </li>
-                    <li class="">
-                        <a type="button" class="inTab" onclick=""><span>마감 (<%=(activeInfo) ? activeInfo.INACTIVE : '0' %>)</span></a>
+                    <li class="<%=(active == 'W') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruit?active=W"><span>대기 (<%=(activeInfo) ? activeInfo.WAIT : '0' %>)</span></a>
                     </li>
-                    <li class="select">
-                        <a type="button" class="inTab" onclick=""><span>전체 (<%=(activeInfo) ? activeInfo.ACTIVE * 1.0 + activeInfo.INACTIVE * 1.0 : '0' %>)</span></a>
+                    <li class="<%=(active == 'N') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruit?active=N"><span>마감 (<%=(activeInfo) ? activeInfo.INACTIVE : '0' %>)</span></a>
+                    </li>
+                    <li class="<%=(!active) ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruit"><span>전체 (<%=(activeInfo) ? activeInfo.ACTIVE * 1.0 + activeInfo.INACTIVE * 1.0 + activeInfo.WAIT * 1.0: '0' %>)</span></a>
                     </li>
                 </ul>
             </div>
@@ -40,8 +48,8 @@
                     <% if (list) {
                         list.forEach(item => { %>
                             <li class="recruit-list-row">
-                            <div class="info_recruit">
-                                <a href="/zf_user/applicant/manage?rec_idx=40230355#rec_idx=40230355&amp;action_code=LIST_APPLICANT&amp;hiring_process_idx=0" class="title">
+                            <div class="info-recruit">
+                                <a href="/mart/recruitResume?seq=<%=item.SEQ %>&page=<%=page %>" class="title <%=(item.ACTIVE == 'Y') ? 'text-info' : 'text-secondary' %>">                                    
                                     <%=item.SUBJECT %>
                                 </a>
                                 <div class="date">
@@ -51,22 +59,24 @@
                                         <dd><%=item.CHARGE %></dd>
                                     </dl>
                                 </div>
-                                <div class="area_status">
-                                    <div class="box_status">
-                                        <strong class="txt_status point_color"><%=(item.ACTIVE == 'Y') ? '진행 중' : '마감' %></strong>
-                                        <div class="area_link">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-sm">복사</button>
-                                            <button type="button" class="btn btn-warning btn-sm">마감</button>
+                                <div class="area-status">
+                                    <div class="box-status">
+                                        <strong class="text-status point_color"><%=(item.ACTIVE == 'Y') ? '진행 중' : (item.ACTIVE == 'W') ? '진행 대기 중' : '마감된 공고' %></strong>
+                                        <div class="area-link">
+                                            <%-(item.ACTIVE == 'W') ? `<button type="button" class="btn btn-outline-primary btn-sm" onclick="active(${item.SEQ})">진행 시작</button>` : '' %>                                            
+                                            <%-(item.ACTIVE == 'Y' || item.ACTIVE == 'W') ? `<button type="button" class="btn btn-outline-secondary btn-sm" onclick="edit(${item.SEQ})">수정</button>` : '' %>                                            
+                                            <button type="button" class="btn btn-dark btn-sm" onclick="copyRecruit(<%=item.SEQ %>)">복사</button>
+                                            <%-(item.ACTIVE == 'Y') ? `<button type="button" class="btn btn-warning btn-sm" onclick="closeRecruit(${item.SEQ})">마감</button>` : '' %>
                                         </div>
                                     </div>
-                                <div class="status_type">
-                                    지원 <%=item.APPLYCOUNT %>
-                                    열람 <%=item.VIEWCOUNT %>
-                                    미열람 <%=(item.APPLYCOUNT * 1.0 - item.VIEWCOUNT * 1.0) %>
+                                    <div class="status-type">
+                                        <% let unreadCount = item.APPLYCOUNT * 1.0 - item.VIEWCOUNT * 1.0; %>
+                                        <span class="m-r-10">지원 <%=item.APPLYCOUNT %></span>
+                                        <span class="m-r-10">열람 <%=item.VIEWCOUNT %></span>
+                                        미열람 <%-(unreadCount > 0) ? `<span class="unread">${unreadCount}</span>` : unreadCount %>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>                                            
+                            </li>                                            
                         <%})
                     } %>
                 </ul>
@@ -93,6 +103,60 @@ $(document).ready(function() {
     } else {
         createPagination('recruit-page', totalCount, rowCount, page, 10, `/mart/recruit`);
     }
+    $("#create").click(function() {
+        self.location = "/mart/recruitCreate";
+    });
 })
+
+let edit = function(seq) {
+    self.location = `/mart/recruitEdit?seq=${seq}&page=${page}`;
+}
+
+let closeRecruit = function(seq) {
+    if (confirm("공고를 마감합니다. 마감된 공고는 재개할 수 없으며, 복사를 통해 다시 게시할 수 있습니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/close?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+let copyRecruit = function(seq) {
+    if (confirm("공고를 복사합니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/copy?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location = `/mart/recruitEdit?seq=${json.data}&page=${page}`;
+            else
+                alert("공고를 복사하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 복사하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+
+let active = function(seq) {
+    if (confirm("공고를 진행합니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/active?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("공고를 시작하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 시작하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
 
 </script>

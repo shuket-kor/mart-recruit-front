@@ -134,4 +134,32 @@ module.exports = class resumeService {
             return null;
         }
     }
+
+    static async listForRecruit(token, recruitSeq, step) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listForRecruit`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json : {
+                    recruitSeq: recruitSeq,
+                    step: step
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService/listForRecruit: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/listForRecruit: ${error}`);
+        }
+    } 
 };

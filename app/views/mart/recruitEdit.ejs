@@ -1,0 +1,553 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/mart.css">
+<link href="/plugins/summernote-0.8.18-dist/summernote.min.css" rel="stylesheet" />
+
+<%- contentFor('content') %>
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="breadcrumb-logo">
+                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
+            </div>
+            <div class="page-title">
+                <h1><%=martInfo.NAME %></h1>
+            </div>		
+            <ul class="job-meta tr-list list-inline">
+                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=martInfo.POSTCODE %>) <%=martInfo.ADDRESS %> <%=martInfo.ADDRESSEXTRA %></li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i><%=martInfo.CONTACT %></li>
+            </ul>
+        </div>
+    </div><!-- /.container -->
+</div><!-- /.tr-breadcrumb -->	
+
+<form name="recruit" id="recruit" action="/mart/recruitProcess" method="POST">
+<input type="hidden" name="workType" id="workType" value="CREATE">
+<input type="hidden" name="SEQ" id="SEQ">
+<input type="hidden" name="MART_SEQ" id="MART_SEQ" value="<%=martInfo.SEQ %>">
+<div class="all-view section-padding">
+    <div class="container">
+        <div class="section edit-recruit">
+            <h4>인사 담당자 정보를 확인하세요</h4>
+            <hr>
+            <div class="form-group row item">
+                <label for="HRONAME" class="col-sm-2 col-form-label title">담당자 <em class="required">필수</em></label>
+                <div class="col-sm-4 data"><input type="text" class="form-control" id="HRONAME" name="HRONAME" placeholder="담당자 이름을 입력하세요" required><span class="validate-message" for="HRONAME">담당자 이름이 입력되지 않았습니다</span></div>
+            </div>
+            <div class="form-group row item">
+                <label for="HROCONTACT" class="col-sm-2 col-form-label title">연락처 <em class="required">필수</em></label>
+                <div class="col-sm-4 data"><input type="text" class="form-control" id="HROCONTACT" name="HROCONTACT" placeholder="담당자 연락처를 입력하세요" required><span class="validate-message" for="HROCONTACT">담당자 연락처가 입력되지 않았습니다</span></div>
+            </div>
+            <div class="form-group row item">
+                <label for="HROEMAIL" class="col-sm-2 col-form-label title">이메일 </label>
+                <div class="col-sm-4 data"><input type="text" class="form-control" id="HROEMAIL" name="HROEMAIL"></div>
+            </div>
+        </div>
+
+        <div class="section edit-recruit">
+            <% if (recruitInfo) { %>
+            <div class="row">
+                <div class="col-sm-8"><h3><%-(recruitInfo.ACTIVE == 'Y') ? `<span class="badge badge-success">진행 중</span>` : `<span class="badge badge-secondary">마감</span>` %>
+                    <%=recruitInfo.SUBJECT %></h3></div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-outline-dark pull-right m-r-10 gotoList">목록으로 돌아가기</button>
+                    <button type="button" class="btn btn-warning pull-right m-r-10" onclick="closeRecruit(<%=recruitInfo.SEQ %>)">마감</button>
+                    <button type="button" class="btn btn-dark pull-right m-r-10" onclick="copyRecruit(<%=recruitInfo.SEQ %>)">복사</button>
+                </div>
+            </div>
+            <% } else { %>  
+                <h4>공고 내용을 가급적 상세하게 입력하세요</h4>
+            <% } %>
+            <hr>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">공고 제목 <em class="required">필수</em></label>
+                <div class="col-sm-10 data"><input type="text" class="form-control" id="SUBJECT" name="SUBJECT" placeholder="공고 제목을 입력하세요" required><span class="validate-message" for="SUBJECT">공고 제목이 입력되지 않았습니다</span></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">직종 <em class="required">필수</em></label>
+                <div class="col-sm-10 data p-t-10">
+                    <a id="JOBKIND"></a>
+                    <% if (jobKindList) {
+                        jobKindList.forEach(item => {%>
+                            <div class="form-check mb-2 mr-sm-2 pull-left">
+                                <input name="JOBKIND" value="<%=item.SEQ %>" id="jobKind_<%=item.SEQ %>" type="checkbox" class="jobKind m-r-5">
+                                <label class="form-check-label" for="jobKind_<%=item.SEQ %>">
+                                    <%=item.NAME %>
+                                </label>
+                            </div>
+                    <%}) } %>
+                    <div class="clearfix validate-message" for="JOBKIND">대상 직종은 한 개 이상 선택해야만 합니다</div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">경력</label>
+                <div class="col-sm-2 data">
+                    <select class="form-control" id="CAREER" name="CAREER">
+                        <option value="1">무관</option>
+                        <option value="2">신입</option>
+                        <option value="3">경력</option>
+                    </select>                    
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">담당업무 <em class="required">필수</em></label>
+                <div class="col-sm-10 data"><input type="text" class="form-control" id="CHARGE" name="CHARGE" placeholder="담당 업무를 입력하세요" required><span class="validate-message" for="CHARGE">담당해야 할 업무를 구체적으로 적어 주세요</span></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">직급/직책 </label>
+                <div class="col-sm-10 data">
+                    <% let jobRank = ['사원', '주임', '계장', '대리', '과장', '차장', '부장', '이사', '전무', '부사장', '임원', '면접 후 결정']; %>
+                    <% jobRank.forEach((item, index) => { %>
+                        <div class="form-check mb-2 mr-sm-2 pull-left">
+                            <input name="JOBRANK" value="<%=item %>" id="jobRank_<%=index %>" type="checkbox" class="jobKind m-r-5">
+                            <label class="form-check-label" for="jobRank_<%=index %>">
+                                <%=item %>
+                            </label>
+                        </div>
+                    <%}); %>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">필수우대조건</label>
+                <div class="col-sm-10 data"><input type="text" class="form-control" id="PREFERENTIAL" name="PREFERENTIAL" placeholder="필수 우대 조건을 입력하세요. 예)보훈대상자,운전면허대형소지자" ></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">학력</label>
+                <div class="col-sm-3 data">
+                    <select class="form-control" id="EDUCATION" name="EDUCATION">
+                        <option value="무관">무관</option>
+                        <option value="고등학교 졸업">고등학교 졸업</option>
+                        <option value="대학(2,3년) 졸업">대학(2,3년) 졸업</option>
+                        <option value="대학교 졸업 이상">대학교 졸업 이상</option>
+                    </select>                    
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">급여 <em class="required">필수</em></label>
+                <div class="col-sm-2 data">
+                    <select class="form-control" id="SALARYTYPE" name="SALARYTYPE">
+                        <option value="연봉">연봉</option>
+                        <option value="월급">월급</option>
+                        <option value="일급">일급</option>
+                        <option value="시급">시급</option>
+                        <option value="면접 후 결정">면접 후 결정</option>
+                    </select>                    
+                </div>
+                <div class="col-sm-4 data">
+                    <select class="form-control" id="SALARY_YEAR" name="SALARY_YEAR">
+                        <option value="1,400 이하">1,400 이하</option>
+                        <option value="1,400~1,600">1,400~1,600</option>
+                        <option value="1,600~1,800">1,600~1,800</option>
+                        <option value="1,800~2,000">1,800~2,000</option>
+                        <option value="2,000~2,200">2,000~2,200</option>
+                        <option value="2,200~2,400">2,200~2,400</option>
+                        <option value="2,400~2,600">2,400~2,600</option>
+                        <option value="2,600~2,800">2,600~2,800</option>
+                        <option value="2,800~3,000">2,800~3,000</option>
+                        <option value="3,000~3,200">3,000~3,200</option>
+                        <option value="3,200~3,400">3,200~3,400</option>
+                        <option value="3,400~3,600">3,400~3,600</option>
+                        <option value="3,600~3,800">3,600~3,800</option>
+                        <option value="3,800~4,000">3,800~4,000</option>
+                        <option value="4,000~5,000">4,000~5,000</option>
+                        <option value="5,000~6,000">5,000~6,000</option>
+                        <option value="6,000~7,000">6,000~7,000</option>
+                        <option value="7,000~8,000">7,000~8,000</option>
+                        <option value="8,000~9,000">8,000~9,000</option>
+                        <option value="9,000~1억원">9,000~1억원</option>
+                        <option value="1억원 이상">1억원 이상</option>
+                        <option value="면접 후 결정">면접 후 결정</option>
+                        <option value="회사 내규에 따름">회사 내규에 따름</option>
+                    </select>
+                    <input type="text" class="form-control" id="SALARY_OTHER" name="SALARY_OTHER" required>
+                    <div class="clearfix validate-message" for="SALARY_OTHER">연봉이 아닐 경우 지급할 급여를 대략적으로 입력하세요</div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">근무 형태 <em class="required">필수</em></label>
+                <div class="col-sm-10 data p-t-10">
+                    <a id="WORKINGTYPE"></a>
+                    <% if (workingTypeList) {
+                        workingTypeList.forEach(item => {%>
+                            <div class="form-check mb-2 mr-sm-2 pull-left">
+                                <input name="WORKINGTYPE" value="<%=item.SEQ %>" id="workingType_<%=item.SEQ %>" type="checkbox" class="workingType m-r-5">
+                                <label class="form-check-label" for="workingType_<%=item.SEQ %>">
+                                    <%=item.NAME %>
+                                </label>
+                            </div>
+                    <%}) } %>    
+                    <div class="clearfix validate-message" for="WORKINGTYPE">근무 형태를 선택하세요. 중복 선택할 수 있습니다.</div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">수습 기간</label>
+                <div class="col-sm-4 data"><input type="text" class="form-control" id="PROBATIONTERM" name="PROBATIONTERM" placeholder="수습 기간이 있을 경우 입력하세요. 예)1개월" ></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">근무 요일</label>
+                <div class="col-sm-5 data">
+                    <select class="form-control" id="WORKSHIFT" name="WORKSHIFT">
+                        <option value="주 5일 (월~금)">주 5일 (월~금)</option>
+                        <option value="토요일 격주 휴무">토요일 격주 휴무</option>
+                        <option value="주 6일 (월~토)">주 6일 (월~토)</option>
+                        <option value="주 3일 (격일)">주 3일 (격일)</option>
+                        <option value="탄력적 근무제">탄력적 근무제</option>
+                        <option value="2교대">2교대</option>
+                        <option value="3교대">3교대</option>
+                        <option value="4교대">4교대</option>
+                        <option value="기타">기타</option>
+                    </select>                    
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">근무 시간 </label>
+                <div class="col-sm-5 data"><input type="text" class="form-control" id="WORKSHIFTTIME" name="WORKSHIFTTIME" placeholder="근무 시간을 자유롭게 입력하세요. 예)9시부터 18시, 하루 3시간" ></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">근무 지역 <em class="required">필수</em></label>
+                <div class="col-sm-10 data">
+                    <a id="WORKREGION"></a>
+                    <% if (regionList) {
+                        regionList.forEach(item => {%>
+                            <div class="form-check mb-2 mr-sm-2 pull-left">
+                                <input name="WORKREGION" value="<%=item.SEQ %>" id="workingRegion_<%=item.SEQ %>" type="checkbox" class="workingRegion m-r-5">
+                                <label class="form-check-label" for="workingRegion_<%=item.SEQ %>">
+                                    <%=item.NAME %>
+                                </label>
+                            </div>
+                    <%}) } %>    
+                    <div class="clearfix validate-message" for="WORKREGION">근무해야 할 지역을 선택하세요. 중복 선택이 가능합니다.</div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">성별</label>
+                <div class="col-sm-10 data">
+                    <select class="col-sm-2 form-control" id="GENDER" name="GENDER">
+                        <option value="무관">무관</option>
+                        <option value="남자">남자</option>
+                        <option value="여자">여자</option>
+                    </select>
+                    <a data-toggle="collapse" href="#collapseGender" role="button" aria-expanded="false" aria-controls="collapseGender">남녀고용평등에 관한 법률 보기</a>                    
+                    <div class="collapse" id="collapseGender">
+                        <div class="card card-body">
+                            <p><b>제7조(모집과 채용)</b></p>
+                            <ol>
+                                <li>사업주는 근로자를 모집하거나 채용할 때 남녀를 차별하여서는 아니 된다.</li>
+                                <li>사업주는 근로자를 모집ㆍ채용할 때 그 직무의 수행에 필요하지 아니한 용모ㆍ키ㆍ체중 등의 신체적 조건, 미혼 조건, 그 밖에 고용노동부령으로 정하는 조건을 제시하거나 요구하여서는 아니 된다.</li>
+                            </ol>
+                            <p>반드시 필요한 경우 예외가 있을 수 있음, 예) 성역할 배우, 여성목욕탕의 관리사 등</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">나이</label>
+                <div class="col-sm-10 data">
+                    <select class="col-sm-2 form-control" id="AGE" name="AGE">
+                        <option value="무관">무관</option>
+                        <option value="20대 이상">20대 이상</option>
+                        <option value="30대 이상">30대 이상</option>
+                        <option value="40대 이상">40대 이상</option>
+                        <option value="50대 이상">50대 이상</option>
+                        <option value="60대 이상">60대 이상</option>
+                    </select>                      
+                    <a data-toggle="collapse" href="#collapseAge" role="button" aria-expanded="false" aria-controls="collapseGender">고용상 연령차별금지 및 고령자고용촉진에 관한 법률 보기</a>                    
+                    <div class="collapse" id="collapseAge">
+                        <div class="card card-body">
+                            <p><b>제4조의4(모집·채용 등에서의 연령차별 금지)</b></p>
+                            <ol>
+                                <li>사업주는 다음 각 호의 분야에서 합리적인 이유 없이 연령을 이유로 근로자 또는 근로자가 되려는 사람을 차별하여서는 아니 된다.</li>
+                                <li>1. 모집ㆍ채용 / 2. 임금, 임금 외의 금품 지급 및 복리후생 / 3. 교육ㆍ훈련 / 4. 배치ㆍ전보ㆍ승진 /5. 퇴직ㆍ해고</li>
+                                <li>제1항을 적용할 때 합리적인 이유 없이 연령 외의 기준을 적용하여 특정 연령집단에 특히 불리한 결과를 초래하는 경우에는 연령차별로 본다.</li>
+                            </ol>
+                            <p>반드시 필요한 경우 예외가 있을 수 있음(진정직업자격), 예) 특정 나이의 역할 배우, 근속 기간에 따른 합리적 차등 등</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">접수 기간 <em class="required">필수</em></label>
+                <div class="col-sm-3 data">
+                    <div class="calendar"><input type="date" class="form-control" id="STARTDATE" name="STARTDATE"></div> 
+                </div>
+                <div class="col-sm-3 data">
+                    <div class="calendar"><input type="date" class="form-control" id="ENDDATE" name="ENDDATE"></div>
+                </div>
+                <div class="col-sm-3 data p-t-10">
+                    <div class="m-r-10 pull-left"> 
+                        <input name="ENDDATE_UNTIL" value="Y" id="ENDDATE_UNTIL" name="ENDDATE_UNTIL" type="checkbox" class="m-r-5"> 채용시까지
+                    </div>                
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">전형 절차</label>
+                <div class="col-sm-10 data"><input type="text" class="form-control" id="HIRINGSTEP" name="HIRINGSTEP" placeholder="전형 절차를 입력하세요. 예)서류전형-면접,서류전형-임원면접" ></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">제출 서류</label>
+                <div class="col-sm-10 data"><input type="text" class="form-control" id="REQUIREDOCS" name="REQUIREDOCS" placeholder="제출 서류를 입력하세요. 예)자기소개서, 건강검진표" ></div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">구인 상세</label>
+                <div class="col-sm-10">
+                    <div class="summernote" id="CONTENT">
+                        <%-(recruitInfo) ? recruitInfo.CONTENT : '' %>
+                    </div>
+                    <input type="hidden" name="CONTENT" id="contentForSummerNote">
+                </div>
+            </div>
+            <div class="form-group row item">
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">상태</label>
+                <div class="col-sm-10 data">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ACTIVE" id="ACTIVE_Y" value="Y">
+                        <label class="form-check-label" for="ACTIVE_Y">진행 중</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ACTIVE" id="ACTIVE_W" value="W">
+                        <label class="form-check-label" for="ACTIVE_W">진행 대기</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row item m-t-40">
+                <div class="col-sm-12 text-center">
+                    <button type="button" class="btn btn-lg btn-primary" id="register">등록하기</button>
+                    <button type="button" class="btn btn-lg btn-outline-dark gotoList">목록으로 돌아가기</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+</div>
+</form>
+
+<%- contentFor('script') %>
+<script src="/plugins/summernote-0.8.18-dist/summernote.min.js"></script>
+<script>
+let page = <%=page %>;
+let hostName = '<%=hostName %>';
+
+$(document).ready(function() {
+
+    loadData();
+
+    $("#SALARYTYPE").change(function() {
+        if ($(this).val() == "연봉") { 
+            $("#SALARY_YEAR").show();
+            $("#SALARY_OTHER").hide();
+        } else {
+            $("#SALARY_YEAR").hide();
+            $("#SALARY_OTHER").show();
+        }
+    });
+    $('input:checkbox[id="ENDDATE_UNTIL"]').click(function() {
+        if ($('input:checkbox[id="ENDDATE_UNTIL"]').prop("checked") == true) $("#ENDDATE").val("");
+    });
+    $('#ENDDATE').change(function() {
+        if ($('#ENDATE').val() != "") $('input:checkbox[id="ENDDATE_UNTIL"]').prop("checked", false);
+    });
+
+    $('#CONTENT').summernote({
+        height: 350,                 // set editor height
+        dialogsInBody: true,
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: false,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+        ],
+        callbacks: {
+            onImageUpload: function(files) {
+            
+                var form_data = new FormData();
+                form_data.append("location", 'recruit');
+                form_data.append("uploadFile", files[0]);
+                $.ajax({
+                    url: hostName + '/api/files/uploadSingle',  
+                    type: 'POST',
+                    dataType: "json",
+                    data: form_data,
+                    async: false,
+                    success:function(json){
+                        if (json.result == "success") {
+                            $('#CONTENT').summernote('insertImage', "<%=hostName %>/PDSData/uploads/recruit/" + json.data.filename, "filename");
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                }); 
+
+
+            }
+        }
+    });
+    
+    if ($("#workType").val() != "CREATE") $("#register").html("수정하기");
+    $("#register").click(saveData);
+    $(".gotoList").click(function() {
+        self.location = `/mart/recruit?page=${page}`;
+    });
+})
+
+let loadData = function() {
+    $("#SALARY_OTHER").hide();
+    <% if (recruitInfo) { %>
+        $("#workType").val('EDIT');
+        $("#SEQ").val('<%=recruitInfo.SEQ %>');
+        $("#HRONAME").val('<%=recruitInfo.HRONAME %>');
+        $("#HROCONTACT").val('<%=recruitInfo.HROCONTACT %>');
+        $("#HROEMAIL").val('<%=recruitInfo.HROEMAIL %>');
+
+        $("#SUBJECT").val('<%=recruitInfo.SUBJECT %>');
+        // 직종 설정
+        let jobKinds = [<%=recruitInfo.JOBKIND_SEQ %>];
+        jobKinds.forEach(item => {
+            $('input:checkbox[id="jobKind_' + item + '"]').prop("checked", true);
+        });
+        // 경력 여부 설정
+        $("#CAREER").val('<%=recruitInfo.CAREER_SEQ %>').change();
+        $("#CHARGE").val('<%=recruitInfo.CHARGE %>');
+        // 직급/직책 설정
+        let jobRanks = [<%-recruitInfo.JOBRANK %>];
+        jobRanks.forEach(item => {
+            $('input:checkbox[value="' + item + '"]').prop("checked", true);
+        });
+        $("#PREFERENTIAL").val('<%=recruitInfo.PREFERENTIAL %>');
+        // 학력 여부 설정
+        $("#EDUCATION").val('<%=recruitInfo.EDUCATION %>').change();
+        // 급여 설정
+        $("#SALARYTYPE").val('<%=recruitInfo.SALARYTYPE %>').change();
+        if ($("#SALARYTYPE").val() == "연봉") { 
+            $("#SALARY_YEAR").show();
+            $("#SALARY_OTHER").hide();
+            $("#SALARY_YEAR").val('<%=recruitInfo.SALARY %>').change();
+        } else {
+            $("#SALARY_YEAR").hide();
+            $("#SALARY_OTHER").show();
+            $("#SALARY_OTHER").val('<%=recruitInfo.SALARY %>');
+        }
+        // 근무 형태 설정
+        let workingTypes = [<%-recruitInfo.WORKINGTYPE_SEQ %>];
+        workingTypes.forEach(item => {
+            $('input:checkbox[id="workingType_' + item + '"]').prop("checked", true);
+        });
+        $("#PROBATIONTERM").val('<%=recruitInfo.PROBATIONTERM %>');
+        $("#WORKSHIFT").val('<%=recruitInfo.WORKSHIFT %>').change();
+        $("#WORKSHIFTTIME").val('<%=recruitInfo.WORKSHIFTTIME %>');
+        // 지역 설정
+        let regions = [<%-recruitInfo.WORKREGION_SEQ %>];
+        regions.forEach(item => {
+            $('input:checkbox[id="workingRegion_' + item + '"]').prop("checked", true);
+        });
+        $("#GENDER").val('<%=recruitInfo.GENDER %>').change();
+        $("#AGE").val('<%=recruitInfo.AGE %>').change();
+        $("#STARTDATE").val("<%=moment(recruitInfo.STARTDATE).format('YYYY-MM-DD') %>");
+        <% if (recruitInfo.ENDDATE) { %>
+            $("#ENDDATE").val("<%=moment(recruitInfo.ENDDATE).format('YYYY-MM-DD') %>");
+        <% } else { %>
+            $('input:checkbox[id="ENDDATE_UNTIL"]').prop("checked", true);
+        <% } %>
+        $("#HIRINGSTEP").val('<%=recruitInfo.HIRINGSTEP %>');
+        $("#REQUIREDOCS").val('<%=recruitInfo.REQUIREDOCS %>');        
+        $("input:radio[name=ACTIVE]:input[value='<%=recruitInfo.ACTIVE %>']").attr("checked", true);
+    <% }%>
+}
+
+let saveData = function() {
+    let invalidate = 0;
+
+    // 텍스트 박스 validate
+    if (!validateText()) invalidate++;
+
+    // 직종 (필)
+    let jobKinds = getJobKinds();
+    if (jobKinds.length == 0) {
+        $(".validate-message[for='JOBKIND']").css("display", "block");
+    }
+    // 직급/직책
+    let jobRanks = getJobRanks();
+    // 근무 형태 (필)
+    let workingTypes = getWorkingTypes();
+    if (workingTypes.length == 0) {
+        $(".validate-message[for='WORKINGTYPE']").css("display", "block");
+    }
+    // 지역 (필)
+    let regions = getRegions();
+    if (regions.length == 0) {
+        $(".validate-message[for='WORKREGION']").css("display", "block");
+    }
+
+    if (invalidate > 0) {
+        $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
+        return;
+    } else  {
+        $("#contentForSummerNote").val($('#CONTENT').summernote('code'));
+        $("#recruit").submit();
+    }
+}
+
+function getJobKinds() {
+    var checkJobKind = "";
+    $('input:checkbox[name="jobKind"]').each(function() {
+        if(this.checked){
+            checkJobKind += this.value + ","; 
+        }
+    });
+    if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 1);
+    return checkJobKind;
+}
+
+function getJobRanks() {
+    var checkJobRank = "";
+    $('input:checkbox[name="jobRank"]').each(function() {
+        if(this.checked){
+            checkJobRank += "'" + this.value + "',"; 
+        }
+    });
+    if (checkJobRank.length > 0) checkJobRank = checkJobRank.substring(0, checkJobRank.length - 1);
+    return checkJobRank;
+}
+
+function getWorkingTypes() {
+    var checkWorkingType = "";
+    $('input:checkbox[name="workingType"]').each(function() {
+        if(this.checked){
+            checkWorkingType += this.value + ","; 
+        }
+    });
+    if (checkWorkingType.length > 0) checkWorkingType = checkWorkingType.substring(0, checkWorkingType.length - 1);
+    return checkWorkingType;
+}
+
+function getRegions() {
+    var checkRegion = "";
+    $('input:checkbox[name="workingRegion"]').each(function() {
+        if(this.checked){
+            checkRegion += this.value + ","; 
+        }
+    });
+    if (checkRegion.length > 0) checkRegion = checkRegion.substring(0, checkRegion.length - 1);
+    return checkRegion;
+}
+
+let closeRecruit = function(seq) {
+    if (confirm("공고를 마감합니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/close?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+</script>

@@ -136,6 +136,62 @@ module.exports = {
         })
     },
 
+    async close(req, res, next) {
+        let recruitSeq = req.query.seq;
+
+        // 구인 공고를 마감한다
+        let result = await recruitService.close(req.cookies.xToken, recruitSeq);
+
+        if (result) {
+            res.status(200).json({
+                result: 'success',
+                data: result
+            });    
+        } else {
+            res.status(200).json({
+                result: 'fail',
+                data: null
+            });    
+        }
+    },
+
+    async active(req, res, next) {
+        let recruitSeq = req.query.seq;
+
+        // 구인 공고를 마감한다
+        let result = await recruitService.active(req.cookies.xToken, recruitSeq);
+
+        if (result) {
+            res.status(200).json({
+                result: 'success',
+                data: result
+            });    
+        } else {
+            res.status(200).json({
+                result: 'fail',
+                data: null
+            });    
+        }
+    },
+
+    async copy(req, res, next) {
+        let recruitSeq = req.query.seq;
+
+        // 구인 공고를 복사한다
+        let result = await recruitService.copy(req.cookies.xToken, recruitSeq);
+
+        if (result) {
+            res.status(200).json({
+                result: 'success',
+                data: result
+            });    
+        } else {
+            res.status(200).json({
+                result: 'fail',
+                data: null
+            });    
+        }
+    },
     async apply(req, res, next) {
         let recruitSeq = req.query.seq;
         let userSeq = req.user.Seq;

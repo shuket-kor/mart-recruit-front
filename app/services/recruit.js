@@ -115,7 +115,7 @@ module.exports = class recruitService {
             return null;
         }
     }  
-    static async listByMart(token, martSeq, page, rowCount) {
+    static async listByMart(token, martSeq, active, page, rowCount) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/list`;
 
@@ -128,6 +128,7 @@ module.exports = class recruitService {
                 }, json: {
                     martSeq: martSeq,
                     page: page,
+                    active: active,
                     rowCount: rowCount,
                     key: secretKey
                 },
@@ -289,4 +290,254 @@ module.exports = class recruitService {
             return null;
         }
     }  
+    static async create(token, MART_SEQ, HRONAME, HROCONTACT, HROEMAIL, SUBJECT, CAREER_SEQ, CHARGE, 
+        PREFERENTIAL, EDUCATION, SALARYTYPE, SALARY, PROBATIONTERM, WORKSHIFT, WORKSHIFTTIME, 
+        GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/create`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    MART_SEQ: MART_SEQ,
+                    HRONAME: HRONAME,
+                    HROCONTACT: HROCONTACT,
+                    HROEMAIL: HROEMAIL,
+                    SUBJECT: SUBJECT, 
+                    CAREER_SEQ: CAREER_SEQ,
+                    CHARGE: CHARGE,
+                    PREFERENTIAL: PREFERENTIAL,
+                    EDUCATION: EDUCATION,
+                    SALARYTYPE: SALARYTYPE,
+                    SALARY: SALARY,
+                    PROBATIONTERM: PROBATIONTERM,
+                    WORKSHIFT: WORKSHIFT,
+                    WORKSHIFTTIME: WORKSHIFTTIME,
+                    GENDER: GENDER,
+                    AGE: AGE,
+                    STARTDATE: STARTDATE,
+                    ENDDATE: ENDDATE,
+                    HIRINGSTEP: HIRINGSTEP,
+                    REQUIREDOCS: REQUIREDOCS,
+                    CONTENT: CONTENT,
+                    JOBKIND: JOBKIND,
+                    JOBRANK: JOBRANK,
+                    WORKINGTYPE: WORKINGTYPE,
+                    WORKREGION: WORKREGION,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/create: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/create: ${error}`);
+            return null;
+        }
+    }  
+    static async update(token, SEQ, HRONAME, HROCONTACT, HROEMAIL, SUBJECT, CAREER_SEQ, CHARGE, 
+        PREFERENTIAL, EDUCATION, SALARYTYPE, SALARY, PROBATIONTERM, WORKSHIFT, WORKSHIFTTIME, 
+        GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION, ACTIVE) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/update`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    SEQ: SEQ,
+                    HRONAME: HRONAME,
+                    HROCONTACT: HROCONTACT,
+                    HROEMAIL: HROEMAIL,
+                    SUBJECT: SUBJECT, 
+                    CAREER_SEQ: CAREER_SEQ,
+                    CHARGE: CHARGE,
+                    PREFERENTIAL: PREFERENTIAL,
+                    EDUCATION: EDUCATION,
+                    SALARYTYPE: SALARYTYPE,
+                    SALARY: SALARY,
+                    PROBATIONTERM: PROBATIONTERM,
+                    WORKSHIFT: WORKSHIFT,
+                    WORKSHIFTTIME: WORKSHIFTTIME,
+                    GENDER: GENDER,
+                    AGE: AGE,
+                    STARTDATE: STARTDATE,
+                    ENDDATE: ENDDATE,
+                    HIRINGSTEP: HIRINGSTEP,
+                    REQUIREDOCS: REQUIREDOCS,
+                    CONTENT: CONTENT,
+                    JOBKIND: JOBKIND,
+                    JOBRANK: JOBRANK,
+                    WORKINGTYPE: WORKINGTYPE,
+                    WORKREGION: WORKREGION,
+                    ACTIVE: ACTIVE,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/create: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/create: ${error}`);
+            return null;
+        }
+    }  
+    static async active(token, recruitSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/active`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    seq: recruitSeq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/close: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/close: ${error}`);
+            return null;
+        }
+    }  
+    static async close(token, recruitSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/close`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    seq: recruitSeq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/close: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/close: ${error}`);
+            return null;
+        }
+    }  
+    static async copy(token, recruitSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/copy`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    seq: recruitSeq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/copy: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/copy: ${error}`);
+            return null;
+        }
+    }  
+    static async getActiveCount(token, martSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/getActiveCount`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/martService/getActiveCount: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/martService/getActiveCount: ${error}`);
+            return null;
+        }
+    }  
+    static async getResumeCount(token, seq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/getResumeCount`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    seq: seq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/martService/getActiveCount: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/martService/getActiveCount: ${error}`);
+            return null;
+        }
+    }  
+
 }

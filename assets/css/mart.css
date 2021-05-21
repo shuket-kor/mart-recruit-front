@@ -13,7 +13,7 @@ ol, ul, li {
 }
 
 .tab_main .tabListBar>li {
-    width: 33.3%;
+    width: 25%;
 }
 
 .tabListBar>li {
@@ -40,6 +40,7 @@ ol, ul, li {
     letter-spacing: -1px;
     line-height: 24px;
     text-align: center;
+    cursor: pointer;
 }
 
 .tabListBar>li.select {
@@ -68,7 +69,7 @@ ol, ul, li {
 
 .recruit-list-row {
     position: relative;
-    padding: 20px 20px 34px 20px;
+    padding: 20px 20px 20px 20px;
     border-bottom: 1px solid #ebebeb;
     box-sizing: border-box;
     display: block;
@@ -91,12 +92,12 @@ ol, ul, li {
     text-align: center;
 }
 
-.recruit-list .info_recruit {
+.recruit-list .info-recruit {
     padding-bottom: 28px;
     min-height: 95px;
 }
 
-.area_message {
+.area-message {
     clear: both;
     width: 100%;
     min-height: 45px;
@@ -105,7 +106,7 @@ ol, ul, li {
     background-color: #f8f8f8;
 }
 
-.recruit-list .info_recruit .title {
+.recruit-list .info-recruit .title {
     display: inline-block;
     max-width: 60%;
     color: #222;
@@ -115,7 +116,7 @@ ol, ul, li {
     line-height: 28px;
 }
 
-.recruit-list .info_recruit .date {
+.recruit-list .info-recruit .date {
     overflow: hidden;
     margin-top: 10px;
     max-width: 60%;
@@ -126,7 +127,14 @@ ol, ul, li {
     white-space: nowrap;
 }
 
-.info_recruit .area_status {
+.recruit-info-row {
+    position: relative;
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box;
+    display: block;
+}
+
+.info-recruit .area-status {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -134,24 +142,24 @@ ol, ul, li {
     text-align: right;
 }
 
-.recruit-list .info_recruit .date>dl>dd {
+.recruit-list .info-recruit .date>dl>dd {
     display: inline-block;
     position: relative;
     word-break: break-all;
     vertical-align: middle;
 }
 
-.info_recruit .area_status .box_status {
+.info-recruit .area-status .box-status {
     position: relative;
     height: 35px;
     text-align: right;
 }
 
-.info_recruit .area_status .box_status .area_link {
+.info-recruit .area-status .box-status .area-link {
     padding-right: 12px;
 }
 
-.info_recruit .area_status .box_status .area_link .link_status {
+.info-recruit .area-status .box-status .area-link .link-status {
     display: inline-block;
     font-size: 14px;
     line-height: 17px;
@@ -160,11 +168,10 @@ ol, ul, li {
     vertical-align: top;
 }
 
-.info_recruit .area_status .status_type {
+.info-recruit .area-status .status-type {
     display: inline-block;
     padding: 11px 14px;
     width: 294px;
-    height: 62px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
@@ -175,7 +182,7 @@ ol, ul, li {
     text-align: center;
 }
 
-.info_recruit .area_status .status_type a.division, .info_recruit .area_status .status_type span.division {
+.info-recruit .area-status .status-type a.division, .info-recruit .area-status .status-type span.division {
     float: left;
     display: inline-block;
     color: #222;
@@ -185,7 +192,7 @@ ol, ul, li {
     text-align: center;
 }
 
-.info_recruit .area_status .txt_status {
+.info-recruit .area-status .text-status {
     position: absolute;
     top: 0;
     left: 0;
@@ -195,7 +202,7 @@ ol, ul, li {
     line-height: 19px;
 }
 
-.info_recruit .area_status .box_status .area_link .link_status:after {
+.info-recruit .area-status .box-status .area-link .link-status:after {
     display: inline-block;
     margin: 4px 3px 0 9px;
     width: 1px;
@@ -205,7 +212,7 @@ ol, ul, li {
     content: "";
 }
 
-.info_recruit .date>dl>dd:after {
+.info-recruit .date>dl>dd:after {
     display: inline-block;
     margin: 0 4px 0 8px;
     width: 1px;
@@ -214,7 +221,71 @@ ol, ul, li {
     content: "";
 }
 
-.info_recruit .date>dl>dd:last-child:after {
+.info-recruit .date>dl>dd:last-child:after {
     display: none;
 }
 
+.info-recruit .unread {
+    font-weight: 700;
+    font-size: 120%;
+    color: red;
+}
+
+.edit-recruit .item {
+    padding: 0px 60px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-recruit .item .title {
+    /* float: left; */
+    padding: 13px 10px 0 0;
+    /* width: 170px; */
+    font-size: 16px;
+    line-height: 21px;
+    vertical-align: top;
+}
+
+.edit-recruit .item .title .required {
+    margin-left: 4px;
+    color: #f00;
+    font-size: 10px;
+    vertical-align: top;
+}
+
+.edit-recruit .item .data {
+    /* float: left; */
+    /* width: 860px; */
+    min-height: 50px;
+    box-sizing: border-box;
+    /* vertical-align: top; */
+}
+
+.edit-recruit .form-control {
+    height: 45px;
+    font-size: 14px;
+    padding: 5px 5px;
+    color: #2d3038;
+    margin-bottom: 0px;
+    border: 1px solid #e8e6e8;
+    background-color: #faf7fa;
+}
+
+.validate-message {
+    font-size: 80%;
+    color: red;
+    display: none;
+}
+
+.resume-list .user-image {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 100%;
+    margin-bottom: 5px;
+}
+
+.resume-list .name {
+    font-weight: 700;
+}

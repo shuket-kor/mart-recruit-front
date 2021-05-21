@@ -172,3 +172,17 @@ function checkMobile() {
         return "other"; 
     } 
 }
+
+let validateText = function() {
+    let result = true;
+    let validateItem = $(':input[required]:visible');
+
+    $(".validate-message").css("display", "none");
+    for (let i=0; i < validateItem.length; i++) {
+        if ($(validateItem[i]).val().length == 0) {
+            $(".validate-message[for='" + $(validateItem[i]).attr('id') + "']").css("display", "block");
+            result = false;
+        }
+    }
+    return result;
+}

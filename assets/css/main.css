@@ -187,11 +187,11 @@ select:focus,
     border-color: #008def;
 }
 */
-.btn i {
+/* .btn i {
     float: left;
     font-size: 20px;
     margin-right: 10px;
-}
+} */
 /*
 .btn.button-send {
     margin-right: 10px;
@@ -3513,3 +3513,10 @@ button.btn-primary,
     font-size: 18px;
     font-family: NanumSquareRoundB;
 }
+
+.clearfix {
+    display: block;
+    content: "";
+    clear: both;
+}
+

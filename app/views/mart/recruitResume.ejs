@@ -1,0 +1,193 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/mart.css">
+
+<%- contentFor('content') %>
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="breadcrumb-logo">
+                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
+            </div>
+        </div>
+    </div><!-- /.container -->
+</div><!-- /.tr-breadcrumb -->	
+
+<div class="section-info">
+    <div class="container">
+        <div class="recruit-info-row">
+            <div class="info-recruit">
+                <h3><%=recruitInfo.SUBJECT %></h3>
+                <div class="date">
+                    <%=moment(recruitInfo.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(recruitInfo.ENDDATE) ? moment(recruitInfo.ENDDATE).format('YYYY.MM.DD') : '채용시까지' %> / 
+                    <%=moment(recruitInfo.MODIFIED).format('YYYY.MM.DD') %>  수정 <br>
+                    <%=recruitInfo.CHARGE %> /
+                    <%=recruitInfo.WORKINGTYPE_NAME %> /
+                    <%=recruitInfo.WORKREGION_NAME %>
+                </div>
+                <div class="area-status">
+                    <div class="box-status">
+                        <strong class="text-status point_color"><%=(recruitInfo.ACTIVE == 'Y') ? '진행 중' : (recruitInfo.ACTIVE == 'W') ? '진행 대기 중' : '마감된 공고' %></strong>
+                    </div>
+                    <div class="status-type bg-white">
+                        <% const unreadCount = recruitInfo.APPLYCOUNT * 1.0 - recruitInfo.VIEWCOUNT * 1.0; %>
+                        <span class="m-r-10">지원 <%=recruitInfo.APPLYCOUNT %></span>
+                        <span class="m-r-10">열람 <%=recruitInfo.VIEWCOUNT %></span>
+                        미열람 <%-(unreadCount > 0) ? `<span class="unread">${unreadCount}</span>` : unreadCount %>
+                    </div>
+                </div>
+            </div>
+        </div>                                            
+    </div>
+</div>
+
+<div class="all-view section-padding" style="padding-top: 20px;">
+    <div class="container">
+        <div class="section" style="padding-top: 0px !important;">
+            <div id="tab_main" class="tab_main">
+                <ul class="tabListBar" data-fixed="fixed">
+                    <li class="<%=(!step) ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruitResume?seq=<%=recruitInfo.SEQ %>&step="><span>전체 (<%=(activeInfo) ? activeInfo.DOCUMENT * 1.0 + activeInfo.INTERVIEW * 1.0 + activeInfo.PASS * 1.0  + activeInfo.FAILURE * 1.0: '0' %>)</span></a>
+                    </li>
+                    <li class="<%=(step == 'D') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruitResume?seq=<%=recruitInfo.SEQ %>&step=D"><span>서류 전형 (<%=(activeInfo) ? activeInfo.DOCUMENT : '0' %>)</span></a>
+                    </li>
+                    <li class="<%=(step == 'I') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruitResume?seq=<%=recruitInfo.SEQ %>&step=I"><span>면접 (<%=(activeInfo) ? activeInfo.INTERVIEW : '0' %>)</span></a>
+                    </li>
+                    <li class="<%=(step == 'P') ? 'select' : '' %>">
+                        <a type="button" class="inTab" href="/mart/recruitResume?seq=<%=recruitInfo.SEQ %>&step=P"><span>최종합격 (<%=(activeInfo) ? activeInfo.PASS : '0' %>)</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resume-list m-t-20">
+                <div class="table-responsive-sm">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                              <th scope="col">전형</th>
+                              <th scope="col">사진</th>
+                              <th scope="col">이름/나이</th>
+                              <th scope="col">경력/최종학력</th>
+                              <th scope="col">희망연봉/직종/지역</th>
+                              <th scope="col">지원일</th>
+                              <th scope="col">검증여부</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% if (list) {
+                            list.forEach(item => { %>
+                                <tr class="text-center">
+                                    <th scope="row"><%=(item.STEP == 'D') ? '서류전형' : (item.STEP == 'I') ? '면접' : (item.STEP == 'P') ? '합격' : '불합격' %></th>
+                                    <td>
+                                        <div class="user-image">
+                                        <%-(item.PHOTO) ? `<img src="${hostName}/api/files/get/${item.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="name"><%=item.NAME %></div>
+                                        <div class="age"><%=(new Date()).getFullYear() - item.BIRTHYEAR * 1.0 %>, <%=item.GENDER %></div>
+                                    </td>
+                                    <td>
+                                        <div><%=item.CAREER_NAME %></div>
+                                        <div><%=item.EDUCATION %></div>
+                                        <div><%=item.EDUCATIONSCHOOL %></div>
+                                    </td>
+                                    <td>
+                                        <div><%=item.SALARY %></div>
+                                        <div><%=item.JOBKIND_NAME %></div>
+                                        <div><%=item.WORKREGION_NAME %></div>
+                                    </td>
+                                    <td>
+                                        <div><%=moment(item.APPLYDATE).format('YYYY.MM.DD') %></div>
+                                        <div><%=(item.READING = 'N') ? '미열람' : '열람' %></div>
+                                    </td>
+                                    <td>
+                                        <div><%-(item.CERTIFICATE == 'Y') ? `<div class="text-warning font-big"><i class="fa fa-check"></i></div>` : '미인증' %></div>
+                                        <div><%-(item.CERTIFICATE == 'Y') ? moment(item.CERTIFICATEDATE).format('YYYY.MM.DD') + '<br>CERTIFICATED' : '' %></div>
+                                    </td>
+                                </tr>
+                            <%})
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
+                    <ul class="pagination justify-content-center" id="resume-page"></ul>
+                </nav>
+            </div>
+        </div>
+    </div>	
+</div>
+
+<%- contentFor('script') %>
+<script>
+let totalCount =<%=totalCount %>; 
+let seq = <%=recruitInfo.SEQ %>;
+let page = <%=page %>;
+let rowCount = <%=rowCount %>;
+
+$(document).ready(function() {
+    // 페이저 만들기
+    if (totalCount <= rowCount) {
+        $('#resume-page').hide();
+    } else {
+        createPagination('resume-page', totalCount, rowCount, page, 10, `/mart/recruitResume?seq=${seq}`);
+    }
+    $("#create").click(function() {
+        self.location = "/mart/recruitCreate";
+    });
+})
+
+let edit = function(seq) {
+    self.location = `/mart/recruitEdit?seq=${seq}&page=${page}`;
+}
+
+let closeRecruit = function(seq) {
+    if (confirm("공고를 마감합니다. 마감된 공고는 재개할 수 없으며, 복사를 통해 다시 게시할 수 있습니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/close?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 마감하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+let copyRecruit = function(seq) {
+    if (confirm("공고를 복사합니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/copy?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location = `/mart/recruitEdit?seq=${json.data}&page=${page}`;
+            else
+                alert("공고를 복사하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 복사하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+
+let active = function(seq) {
+    if (confirm("공고를 진행합니다. 계속하시겠습니까?")) {
+        doGetCallSync(`/recruit/active?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("공고를 시작하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("공고를 시작하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+
+</script>

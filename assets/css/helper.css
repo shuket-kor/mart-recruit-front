@@ -214,3 +214,11 @@
     margin-bottom: 12px;
     margin-left: 8px;
   }
+
+  .bg-white {
+    background-color: white;
+  }
+
+  .font-big {
+    font-size: 20px;
+  }
