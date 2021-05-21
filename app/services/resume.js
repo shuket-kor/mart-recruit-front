@@ -3,7 +3,7 @@ const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
 
 module.exports = class resumeService {
-    static async get(user_seq) {
+    static async getByUserSeq(user_seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/getByUserSeq`;
             const { body } = await got.post(apiURL, { json: { seq: user_seq },responseType: "json" });

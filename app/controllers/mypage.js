@@ -107,17 +107,17 @@ module.exports = {
     },
     
 
-    async resumeList(req, res, next){
+    async resumegetByUserSeq(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        const get = await resumeService.get(user_seq);
+        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
         let resumeSeq = get.SEQ;
         const listCareer = await resumeService.listCareer(resumeSeq);
         res.render('mypage/userpageresume', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            get: get,
+            get: getByUserSeq,
             moment: moment,
             hostName: process.env.APIHOST,
             listCareer: listCareer
