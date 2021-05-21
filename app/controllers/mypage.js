@@ -111,7 +111,7 @@ module.exports = {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
         const getByUserSeq = await resumeService.getByUserSeq(user_seq);
-        let resumeSeq = get.SEQ;
+        let resumeSeq = getByUserSeq.SEQ;
         const listCareer = await resumeService.listCareer(resumeSeq);
         res.render('mypage/userpageresume', {
             layout: 'layouts/default',
