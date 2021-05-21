@@ -227,26 +227,30 @@
                                 </label>
                             </div>
                         </div>
-                        <span id='historyBtn' class="icon clone"style="float: right;"><i class="fa fa-plus" aria-hidden="true" ></i></span>
                         <li class="work-history" id="work-history">
                             <div class="media-body additem-work">
                                 <span class="tr-title">경력</span>
                                 <div id="addhistory" class="additem">
+                                    <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <% listCareer.forEach(item => { %>
+                                        <hr>
                                         <div class="code-edit-small">
+                                            <!-- <div class="card" style="width: 50rem;">         -->
                                             <label>마트 이름</label>
-                                            <div class="code-edit"></div>
+                                            <div class="code-edit"><%= item.COMPANY %></div>
                                             <div class="row">
                                                 <div class="col-sm-6 col-md-4">
                                                     <label>시작</label>
                                                     <div class="calendar">
-                                                        <input type="date" name="" class="form-control" value="" />
+                                                        <input type="date" name="" class="form-control" value="<%= moment(item.WOKSTART).format('YYYY-MM-DD') %>" />
                                                     </div>
                                                     <!-- calendar -->
                                                 </div>
                                                 <div class="col-sm-6 col-md-4">
                                                     <label>끝</label>
                                                     <div class="calendar">
-                                                        <input type="date" class="form-control" value="" />
+                                                        <input type="date" class="form-control" value="<%= moment(item.WORKEND).format('YYYY-MM-DD') %>" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -257,27 +261,28 @@
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <label>경력기간</label>
-                                                <div class="code-edit"></div>
+                                                <div class="code-edit"><%= item.CAREER %></div>
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <label>직급</label>
-                                                <div class="code-edit"></div>
+                                                <div class="code-edit"><%= item.POSITION %></div>
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <label>담당 업무</label>
-                                                <div class="code-edit"></div>
+                                                <div class="code-edit"><%= item.JOBTYPE %></div>
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <label>근무 지역</label>
-                                                <div class="code-edit"></div>
+                                                <div class="code-edit"><%= item.WORKREGION %></div>
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <label>최종 연봉</label>
-                                                <div class="code-edit"></div>
+                                                <div class="code-edit"><%= item.SALARY %></div>
                                             </div>
                                         </div>
                                     <!-- </div> -->
                                 </div>
+                                <% }) %>
                             </div>
                         </li>
                         <% }else{ %>
@@ -436,21 +441,6 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     $(document).ready(function(){
-        var careerCount = <%= careerCnt%>;
-        console.log(`커리어 카운트는 ? ? ${careerCount} careerCount`);
-        function appendTest(){
-            // 커리어 카운트만큼의 div가 생겨야 해서 반복문으로 생성시킴.
-            // for(i=1; i<careerCount+1;i++){
-                
-            // }
-            // $(".media-body additem-work").append($("#addhistory")[0])
-            
-        }
-
-        $("#historyBtn").click(function(){
-            var historyappendhtml = $("#addhistory")[0].outerHTML
-            $(".additem-work").append(historyappendhtml);
-        })
         var hostName = `<%= hostName%>`
         // 이미지 업로드 모달 클릭
         $("#imageuploadbtn").click(function(){
