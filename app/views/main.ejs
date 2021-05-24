@@ -1,0 +1,131 @@
+<%- contentFor('style') %>
+
+<%- contentFor('content') %>
+<div class="tr-banner section-before bg-image">
+    <div class="container">
+        <div class="banner-content text-center">
+            <h1>The Best Way to Get a Job at the Marts</h1>
+            <h2>We offer <%=numeral(totalCount).format('0,0') %> jobs right now</h2>
+            <div class="banner-form">
+                <form action="#">
+                    <div class="dropdown tr-change-dropdown" id="searchType">
+                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">Search For</span><i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu tr-change" style="left:0 !important">
+                            <li><a href="#">마트 이름</a></li>
+                            <li><a href="#">공고 제목</a></li>
+                        </ul>								
+                    </div><!-- /.category-change -->
+                    <input type="text" class="form-control" placeholder="keyword" name="keyword" id="keyword">
+                    <button type="button" class="btn btn-primary button-search" value="Search">Search</button>
+                </form>
+            </div><!-- /.banner-form -->				
+        </div><!--/. banner-content -->
+    </div><!-- /.container -->
+</div><!-- /.tr-banner -->
+
+<div class="jobs-listing section-padding">
+    <div class="container">
+
+        <div class="job-topbar">
+            <p class="h2">Recently New Jobs</p>
+        </div>
+
+        <div class="tab-content tr-job-posted">
+            <div role="tabpanel" class="tab-pane fade show active" id="four-colum">
+                <div class="row">
+
+        <%
+            if (topList) {
+                topList.forEach(item => { %>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="job-item">
+                            <div class="item-overlay">
+                                <div class="job-info">
+                                    <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
+                                    <span class="tr-title">
+                                        <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
+                                    </span>
+                                    <ul class="tr-list job-meta">
+                                        <li><i class="fa fa-home" aria-hidden="true"></i><%=item.NAME %></li>
+                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i><%=item.ADDRESS %></li>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i><%=item.WORKSHIFT %> <%=item.WORKSHIFTTIME %></li>
+                                        <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                    </ul>
+                                    <ul class="job-social tr-list listing-2" > 
+                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                        <li><a href="#" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>										
+                            </div>
+                            <div class="job-info">
+                                <div class="company-logo">
+                                    <%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h5>${item.NAME}</h5>` %> 
+                                </div>
+                                <span class="tr-title">
+                                    <a href="#"><%=item.SUBJECT %></a>
+                                </span>
+                                <ul class="tr-list job-meta">
+                                    <li><span><i class="fa fa-home" aria-hidden="true"></i></span><%=item.NAME %></li>
+                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span><%=item.ADDRESS %></li>
+                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span><%=item.WORKSHIFT %><%=item.WORKSHIFTTIME %></li>
+                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                </ul>
+                                <div class="time">
+                                    <a href="#"><span><%=item.JOBKIND_NAME %></span></a>
+                                    <span class="pull-right"><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></td></span>
+                                </div>																				
+                            </div>
+                        </div>
+                    </div>
+
+                <% })
+            }
+        %>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-topbar">
+            <span class="pull-left"><p class="h2">Jobs List</p></span>
+            <ul class="nav nav-tabs job-tabs" role="tablist">
+                <li>총 <%=numeral(totalCount).format('0,0') %> 개의 공고가 있습니다.</li>
+            </ul>				
+        </div>
+        
+
+        <div class="tab-content tr-job-posted">
+            <div role="tabpanel" class="tab-pane fade show active" id="four-colum">
+                <div class="row">
+
+        <%
+            if (list) {
+                list.forEach(item => { %>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="job-item-list">
+                            <div class="job-info">
+                                <span class="tr-title">
+                                    <a href="#"><h5><%=item.NAME %></h5><%=item.SUBJECT %></a>
+                                </span>
+                                <ul class="tr-list job-meta">
+                                    <li><span><i class="fa fa-cash-register" aria-hidden="true"></i></span><%=item.JOBKIND_NAME %> / <%=item.WORKREGION_NAME %></li>
+                                    <li><span><i class="fa fa-clock" aria-hidden="true"></i></span><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                <% })
+            }
+        %>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a href="/recruit/list" type="button" class="btn btn-light btn-lg">더 많은 구인 공고 보기 <i class="far fa-arrow-alt-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<%- contentFor('script') %>

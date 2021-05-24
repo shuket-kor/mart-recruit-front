@@ -128,7 +128,7 @@
                                     <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                 </ul>
                                 <div class="time">
-                                    <a href="#"><span><%=item.CHARGE %></span></a>
+                                    <a href="#"><span><%=item.JOBKIND_NAME %></span></a>
                                     <span class="pull-right"><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></td></span>
                                 </div>																				
                             </div>
@@ -155,7 +155,7 @@
                     <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th scope="col">마트명</th>
+                            <th scope="col" width="120px">마트명</th>
                             <th scope="col">제목</th>
                             <th scope="col">업무</th>
                             <th scope="col">자격</th>

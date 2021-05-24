@@ -81,7 +81,7 @@ module.exports = class recruitService {
             return null;
         }
     }  
-    static async list(token, regions, jobKinds, workingTypes, searchType, keyword, page, rowCount) {
+    static async list(token, active, regions, jobKinds, workingTypes, searchType, keyword, page, rowCount) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/list`;
 
@@ -97,6 +97,7 @@ module.exports = class recruitService {
                     workingTypes: workingTypes,
                     name: (searchType == 'm') ? keyword : '',
                     subject: (searchType == 'r') ? keyword : '',
+                    active: active,
                     page: page,
                     rowCount: rowCount,
                     key: secretKey
@@ -503,11 +504,11 @@ module.exports = class recruitService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog('error', `services/martService/getActiveCount: ${body.result}`);           
+                logger.writeLog('error', `services/recruitService/getActiveCount: ${body.result}`);           
                 return null;
             }
         } catch (error) {
-            logger.writeLog('error', `services/martService/getActiveCount: ${error}`);
+            logger.writeLog('error', `services/recruitService/getActiveCount: ${error}`);
             return null;
         }
     }  
@@ -531,13 +532,108 @@ module.exports = class recruitService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog('error', `services/martService/getActiveCount: ${body.result}`);           
+                logger.writeLog('error', `services/recruitService/getActiveCount: ${body.result}`);           
                 return null;
             }
         } catch (error) {
-            logger.writeLog('error', `services/martService/getActiveCount: ${error}`);
+            logger.writeLog('error', `services/recruitService/getActiveCount: ${error}`);
             return null;
         }
     }  
+    static async setRead(token, recruitSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/setRead`;
 
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    recruitSeq: recruitSeq,
+                    resumeSeq: resumeSeq
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/setRead: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/setRead: ${error}`);
+            return null;
+        }
+    }  
+    static async setStep(token, recruitSeq, resumeSeq, step) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/setStep`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    recruitSeq: recruitSeq,
+                    resumeSeq: resumeSeq,
+                    step: step
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/setStep: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/setStep: ${error}`);
+            return null;
+        }
+    }  
+    static async getApply(token, recruitSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/getApply`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    recruitSeq: recruitSeq,
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/getApply: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/getApply: ${error}`);
+            return null;
+        }
+    }  
+    static applyStatus(step) {
+        switch (step) {
+            case 'D' : return '서류 전형'; break;
+            case 'I' : return '면접'; break;
+            case 'P' : return '합격'; break;
+            case 'F' : return '불합격'; break;
+        }
+    }
 }

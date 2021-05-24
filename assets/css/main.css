@@ -238,7 +238,7 @@ select:focus,
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(44, 55, 62, 0.8);
+    background-color: rgba(44, 55, 62, 0.2);
     /* background-image: url(../images/bg/05.jpg); */
     background-repeat: round;
     background-position: initial;
@@ -776,7 +776,7 @@ select:focus,
 .tr-banner {
     color: #fff;
     padding: 120px 0;
-    background-image: url(../images/bg/banner.jpg);
+    background-image: url(../images/bg/mainbanner.jpg);
 }
 
 .banner-content h1 {
@@ -1414,6 +1414,41 @@ select:focus,
 .item-overlay .job-info .tr-title a {
     color: #fff;
 }
+
+.job-item-list {
+    border-radius: 3px;
+    position: relative;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+.job-item-list .job-info {
+    font-size: 14px;
+    color: #000;
+    overflow: hidden;
+    padding: 15px 15px 0px 15px;
+    background-color: white;
+    min-height: 180px;
+    max-height: 180px;
+    overflow: auto;
+}
+
+.job-item-list > .job-info {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.job-item-list > .job-info ul {
+    margin-bottom: 0px;
+}
+
+.job-item-list .job-info {
+    font-size: 14px;
+    color: #000;
+    overflow: hidden;
+    /* padding: 40px 25px 20px; */
+}
+
 /* 210402 YDH  */
 /* .job-social {
     margin-top: 35px;
@@ -2431,7 +2466,8 @@ select:focus,
 /* Account Info */
 
 .resume-last-updated {
-    padding: 10px 40px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
 }
 
 .account-info .icon {
@@ -2488,6 +2524,14 @@ select:focus,
 .account-info li {
     overflow: hidden;
     margin-bottom: 20px;
+}
+
+.resume-info>li{
+    margin-bottom: 30px;;
+}
+
+.resume-info .introduce {
+    padding-bottom: 40px;
 }
 
 .account-info li:last-child {
@@ -3524,3 +3568,7 @@ button.btn-primary,
     cursor: pointer;
 }
 
+.goto-list-button-area {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}

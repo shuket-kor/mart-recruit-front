@@ -52,6 +52,7 @@ module.exports = {
         const workingTypes = (req.query.workingTypes) ? req.query.workingTypes : '';
         const searchType = (req.query.searchType) ? req.query.searchType : ''; //m: 마트이름, r: 공고명
         const keyword = (req.query.keyword) ? req.query.keyword : '';
+        const active = 'Y';
 
         // 지역 리스트를 얻는다
         const regionList = await recruitService.listWorkingRegion();
@@ -60,9 +61,9 @@ module.exports = {
         // 근무 형태 리스트를 얻는다
         const workingTypeList = await recruitService.listWorkingType();
         // 최신 8개의 리스트를 따로 얻는다
-        const returnData_Top = await recruitService.list(req.cookies.xToken, regions, jobKinds, workingTypes, searchType, keyword, 1, 8);
+        const returnData_Top = await recruitService.list(req.cookies.xToken, active, regions, jobKinds, workingTypes, searchType, keyword, 1, 8);
         // 페이지에 따른 리스트를 얻는다
-        const returnData = await recruitService.list(req.cookies.xToken, regions, jobKinds, workingTypes, searchType, keyword, currentPage, rowCount);
+        const returnData = await recruitService.list(req.cookies.xToken, active, regions, jobKinds, workingTypes, searchType, keyword, currentPage, rowCount);
 
         res.render('recruit/list', {
             layout: 'layouts/default',
@@ -286,5 +287,25 @@ module.exports = {
                 data: null
             });    
         }
-    }
+    },
+    async setStep(req, res, next) {
+        let recruitSeq = req.query.recruitSeq;
+        let resumeSeq = req.query.resumeSeq;
+        let step = req.query.step;
+
+        // 구인 공고에 지원 처리를 한다
+        let result = await recruitService.setStep(req.cookies.xToken, recruitSeq, resumeSeq, step);
+
+        if (result) {
+            res.status(200).json({
+                result: 'success',
+                data: result
+            });    
+        } else {
+            res.status(200).json({
+                result: 'fail',
+                data: null
+            });    
+        }
+    },
 }

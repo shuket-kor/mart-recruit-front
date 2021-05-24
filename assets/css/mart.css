@@ -298,3 +298,7 @@ ol, ul, li {
 .resume-list .card.inactive {
     background-color: #e6ecf0;
 }
+
+.tr-list > table {
+    margin-bottom: 30px;
+}

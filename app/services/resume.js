@@ -208,13 +208,7 @@ module.exports = class resumeService {
                 },
                 responseType: 'json'
             });
-            if (body.result === 'success') {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog('error', `services/resumeService/increaseViewCount: 이력서 뷰 카운트 증가 실패 SEQ: ${SEQ}`);
-                return null;
-            }
+            return 0;
         } catch (error) {
             logger.writeLog('error', `services/resumeService/increaseViewCount: ${error}`);
         }

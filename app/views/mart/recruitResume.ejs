@@ -71,7 +71,7 @@
                               <th scope="col">경력/최종학력</th>
                               <th scope="col">희망연봉/직종/지역</th>
                               <th scope="col">지원일</th>
-                              <th scope="col">검증여부</th>
+                              <th scope="col">인증여부</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,7 +141,7 @@ $(document).ready(function() {
 })
 
 let showResume = function(resumeSeq) {
-    self.location = `/mart/recruitResumeView?recruitSeq=${recruitSeq}&resumeSeq=${resumeSeq}&step=${step}&page=${page}`;
+    self.location = `/mart/recruitResumeView?recruitSeq=${recruitSeq}&resumeSeq=${resumeSeq}&step=${step}&listPage=${page}`;
 }
 
 
