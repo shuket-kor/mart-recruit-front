@@ -19,6 +19,22 @@ module.exports = class resumeService {
             return null;
         }
     }
+    static async get(user_seq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/get`;
+            const { body } = await got.post(apiURL, { json: { seq: user_seq },responseType: "json" });
+            if (body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `services/resumeService/get: ${body.result}`);
+                return body.data;
+            }
+        } catch (error) {
+            logger.writeLog("error", `services/resumeService/get: ${error}`);
+            return null;
+        }
+    }
     static async update(seq, subject, photo, name, contact, email,
         postCode, address, addressExtra, education, educcationSchool, carrerSeq, technical, license,
         isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary){

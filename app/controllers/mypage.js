@@ -7,26 +7,16 @@ module.exports = {
     async userpage(req, res, next) {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        const get = await resumeService.get(user_seq);
+        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
 
         res.render('mypage/userpage', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            get: get,
+            get: getByUserSeq,
             moment: moment,
             hostName: process.env.APIHOST
         });
-    },
-
-    async create(req, res, next){
-        let title = '마이 페이지';
-
-        res.render('mypage/userpagecreate', {
-            layout: 'layouts/default',
-            title: title,
-            user: req.user
-        })
     },
 
     // POST 로 이력서 수정
@@ -133,6 +123,8 @@ module.exports = {
             user: req.user
         })
     },
+
+    // 지원현황
     async support(req, res, next){
         let title = '마이 페이지';
 
@@ -142,15 +134,7 @@ module.exports = {
             user: req.user
         })
     },
-    async remove(req, res, next){
-        let title = '마이 페이지';
 
-        res.render('mypage/userpageremove', {
-            layout: 'layouts/default',
-            title: title,
-            user: req.user
-        })
-    },
     // 마트페이지
     async martpage(req, res, next) {
         let title = '마트 페이지';
