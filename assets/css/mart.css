@@ -289,3 +289,12 @@ ol, ul, li {
 .resume-list .name {
     font-weight: 700;
 }
+
+.resume-list .card {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 0px;
+}
+.resume-list .card.inactive {
+    background-color: #e6ecf0;
+}

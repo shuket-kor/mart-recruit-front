@@ -3520,3 +3520,7 @@ button.btn-primary,
     clear: both;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+

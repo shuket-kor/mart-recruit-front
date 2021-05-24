@@ -77,7 +77,7 @@
                         <tbody>
                         <% if (list) {
                             list.forEach(item => { %>
-                                <tr class="text-center">
+                                <tr class="text-center cursor-pointer" onclick="showResume(<%=item.SEQ %>)">
                                     <th scope="row"><%=(item.STEP == 'D') ? '서류전형' : (item.STEP == 'I') ? '면접' : (item.STEP == 'P') ? '합격' : '불합격' %></th>
                                     <td>
                                         <div class="user-image">
@@ -100,7 +100,7 @@
                                     </td>
                                     <td>
                                         <div><%=moment(item.APPLYDATE).format('YYYY.MM.DD') %></div>
-                                        <div><%=(item.READING = 'N') ? '미열람' : '열람' %></div>
+                                        <div><%-(item.READING == 'N') ? `<span class='text-primary'>미열람</span>` : '열람' %></div>
                                     </td>
                                     <td>
                                         <div><%-(item.CERTIFICATE == 'Y') ? `<div class="text-warning font-big"><i class="fa fa-check"></i></div>` : '미인증' %></div>
@@ -123,70 +123,25 @@
 <%- contentFor('script') %>
 <script>
 let totalCount =<%=totalCount %>; 
-let seq = <%=recruitInfo.SEQ %>;
+let recruitSeq = <%=recruitInfo.SEQ %>;
 let page = <%=page %>;
 let rowCount = <%=rowCount %>;
+let step = '<%=(step) ? step : '' %>';
 
 $(document).ready(function() {
     // 페이저 만들기
     if (totalCount <= rowCount) {
         $('#resume-page').hide();
     } else {
-        createPagination('resume-page', totalCount, rowCount, page, 10, `/mart/recruitResume?seq=${seq}`);
+        createPagination('resume-page', totalCount, rowCount, page, 10, `/mart/recruitResume?seq=${recruitSeq}`);
     }
     $("#create").click(function() {
         self.location = "/mart/recruitCreate";
     });
 })
 
-let edit = function(seq) {
-    self.location = `/mart/recruitEdit?seq=${seq}&page=${page}`;
-}
-
-let closeRecruit = function(seq) {
-    if (confirm("공고를 마감합니다. 마감된 공고는 재개할 수 없으며, 복사를 통해 다시 게시할 수 있습니다. 계속하시겠습니까?")) {
-        doGetCallSync(`/recruit/close?seq=${seq}`)
-        .success(function(json){
-            if (json.result == "success") 
-                self.location.reload();
-            else
-                alert("공고를 마감하는 도중에 오류가 발생했습니다.");
-        })
-        .fail(function(sender, message, details){
-            alert("공고를 마감하는 도중에 오류가 발생했습니다.");
-        });
-    }
-}
-
-let copyRecruit = function(seq) {
-    if (confirm("공고를 복사합니다. 계속하시겠습니까?")) {
-        doGetCallSync(`/recruit/copy?seq=${seq}`)
-        .success(function(json){
-            if (json.result == "success") 
-                self.location = `/mart/recruitEdit?seq=${json.data}&page=${page}`;
-            else
-                alert("공고를 복사하는 도중에 오류가 발생했습니다.");
-        })
-        .fail(function(sender, message, details){
-            alert("공고를 복사하는 도중에 오류가 발생했습니다.");
-        });
-    }
-}
-
-
-let active = function(seq) {
-    if (confirm("공고를 진행합니다. 계속하시겠습니까?")) {
-        doGetCallSync(`/recruit/active?seq=${seq}`)
-        .success(function(json){
-            if (json.result == "success") 
-                self.location.reload();
-            else
-                alert("공고를 시작하는 도중에 오류가 발생했습니다.");
-        })
-        .fail(function(sender, message, details){
-            alert("공고를 시작하는 도중에 오류가 발생했습니다.");
-        });
-    }
+let showResume = function(resumeSeq) {
+    self.location = `/mart/recruitResumeView?recruitSeq=${recruitSeq}&resumeSeq=${resumeSeq}&step=${step}&page=${page}`;
 }
 
 

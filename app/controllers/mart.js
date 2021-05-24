@@ -1,11 +1,12 @@
 const moment = require('moment');
 const numeral = require('numeral');
+const { ConsoleTransportOptions } = require('winston/lib/winston/transports');
 const logger = require('../config/logger.js');
 const commonService = require('../services/common.js');
 const martService = require('../services/mart.js');
 const recruitService = require('../services/recruit.js');
 const resumeService = require('../services/resume.js');
-const rowCount = 10;
+let rowCount = 10;
 
 module.exports = {
     async recruitList(req, res, next) {
@@ -183,6 +184,45 @@ module.exports = {
             step: step,
             totalCount: resumeList.totalCount,
             list: resumeList.list,
+            rowCount: rowCount,
+            page: currentPage
+        })
+    },
+
+    async recruitResumeView(req, res, next) {
+        const recruitSeq = req.query.recruitSeq;
+        const resumeSeq = req.query.resumeSeq;
+        const currentPage = (req.query.page) ? req.query.page : 1;
+        const step = req.query.step;
+
+        await resumeService.increaseViewCount(resumeSeq);
+        // 이력서 정보를 얻는다
+        const resumeInfo = await resumeService.get(resumeSeq);
+        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+
+        // 공고 정보를 얻는다
+        let recruitInfo = await recruitService.get(req.cookies.xToken, recruitSeq);
+        if (!recruitInfo) res.redirect("/");
+         // 공고 정보로부터 마트 정보를 얻는다
+        let martInfo = await martService.get(req.cookies.xToken, recruitInfo.MART_SEQ);
+        // 공고에 지원한 지원자 목록을 얻는다
+        let resumeList = await resumeService.listForRecruit(req.cookies.xToken, recruitInfo.SEQ, step);
+        rowCount = 5;
+
+        res.render('mart/recruitResumeView', {
+            layout: 'layouts/default',
+            title: req.app.get('baseTitle') + ' 지원자 채용',
+            user: req.user,
+            moment: moment,
+            numeral: numeral,
+            hostName: process.env.APIHOST,
+            martInfo: martInfo,
+            recruitInfo: recruitInfo,
+            totalCount: resumeList.totalCount,
+            list: resumeList.list,
+            resumeInfo: resumeInfo,
+            listCareer: listCareer,
+            step: step,
             rowCount: rowCount,
             page: currentPage
         })
