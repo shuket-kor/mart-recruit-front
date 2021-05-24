@@ -41,7 +41,7 @@
                         <div class="job-item">
                             <div class="item-overlay">
                                 <div class="job-info">
-                                    <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
+                                    <a class="btn btn-primary" onclick="showDetail(<%=item.SEQ %>)"><%=item.CHARGE %></a>
                                     <span class="tr-title">
                                         <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
                                     </span>
@@ -104,7 +104,7 @@
                         <div class="job-item-list">
                             <div class="job-info">
                                 <span class="tr-title">
-                                    <a href="#"><h5><%=item.NAME %></h5><%=item.SUBJECT %></a>
+                                    <a onclick="showDetail(<%=item.SEQ %>)"><h5><%=item.NAME %></h5><%=item.SUBJECT %></a>
                                 </span>
                                 <ul class="tr-list job-meta">
                                     <li><span><i class="fa fa-cash-register" aria-hidden="true"></i></span><%=item.JOBKIND_NAME %> / <%=item.WORKREGION_NAME %></li>
@@ -129,3 +129,34 @@
     </div>
 </div>
 <%- contentFor('script') %>
+<script>
+let searchType = '<%=searchType %>';
+let keyword = '<%=keyword %>';
+
+$(document).ready(function() {
+    // 검색 조건 설정
+    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
+    $("#keyword").val(keyword);
+    $("#keyword").keypress(function(e) {
+        if (e.keyCode == 13 && $(this).val().length > 0) search();
+    });
+    //검색 버튼 설정
+    $(".button-search").click(function() { search(); })
+    $(".button-search-reset").click(function() {
+        $("#searchType > a > span").html("Search For");
+        $('#keyword').val('');
+    })
+});
+
+function search() {
+    let searchType = ($("#searchType > a > span").html() == "마트 이름") ? "m" : ($("#searchType > a > span").html() == "공고 제목") ? "r" : "";
+    let keyword = $('#keyword').val();
+
+    self.location = `/recruit/list?searchType=${searchType}&keyword=${keyword}`;
+}
+
+function showDetail(seq) {
+    window.open(`/recruit/detail?seq=${seq}&searchType=${searchType}&keyword=${keyword}`);
+}
+
+</script>

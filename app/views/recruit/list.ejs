@@ -98,7 +98,7 @@
                         <div class="job-item">
                             <div class="item-overlay">
                                 <div class="job-info">
-                                    <a href="#" class="btn btn-primary"><%=item.CHARGE %></a>
+                                    <a class="btn btn-primary" onclick="showDetail(<%=item.SEQ %>)"><%=item.CHARGE %></a>
                                     <span class="tr-title">
                                         <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
                                     </span>
@@ -109,8 +109,8 @@
                                         <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                     </ul>
                                     <ul class="job-social tr-list listing-2" > 
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                        <li><a class="cursor-pointer" onclick="scrap(<%=item.SEQ %>)" ><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                        <li><a class="cursor-pointer" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>										
                             </div>
@@ -232,7 +232,7 @@ $(document).ready(function() {
         if (e.keyCode == 13 && $(this).val().length > 0) search();
     });
     //검색 버튼 설정
-    $(".button-search").click(function() { search(); })
+    $(".button-search").click(search)
     $(".button-search-reset").click(function() {
         $('input:checkbox[name="workingRegion"]').prop("checked", false);
         $('input:checkbox[name="jobKind"]').prop("checked", false);
@@ -242,7 +242,7 @@ $(document).ready(function() {
     })
 });
 
-function getRegions() {
+let getRegions = function () {
     let checkRegion = "";
     $('input:checkbox[name="workingRegion"]').each(function() {
         if(this.checked){
@@ -253,7 +253,7 @@ function getRegions() {
     return checkRegion;
 }
 
-function getJobKinds() {
+let getJobKinds = function () {
     let checkJobKind = "";
     $('input:checkbox[name="jobKind"]').each(function() {
         if(this.checked){
@@ -264,7 +264,7 @@ function getJobKinds() {
     return checkJobKind;
 }
 
-function getWorkingTypes() {
+let getWorkingTypes = function () {
     let checkWorkingType = "";
     $('input:checkbox[name="workingType"]').each(function() {
         if(this.checked){
@@ -275,7 +275,7 @@ function getWorkingTypes() {
     return checkWorkingType;
 }
 
-function search() {
+let search = function () {
     let regions = getRegions();
     let jobKinds = getJobKinds();
     let workingTypes = getWorkingTypes();
@@ -285,8 +285,23 @@ function search() {
     self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
 }
 
-function showDetail(seq) {
+let showDetail = function(seq) {
     window.open(`/recruit/detail?seq=${seq}&regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`);
+}
+
+let scrap = function(seq) {
+    if (confirm("이 구인 공고를 북마크를 하겠습니까?")) {
+        doGetCallSync(`/recruit/scrap?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("구인 공고를 북마크하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("구인 공고를 북마크하는 도중에 오류가 발생했습니다.");
+        });
+    }
 }
 
 </script>
