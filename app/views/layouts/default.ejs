@@ -127,5 +127,11 @@
 
 	<%-script %>
 
+	<script>
+		// 서브 메뉴가 있을 경우 처리를 위한 공용 스크립트
+		const uri = window.location.pathname.split('/');
+
+		$("#" + uri[uri.length - 1]).addClass("active");
+	</script>
 </body>
 </html>	

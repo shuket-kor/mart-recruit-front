@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { martpage, userpage,  edit, userEdit, resumegetByUserSeq,support, bookmark, updateImage, updatecertificate} = require('../app/controllers/mypage.js');
+const { martpage, userPage,  edit, userEdit, resumegetByUserSeq, apply, scrap, closeAccount, updateImage, updatecertificate} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
-router.get('/user', verify, userpage);
+router.get('/user', verify, userPage);
 
 // 이력서 수정
 router.get('/user/edit', verify, edit);
@@ -21,10 +21,13 @@ router.post('/user/updatecertificate', updatecertificate)
 router.get('/user/resume', verify, resumegetByUserSeq);
 
 // 북마크
-router.get('/user/bookmark', verify, bookmark);
+router.get('/user/scrap', verify, scrap);
 
 // 지원 현황
-router.get('/user/support', verify, support);
+router.get('/user/apply', verify, apply);
+
+// 지원 현황
+router.get('/user/closeAccount', verify, closeAccount);
 
 // 마트 > 내정보
 router.get('/mart', verify, martpage);

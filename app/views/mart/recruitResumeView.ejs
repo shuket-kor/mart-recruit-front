@@ -51,7 +51,7 @@
                             <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
                             <div class="updated-info">
                                 <span class="pull-left">이력서의 마지막 업데이트</span>
-                                <span class="pull-right"><%=moment(resumeInfo.MODIFIED).format('YYYY.MM.DD') %></span>
+                                <span class="pull-right"><%=moment(resumeInfo.MODIFIED).format('YYYY.MM.DD HH:mm:ss') %></span>
                             </div>
                         </div><!-- /.resume-last-updated -->
 
@@ -99,7 +99,7 @@
                             <ul class="tr-list resume-info">
                                 <li class="personal-deatils media">
                                     <div class="icon">
-                                        <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </div>
                                     <div class="media-body">
                                         <span class="tr-title">이력서 정보</span>
@@ -157,7 +157,9 @@
                                     </div>
                                 </li><!-- /.career-objective -->
                             </ul>  
-                            <hr>              
+
+                        </div>
+                        <div class="section">
                             <div class="alert alert-light text-center" role="alert">
                                 본 이력서는 <h3><i class="fa fa-quote-left"></i> <%=applyInfo.STEPNAME %> <i class="fa fa-quote-right"></i></h3>상태입니다. 다음 상태로 변경하여 관리할 수 있습니다.
                             </div>

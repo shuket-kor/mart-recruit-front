@@ -1,21 +1,23 @@
-const { logger } = require('../config/logger.js');
-const resumeService = require('../services/resume.js');
+const { logger } = require('../config/logger');
+const resumeService = require('../services/resume');
+const scrapService = require('../services/scrap');
 const moment = require('moment');
 module.exports = {
     
     // 유저 정보 페이지
-    async userpage(req, res, next) {
+    async userPage(req, res, next) {
         let title = '마이 페이지';
-        let user_seq = req.user.Seq;
-        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
+        let userSeq = req.user.Seq;
+        // 사용자 정보를 포함한 이력서 정보이다
+        const userInfo = await resumeService.getByUserSeq(userSeq);
 
-        res.render('mypage/userpage', {
+        res.render('mypage/userPage', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            get: getByUserSeq,
             moment: moment,
-            hostName: process.env.APIHOST
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
         });
     },
 
@@ -99,39 +101,70 @@ module.exports = {
 
     async resumegetByUserSeq(req, res, next){
         let title = '마이 페이지';
-        let user_seq = req.user.Seq;
-        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
-        let resumeSeq = getByUserSeq.SEQ;
-        const listCareer = await resumeService.listCareer(resumeSeq);
-        res.render('mypage/userpageresume', {
+        let userSeq = req.user.Seq;
+        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const listCareer = await resumeService.listCareer(userInfo.SEQ);
+
+        res.render('mypage/userPageResume', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            get: getByUserSeq,
             moment: moment,
             hostName: process.env.APIHOST,
+            userInfo: userInfo,
             listCareer: listCareer
         })
     },
 
-    async bookmark(req, res, next){
+    async scrap(req, res, next){
         let title = '마이 페이지';
+        let userSeq = req.user.Seq;
+        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const scrapList = await scrapService.scrapList(req.cookies.xToken, userSeq);
 
-        res.render('mypage/userpagebookmark', {
+        console.log(scrapList.list);
+        res.render('mypage/userPageScrap', {
             layout: 'layouts/default',
             title: title,
-            user: req.user
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
+            list: scrapList.list
         })
     },
 
     // 지원현황
-    async support(req, res, next){
+    async apply(req, res, next){
         let title = '마이 페이지';
+        let userSeq = req.user.Seq;
+        const userInfo = await resumeService.getByUserSeq(userSeq);
 
-        res.render('mypage/userpagesupport', {
+        res.render('mypage/userPageApply', {
             layout: 'layouts/default',
             title: title,
-            user: req.user
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
+
+        })
+    },
+
+    // 지원현황
+    async closeAccount(req, res, next){
+        let title = '마이 페이지';
+        let userSeq = req.user.Seq;
+        const userInfo = await resumeService.getByUserSeq(userSeq);
+
+        res.render('mypage/userPageCloseAccount', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
+
         })
     },
 

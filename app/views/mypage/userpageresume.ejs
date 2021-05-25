@@ -1,255 +1,140 @@
 <%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
+<%-include('module_UserPageInfo.js') %>
+
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <ul class="nav nav-tabs profile-tabs section" role="tablist">
-                        <li role="presentation"><a href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
-                        <li role="presentation"><a class="active" href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
-                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
-                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
-                        <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
-                        <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
-                    </ul>	
+                    <%-include('module_UserPageLeft.js') %>
                 </div>
             </div>
             
-            <div class="col-md-8 col-lg-9">
-                <div style="display: none;">
-                    <input id="seqseq" value="<% user %>)" name="user-seq">
-                </div>
-                <div role="tabpanel" class="tab-pane section">
-                    <ul class="tr-list">
-                        <li class="career-objective media">
-                            <div class="media-body">
-                                <p class="tr-title">이력서</p>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label class="pull-left">제목</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="subject"><%= get.SUBJECT %></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="career-objective media">
-                            <div class="media-body">
-                                <p class="tr-title">개인정보</p>
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label class="pull-left">이름</label>
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <span name="name"><%= get.NAME %></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label class="pull-left">연락처</label>
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <span name="contact"><%= get.CONTACT %></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label class="pull-left">이메일</label>
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <span name="email"><%= get.EMAIL %></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label class="pull-left">성별</label>
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <span name="gender"><%= get.GENDER %></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label>주소</label>
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <span ><%= get.ADDRESS %> <%= get.ADDRESSEXTRA %></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="change-photo">
-                                            <div class="user-image">
-                                                <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
-                                                <!-- <img src="/assets/images/test/test1.png" alt="Image" class="img-fluid"> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <li class="education-background code-edit-small">
-                            <div class="media-body">
-                                <div class="tr-title">학력 사항</div>
-                                <div class="media-body">
-                                    <div class="code-edit-small">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <label>학위</label>
-                                            </div>
-                                            <div class="col-sm-8">    
-                                                <span  name="gender"><%= get.EDUCATION %></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <label>최종학력</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <span name="EDUCATIONSCHOOL"><%= get.EDUCATIONSCHOOL %></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /.additem -->
-                        </li>
-                        <br>
-                        <li class="qualification code-edit-small">
-                            <div class="media-body">
-                            <div class="tr-title">보유기술 및 자격증</div>
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label>보유기술</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="TECHNICAL"><%= get.TECHNICAL %></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label>자격증 </label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span name="LICENSE"><%= get.LICENSE %></span>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="col-md-8 col-lg-9 account-info">
+                <div class="section resume-last-updated">
+                    <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
+                    <div class="updated-info">
+                        <span class="pull-left">이력서의 마지막 업데이트</span>
+                        <span class="pull-right"><%=moment(userInfo.MODIFIED).format('YYYY.MM.DD HH:mm:ss') %></span>
+                    </div>
+                </div><!-- /.resume-last-updated -->
+
+                <% if (userInfo.CERTIFICATE == 'Y') { %> 
+                    <div class="alert alert-warning">
+                        <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
+                        <div class="updated-info">
+                            <span class="pull-left">이 이력서는 인증되었습니다</span>
+                            <span class="pull-right"><%=moment(userInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
                         </div>
-                        </li>
-                        <br>
-                        <li class="findjob code-edit-small">
-                            <div class="media-body">
-                            <div class="tr-title">취업 우대사항</div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>보훈대상</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <span name="ISWELFARE"><%= get.ISWELFARE %></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>병역</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <span name="ISMILITALY"><%= get.ISMILITALY %></span>
-                                </div>
-                            </div>
+                    </div><!-- /.resume-last-updated -->
+                <%}%>
+
+                <div class="section display-information">
+                    <div class="title title-after">
+                        <div class="icon"><img src="/assets/images/icons/2.png" alt="Icon" class="img-fluid"></div> 
+                        <span>기본 정보</span>
+                    </div>
+
+                    <div class="change-photo pull-left">
+                        <div class="user-image">
+                            <%-(userInfo.PHOTO) ? `<img src="${hostName}/api/files/get/${userInfo.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
                         </div>
-                        </li>
-                        <br>
-                        <li class="career-objective code-edit-small">
+                    </div>
+                    <div>
+                        <dl class="row">
+                            <dt class="col-sm-3">이름</dt>
+                            <dd class="col-sm-9"><%=userInfo.NAME %> (<%=userInfo.GENDER %>) / <%=userInfo.BIRTHYEAR %>년 생 (<%=(new Date()).getFullYear() - userInfo.BIRTHYEAR * 1.0 %>)</dd>
+                            
+                            <dt class="col-sm-3">주소</dt>
+                            <dd class="col-sm-9">(<%=userInfo.POSTCODE %>) <%=userInfo.ADDRESS %> <%=userInfo.ADDRESSEXTRA %></dd>
+                            
+                            <dt class="col-sm-3">연락처</dt>
+                            <dd class="col-sm-9"><%=userInfo.CONTACT %></dd>
+                            
+                            <dt class="col-sm-3">이메일</dt>
+                            <dd class="col-sm-9"><%=userInfo.EMAIL %></dd>
+                            
+                            <dt class="col-sm-3">학력</dt>
+                            <dd class="col-sm-9"><%=userInfo.EDUCATION %> (<%=userInfo.EDUCATIONSCHOOL %>)</dd>
+                            </dl>                                
+                    </div>
+                </div><!-- /.display-information -->
+                <div class="section">
+                    <ul class="tr-list resume-info">
+                        <li class="personal-deatils media">
+                            <div class="icon">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </div>
                             <div class="media-body">
-                                <div class="tr-title">경력 증명 서류</div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <label>업로드 유무</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span ><%if (get.CAREERCERTIFICATE )%> 파일업로드 완료</span>
-                                    </div>
+                                <span class="tr-title">이력서 정보</span>
+                                <ul class="tr-list">
+                                    <li><span class="left">경력여부</span><span class="middle">:</span> <span class="right"><%=userInfo.CARRER_NAME %></span></li>
+                                    <li><span class="left">보유기술 </span><span class="middle">:</span> <span class="right"><%=userInfo.TECHNICAL %></span></li>
+                                    <li><span class="left">자격증</span><span class="middle">:</span> <span class="right"><%=userInfo.LICENSE %></span></li>
+                                    <li><span class="left">보훈대상</span><span class="middle">:</span> <span class="right"><%=userInfo.ISWELFARE %></span></li>
+                                    <li><span class="left">병역사항</span><span class="middle">:</span> <span class="right"><%=userInfo.ISMILITALY %></span></li>
+                                </ul>							    	
+                            </div>
+                        </li><!-- /.personal-deatils -->
+                        <% if (listCareer) { %>
+                        <li class="work-history media">
+                            <div class="icon">
+                                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <span class="tr-title">근무 기록</span>
+                                <div class="tr-list">
+                                    <%    listCareer.forEach(item => { %>
+                                            
+                                            <table class="table">
+                                                <tr>
+                                                    <th>근무처</th>
+                                                    <td><%=item.COMPANY %></td>
+                                                    <th>직급직책</th>
+                                                    <td><%=item.POSITION %></td>
+                                                    <th>근무 기간</th>
+                                                    <td colspan="3"><%=moment(item.WORKSTART).format('YYYY.MM.DD') %>~ <%=(item.WORKEND) ? moment(item.WORKEND).format('YYYY.MM.DD') : '재직 중' %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>직종</th>
+                                                    <td><%=item.JOBTYPE %></td>
+                                                    <th>근무지역</th>
+                                                    <td><%=item.WORKREGION %></td>
+                                                    <th>담당업무</th>
+                                                    <td><%=item.WORKREGION %></td>
+                                                    <th>최종 급여</th>
+                                                    <td><%=item.SALARY %></td>
+                                                </tr>
+                                            </table>
+                                        <% }) %>
                                 </div>
                             </div>
-                        </li>
-                        <li class="career-objective media code-edit-small">
+                        </li><!-- /.work-history -->	
+                        <% } %>
+                        <li class="career-objective media">
+                            <div class="icon">
+                                <i class="fa fa-black-tie" aria-hidden="true"></i>
+                            </div>  
                             <div class="media-body">
-                                <label class="tr-title">소개</label>
-                                <span><%= get.INTRODUCE %></span>
+                                <span class="tr-title">자기 소개서</span>
+                                <div class="introduce"><%-userInfo.INTRODUCE %></div>
                             </div>
-                        </li>
-                        <br>
-                        <li class="work-history" id="work-history">
+                        </li><!-- /.career-objective -->
+                        <li class="career-objective media">
+                            <div class="icon">
+                                <i class="fa fa-file-word" aria-hidden="true"></i>
+                            </div>  
                             <div class="media-body">
-                                <label class="tr-title">경력</label> 
-                                <% if(listCareer){ var now = new Date(); %>
-                                <% var nowYear = now.getFullYear(); %>
-                                <% var startYear = parseInt(moment(listCareer[0].WOKSTART).format('YYYY')); %>
-                                    <% if(listCareer[listCareer.length-1].WORKEND == null){ %> 
-                                        총 <%= nowYear - startYear %>
-                                    <% }else {%>
-                                        총  <% parseInt(moment(listCareer[listCareer.length-1].WORKEND).foramt('YYYY')) - startYear %>
-                                    <% }%>
-                                    년
-                                <% } %>
-                                    
-                                <table class="table table-hover" style="background-color: #eee">
-                                    <tr style="background-color: #fff">
-                                        <td>
-                                            <font size="2pt"
-                                                ><strong><center>근무기간</center></strong></font
-                                            >
-                                        </td>
-                                        <td>
-                                            <font size="2pt"
-                                                ><strong><center>마트명</center></strong></font
-                                            >
-                                        </td>
-                                        <td>
-                                            <font size="2pt"
-                                                ><strong><center>직책</center></strong></font
-                                            >
-                                        </td>
-                                        <td>
-                                            <font size="2pt"
-                                                ><strong><center>지역</center></strong></font
-                                            >
-                                        </td>
-                                        <td>
-                                            <font size="2pt"
-                                                ><strong><center>최종연봉</center></strong></font
-                                            >
-                                        </td>
-                                    </tr>
-                                    <% if(listCareer){listCareer.forEach(item => { %>
-                                        <tr>
-                                            <td><center><%= moment(item.WOKSTART).format('YYYY-MM-DD') %> ~ 
-                                            <% if(item.WORKEND != null) { %>
-                                                <%= moment(item.WORKEND).format('YYYY-MM-DD') %>
-                                            <% }else{%>
-                                                재직중
-                                            <% } %>
-                                            </center></td>
-                                            <td><center><%= item.COMPANY %></center></td>
-                                            <td><center><%= item.POSITION %></center></td>
-                                            <td><center><%= item.WORKREGION %></center></td>
-                                            <td><center><%= item.SALARY %></center></td>
-                                        </tr>
-                                        <% })} %>
-                                </table>
+                                <span class="tr-title">인증용 파일</span>
+                                <div class="introduce"><%-(userInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${userInfo.CAREERCERTIFICATE}' target='_blank'>` : '제출되지 않았습니다' %></div>
                             </div>
-                        </li>
-                        <!-- /.work-history -->
-                    </ul>
+                        </li><!-- /.career-objective -->
+                    </ul>  
+
                 </div>
-                <!-- /.tab-pane -->
             </div>
         </div><!-- /.row -->
     </div><!-- /.container -->

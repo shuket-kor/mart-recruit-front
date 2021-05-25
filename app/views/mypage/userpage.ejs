@@ -1,20 +1,15 @@
 <%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
+<%-include('module_UserPageInfo.js') %>
+
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <ul class="nav nav-tabs profile-tabs section" role="tablist">
-                        <li role="presentation"><a class="active" href="/mypage/user" ><i class="fa fa-life-ring" aria-hidden="true"></i>내 정보</a></li>
-                        <!-- <li role="presentation"><a href="/mypage/user/create"><span><i class="fa fa-plus" aria-hidden="true"></i></span> 이력서 생성</a></li> -->
-                        <li role="presentation"><a href="/mypage/user/resume" ><span><i class="fa fa-user-o" aria-hidden="true"></i></span> 내 이력서</a></li>
-                        <li role="presentation"><a href="/mypage/user/edit" ><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 이력서 수정</a></li>
-                        <li role="presentation"><a href="/mypage/user/bookmark" ><span><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> 북마크</a></li>
-                        <li role="presentation"><a href="/mypage/user/support" ><span><i class="fa fa-clone" aria-hidden="true"></i></span> 지원 현황</a></li>
-                        <li role="presentation"><a href="/mypage/user/remove" ><span><i class="fa fa-remove" aria-hidden="true"></i></span> 계정 삭제</a></li>
-                    </ul>	
+                    <%-include('module_UserPageLeft.js') %>
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
@@ -24,81 +19,61 @@
                             <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
                             <div class="updated-info">
                                 <span class="pull-left">마지막 업데이트</span>
-                                <span class="pull-right">이력서 업데이트 날자 <%= moment(get.MODIFIED).format('YYYY-MM-DD hh:mm:ss')%></span>
+                                <span class="pull-right"><%= moment(userInfo.MODIFIED).format('YYYY.MM.DD hh:mm:ss')%></span>
                             </div>
                         </div><!-- /.resume-last-updated -->
+
+                        <% if (userInfo.CERTIFICATE == 'Y') { %> 
+                            <div class="alert alert-warning">
+                                <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
+                                <div class="updated-info">
+                                    <span class="pull-left">이 이력서는 인증되었습니다</span>
+                                    <span class="pull-right"><%=moment(userInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
+                                </div>
+                            </div><!-- /.resume-last-updated -->
+                        <%} else if (userInfo.CAREERCERTIFICATE) { %>
+                            <div class="alert alert-dark">
+                                <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
+                                <div class="updated-info">
+                                    <span class="pull-left">인증용 파일을 첨부했으나 아직 인증되지 않았습니다.</span>                                    
+                                </div>
+                            </div><!-- /.resume-last-updated -->
+                        <% } %>
 
                         <div class="section display-information">
                             <div class="title title-after">
                                 <img src="/assets/images/icons/2.png" alt="Icon" class="img-fluid">
                                 <span>내 정보</span>
-                                <% if(get.CERTIFICATE == 'Y'){ %>
-                                <div class="bg-icon bg-icon-success pull-right">
-                                    <i class="fa fa-check"> 인증완료</i>
-                                </div>
-                                <% }else { %>
-                                    <div class="bg-icon bg-icon-success pull-right">
-                                        <i class="fa fa-exit"> 인증 대기</i>
-                                    </div>
-                                <% } %>
                             </div>
-
-                            <!-- <div class="change-photo">
-                                <div class="user-image">
-                                    이프 이미지 겟.포토 ~~~~
-                                </div> -->
-                                <!-- <div class="upload-photo">
-                                    <label class="btn btn-primary" for="upload-photo">
-                                        <input type="file" id="upload-photo">
-                                        업로드
-                                    </label>
-                                    <span class="max-size">Max 20 MB</span>
-                                </div> -->
-                                <!-- <div class="upload-photo">
-                                    <label class="btn btn-primary" for="upload-photo" >사진 업로드</label>
-                                    <input type="file" id="upload-photo">
-                                    <span class="max-size">Max 20 MB</span>
-                                </div> -->
-                            <!-- </div> -->
-                            
+                           
                             <ul class="tr-list account-details">
                                 <div class="row">
                                     <div class="col-sm-8">
-                                        <li>이름<span><%= get.NAME %></span></li>
+                                        <li>이름<span><%= userInfo.NAME %></span></li>
                                     </div>
                                     <div class="col-sm-4" style="text-align : center;">
-                                        <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                                        <% if (userInfo.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=userInfo.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <li>주소<span><%= get.ADDRESS %> <%= get.ADDRESSEXTRA %></span></li>
+                                        <li>주소<span>(<%= userInfo.POSTCODE %>) <%= userInfo.ADDRESS %> <%= userInfo.ADDRESSEXTRA %></span></li>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <li>핸드폰<span><%= get.CONTACT %></span></li>
+                                        <li>핸드폰<span><%= userInfo.CONTACT %></span></li>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <li>이메일<span><a href="#"><%= get.EMAIL %></a></span></li>
+                                        <li>이메일<span><a href="#"><%= userInfo.EMAIL %></a></span></li>
                                     </div>
                                 </div>
                                 <br>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <li>직무<span><%= get.JOBKIND_NAME %></span></li>
-                                    </div>
-                                </div>
                                 <br>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <li>4대보험 확인증<span><%= get.CERTIFICATE=='Y'? '인증 완료' : '미인증' %></span></li>
-                                    </div>
-                                </div>
                             </ul>								
                         </div><!-- /.display-information -->
                     </div><!-- /.tab-pane -->
