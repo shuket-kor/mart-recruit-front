@@ -48,7 +48,7 @@
 					<ul class="nav navbar-nav">
 					<% if (!user || user.Type == 'U') { %>
 						<li class="m-l-30"><a href="/recruit/list">구인 공고</a></li>
-						<li class="m-l-30"><a href="/recruit/recommend">추천 공고</a></li>
+						<!-- <li class="m-l-30"><a href="/recruit/recommend">추천 공고</a></li> -->
 						<li class="m-l-30"><a href="/notice/list">공지사항</a></li>
 					<%} else { %>
 						<li class="m-l-30"><a href="/mart/recruit">지원자 채용</a></li>
@@ -60,19 +60,18 @@
 
 				<div class="navbar-right">			
 					<ul class="sign-in tr-list">
-						<li><i class="fa fa-user"></i></li>
 						<% if (user) { %>
-							<li><a href="/auth/logout">로그아웃 </a></li>
+							<li><i class="fa fa-power-off"></i> <a href="/auth/logout">로그아웃 </a></li>
 							<% if (user.Type == 'U') { %>
-							<li><a href="/mypage/user">유저 정보관리</a></li>
+							<li><i class="fa fa-info-circle"></i> <a href="/mypage/user">마이 페이지</a></li>
 							<%} else if(user.Type == 'M'){ %>
-							<li><a href="/mypage/mart">마트 정보관리</a></li>
+							<li><i class="fa fa-shopping-cart"></i> <a href="/martPage/martInfo">마트 정보</a></li>
 							<% }else{ %>
 							<li><a href="/notpage">어드민 정보관리</a></li>
 							<% } %>
 						<%} else { %>
-							<li><a href="/auth/login">로그인 </a></li>
-							<li><a href="/users/signup">회원 가입</a></li>
+							<li><i class="fa fa-sign-in-alt"></i> <a href="/auth/login">로그인 </a></li>
+							<li><i class="fa fa-user-plus"></i> <a href="/users/signup">회원 가입</a></li>
 						<% } %>
 					</ul><!-- /.sign-in -->					
 					<% if (!user || user.Type == 'M') { %>

@@ -2,22 +2,7 @@
 <link rel="stylesheet" href="/assets/css/mart.css">
 
 <%- contentFor('content') %>
-<div class="tr-breadcrumb bg-image section-before">
-    <div class="container">
-        <div class="breadcrumb-info text-center">
-            <div class="breadcrumb-logo">
-                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
-            </div>
-            <div class="page-title">
-                <h1><%=martInfo.NAME %></h1>
-            </div>		
-            <ul class="job-meta tr-list list-inline">
-                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=martInfo.POSTCODE %>) <%=martInfo.ADDRESS %> <%=martInfo.ADDRESSEXTRA %></li>
-                <li><i class="fa fa-phone" aria-hidden="true"></i><%=martInfo.CONTACT %></li>
-            </ul>
-        </div>
-    </div><!-- /.container -->
-</div><!-- /.tr-breadcrumb -->	
+<%- include('module_martInfo.ejs') %>
 
 <div class="all-view section-padding" style="padding-top: 20px;">
     <div class="container">
@@ -49,7 +34,7 @@
                         list.forEach(item => { %>
                             <li class="recruit-list-row">
                             <div class="info-recruit">
-                                <a href="/mart/recruitResume?seq=<%=item.SEQ %>&page=<%=page %>" class="title <%=(item.ACTIVE == 'Y') ? 'text-info' : 'text-secondary' %>">                                    
+                                <a href="/mart/recruitResume?seq=<%=item.SEQ %>&page=<%=page %>" class="title <%=(item.ACTIVE == 'Y') ? 'text-info' : 'text-secondary' %>">
                                     <%=item.SUBJECT %>
                                 </a>
                                 <div class="date">

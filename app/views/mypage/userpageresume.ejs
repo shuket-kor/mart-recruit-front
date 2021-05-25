@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
-<%-include('module_UserPageInfo.js') %>
+<%-include('module_userPageInfo.ejs') %>
 
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <%-include('module_UserPageLeft.js') %>
+                    <%-include('module_userPageLeft.ejs') %>
                 </div>
             </div>
             
@@ -30,7 +30,15 @@
                             <span class="pull-right"><%=moment(userInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
                         </div>
                     </div><!-- /.resume-last-updated -->
-                <%}%>
+                <%} else if (userInfo.CAREERCERTIFICATE) { %>
+                    <div class="alert alert-dark">
+                        <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
+                        <div class="updated-info">
+                            <span class="pull-left">인증용 파일을 첨부했으나 아직 인증되지 않았습니다.</span>                                    
+                        </div>
+                    </div><!-- /.resume-last-updated -->
+                <% } %>
+
 
                 <div class="section display-information">
                     <div class="title title-after">

@@ -2,19 +2,19 @@
 <link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
-<%-include('module_UserPageInfo.js') %>
+<%-include('module_userPageInfo.ejs') %>
 
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <%-include('module_UserPageLeft.js') %>
+                    <%-include('module_userPageLeft.ejs') %>
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
                 <div class="tab-content">
-                    <div role="tabpanel" class="bookmark" id="bookmark">
+                    <div class="bookmark account-info" >
                         <div class="row">
                             <% if (list) {
                                 list.forEach(item => { %>
@@ -61,9 +61,13 @@
                                     </div>
                             <% });                               
                             } else { %>
-                                <div class="section col-md-12">
-                                aaaa
-                                </div>
+                                <div class="col-md-12 alert alert-warning">
+                                    <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-bookmark"></i></div></span>
+                                    <div class="updated-info">
+                                        <span class="pull-left">스크랩한 공고가 없습니다.</span>
+                                    </div>
+                                </div><!-- /.resume-last-updated -->
+            
                             <% } %>
                         </div><!-- /.row -->					
                     </div><!-- /.tab-pane -->

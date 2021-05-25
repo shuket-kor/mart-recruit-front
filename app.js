@@ -40,8 +40,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
 app.use('/recruit', require('./routes/recruit'));
-app.use('/mypage', require('./routes/mypage'));
 app.use('/mart', require('./routes/mart'));
+app.use('/mypage', require('./routes/mypage'));
+app.use('/martPage', require('./routes/martPage'));
 
 app.use(
   morgan('combined', 

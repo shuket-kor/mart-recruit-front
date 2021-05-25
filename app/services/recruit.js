@@ -628,6 +628,34 @@ module.exports = class recruitService {
             return null;
         }
     }  
+    static async listUserApply(token, userSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/recruit/listUserApply`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    userSeq: userSeq,
+                    key: secretKey
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/recruitService/listUserApply: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/recruitService/listUserApply: ${error}`);
+            return null;
+        }
+    }  
     static applyStatus(step) {
         switch (step) {
             case 'D' : return '서류 전형'; break;

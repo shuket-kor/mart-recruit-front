@@ -1,0 +1,13 @@
+<div class="tr-breadcrumb bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="breadcrumb-logo">
+                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
+            </div>
+            <ul class="job-meta tr-list list-inline">
+                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=(martInfo.POSTCODE) ? martInfo.POSTCODE : '' %>) <%=(martInfo.ADDRESS) ? martInfo.ADDRESS : '' %> <%=(martInfo.ADDRESSEXTRA) ? martInfo.ADDRESSEXTRA : '' %></li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i><%=(martInfo.CONTACT) ? martInfo.CONTACT : '' %></li>
+            </ul>
+        </div>
+    </div>
+</div>

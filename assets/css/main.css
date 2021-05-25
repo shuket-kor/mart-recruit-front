@@ -2049,7 +2049,7 @@ select:focus,
 }
 
 .account-content {
-    padding: 35px 30px;
+    padding: 35px 20px;
     border-radius: 4px;
     background-color: #fff;
 }
@@ -2057,7 +2057,7 @@ select:focus,
 .user-account .form-control,
 .user-account .dropdown {
     padding: 5px 20px;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     margin-bottom: 30px;
     background-color: #fcfcfc;
 }
@@ -2772,6 +2772,7 @@ select:focus,
     float: left;
     margin-bottom: 0;
     margin-right: 10px;
+    max-width: 150px;
 }
 
 .apply-job .job-info,

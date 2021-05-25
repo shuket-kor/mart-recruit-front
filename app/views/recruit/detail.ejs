@@ -82,6 +82,7 @@
                         <%} else {%> 
                             <button type="button" class="button-apply button-recruit-apply">입사 지원</button>
                         <%}%> 
+                        <button type="button" class="button-list button-recruit-list m-t-20">목록 보기</button>
                     </div><!-- /.widget-area -->
                 </div><!-- /.tr-sidebar -->
             </div>
@@ -146,14 +147,20 @@
 <script>
 let seq = <%=recruitInfo.SEQ %>;
 let applyResult = '<%=applyResult %>';
+let regions = '<%=regions %>';
+let jobKinds = '<%=jobKinds %>';
+let workingTypes = '<%=workingTypes %>';
+let searchType = '<%=searchType %>';
+let keyword = '<%=keyword %>';
 
 $(document).ready(function() {
     $(".button-apply").click(apply);
     $(".button-cancel-apply").click(cancelApply);
-    ShowMessage();
+    $(".button-list").click(gotoList);
+    ShowMessage;
 });
 
-function apply() {
+let apply = function() {
     if (confirm("이 구인 공고에 지원하시겠습니까?")) {
         doGetCallSync(`/recruit/apply?seq=${seq}`)
         .success(function(json){
@@ -168,7 +175,7 @@ function apply() {
     }
 }
 
-function cancelApply() {
+let cancelApply = function() {
     if (confirm("지원을 취소하시겠습니까?")) {
         doGetCallSync(`/recruit/cancelApply?seq=${seq}`)
         .success(function(json){
@@ -183,7 +190,7 @@ function cancelApply() {
     }
 }
 
-function scrap(recruitSeq) {
+let scrap = function(recruitSeq) {
     doGetCallSync(`/recruit/scrap?seq=${recruitSeq}`)
     .success(function(json){
         if (json.result == "success") 
@@ -196,7 +203,7 @@ function scrap(recruitSeq) {
     });
 }
 
-function cancelScrap(recruitSeq) {
+let cancelScrap = function(recruitSeq) {
     doGetCallSync(`/recruit/cancelScrap?seq=${recruitSeq}`)
     .success(function(json){
         if (json.result == "success") 
@@ -209,7 +216,7 @@ function cancelScrap(recruitSeq) {
     });
 }
 
-function ShowMessage()
+let ShowMessage = function()
 {
     switch (applyResult) {
         case "userNotMatch" : 
@@ -218,7 +225,11 @@ function ShowMessage()
     } 
 }
 
-function showDetail(seq) {
-    window.open(`/recruit/detail?seq=${seq}`);
+let gotoList = function() {
+    self.location = `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`;
+}
+
+let showDetail = function(seq) {
+    window.open(`/recruit/detail?seq=${seq}&regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`);
 }
 </script>

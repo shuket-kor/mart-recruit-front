@@ -61,10 +61,11 @@ module.exports = {
         let resultCode = (req.query.result) ? req.query.result : '0'; 
         let refer = (req.query.refer) ? req.query.refer : ''; 
 
-        logger.writeLog("info", `controller/auth/login: login - ${resultCode}`);
+        // logger.writeLog("info", `controller/auth/login: login - ${resultCode}`);
 
         res.render("auth/login", {
             layout: "layouts/default",
+            title: '한국마트협회 구인구직 - 로그인',
             user: req.user,
             resultCode: resultCode,
             refer: refer
@@ -73,7 +74,7 @@ module.exports = {
 
     //  로그인 프로세스
     async loginProcess(req, res, next) {
-        let userId = req.body.userid;
+        let userId = req.body.userId;
         let password = req.body.password;
         let refer = (req.body.refer) ? req.body.refer : '';
         // 인증서버로부터 인증 정보를 받는다.
