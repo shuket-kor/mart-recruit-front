@@ -191,11 +191,11 @@
                                 <label class="tr-title">경력</label> 
                                 <% if(listCareer){ var now = new Date(); %>
                                 <% var nowYear = now.getFullYear(); %>
-                                <% var startYear = parseInt(moment(listCareer[0].WOKSTART).format('YYYY')); %>
-                                    <% if(listCareer[listCareer.length-1].WORKEND == null){ %> 
+                                <% var startYear = parseInt(moment(listCareer[listCareer.length-1].WORKSTART).format('YYYY')); %>
+                                    <% if(listCareer[0].WORKEND == null){ %> 
                                         총 <%= nowYear - startYear %>
                                     <% }else {%>
-                                        총  <% parseInt(moment(listCareer[listCareer.length-1].WORKEND).foramt('YYYY')) - startYear %>
+                                        총  <% nowYear - startYear %>
                                     <% }%>
                                     년
                                 <% } %>
@@ -230,7 +230,7 @@
                                     </tr>
                                     <% if(listCareer){listCareer.forEach(item => { %>
                                         <tr>
-                                            <td><center><%= moment(item.WOKSTART).format('YYYY-MM-DD') %> ~ 
+                                            <td><center><%= moment(item.WORKSTART).format('YYYY-MM-DD') %> ~ 
                                             <% if(item.WORKEND != null) { %>
                                                 <%= moment(item.WORKEND).format('YYYY-MM-DD') %>
                                             <% }else{%>

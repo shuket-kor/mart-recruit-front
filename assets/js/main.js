@@ -121,6 +121,28 @@ jQuery(function ($) {
                         this.id = match[1] + (cloneitem);
                     };
             });
+            // function careerContent(){
+            //     var contentString = '';
+            //     contentString +='<div id="addhistory'+i+'"'+'class="additem">'
+            //     contentString +='<span class="icon clone" style="display: none;"><i class="fa fa-plus" aria-hidden="true"></i></span>'
+            //     contentString +='<span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>'
+            //     contentString +='<div class="code-edit-small">'
+            //     contentString +='<label>마트 이름</label>'
+            //     contentString +=`<div class="code-edit"><%= listCareer.COMPANY %></div>`
+            //     contentString +='<div class="row">'
+            //     contentString +='<div class="col-sm-6 col-md-4"><label>시작</label><div class="calendar"><input type="date" name="" class="form-control" value="" /></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-4"><label>끝</label><div class="calendar"><input type="date" class="form-control" value="" /></div></div>'
+            //     contentString +='<div class="col-md-4"><div class="checkbox"><label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-4"><label>경력기간</label><div class="code-edit"></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-4"><label>직급</label><div class="code-edit"></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-3"><label>담당 업무</label><div class="code-edit"></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-3"><label>근무 지역</label><div class="code-edit"></div></div>'
+            //     contentString +='<div class="col-sm-6 col-md-3"><label>최종 연봉</label><div class="code-edit"></div></div>'
+            //     contentString +='</div>'
+            //     contentString +='</div></div>'
+            //     i ++;
+            //     return contentString;
+            // }
         cloneitem++;
         });
 

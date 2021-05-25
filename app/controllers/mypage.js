@@ -58,6 +58,7 @@ module.exports = {
         let resumeSeq = getByUserSeq.SEQ;
         const listCareer = await resumeService.listCareer(resumeSeq);
         let careerCnt = listCareer.length;
+        console.log(listCareer);
         res.render('mypage/userpageresumeedit', {
             layout: 'layouts/default',
             title: title,
@@ -103,6 +104,8 @@ module.exports = {
         const getByUserSeq = await resumeService.getByUserSeq(user_seq);
         let resumeSeq = getByUserSeq.SEQ;
         const listCareer = await resumeService.listCareer(resumeSeq);
+        console.log(getByUserSeq);
+        console.log(listCareer);
         res.render('mypage/userpageresume', {
             layout: 'layouts/default',
             title: title,

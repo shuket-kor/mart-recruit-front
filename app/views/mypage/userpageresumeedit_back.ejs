@@ -16,7 +16,6 @@
             </div>
             <div class="col-md-8 col-lg-9">
                 <div style="display: none;">
-                    <% console.log(user) %>)
                     <input id="seqseq" value="<% user %>)" name="user-seq">
                 </div>
                 <div role="tabpanel" class="tab-pane edit-resume section">
@@ -234,55 +233,53 @@
                                     <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                                     <% listCareer.forEach(item => { %>
-                                        <hr>
-                                        <div class="code-edit-small">
-                                            <!-- <div class="card" style="width: 50rem;">         -->
-                                            <label>마트 이름</label>
-                                            <div class="code-edit"><%= item.COMPANY %></div>
-                                            <div class="row">
-                                                <div class="col-sm-6 col-md-4">
-                                                    <label>시작</label>
-                                                    <div class="calendar">
-                                                        <input type="date" name="" class="form-control" value="<%= moment(item.WOKSTART).format('YYYY-MM-DD') %>" />
-                                                    </div>
-                                                    <!-- calendar -->
-                                                </div>
-                                                <div class="col-sm-6 col-md-4">
-                                                    <label>끝</label>
-                                                    <div class="calendar">
-                                                        <input type="date" class="form-control" value="<%= moment(item.WORKEND).format('YYYY-MM-DD') %>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="checkbox">
-                                                        <label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
-                                                    </div>
+                                    <input type="button" class="removeBtn icon remove" style="display: block;">
+                                    
+                                    <div class="code-edit-small" id="careerForm">
+                                        <label>마트 이름</label>
+                                        <div class="code-edit"><%= item.COMPANY %></div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-4">
+                                                <label>시작</label>
+                                                <div class="calendar">
+                                                    <input type="date" name="" class="form-control" value="<%= moment(item.WORKSTART).format('YYYY-MM-DD') %>" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-md-4">
-                                                <label>경력기간</label>
-                                                <div class="code-edit"><%= item.CAREER %></div>
+                                                <label>끝</label>
+                                                <div class="calendar">
+                                                    <input type="date" class="form-control" value="<%= moment(item.WORKEND).format('YYYY-MM-DD') %>" />
+                                                </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-4">
-                                                <label>직급</label>
-                                                <div class="code-edit"><%= item.POSITION %></div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-4">
-                                                <label>담당 업무</label>
-                                                <div class="code-edit"><%= item.JOBTYPE %></div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-4">
-                                                <label>근무 지역</label>
-                                                <div class="code-edit"><%= item.WORKREGION %></div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-4">
-                                                <label>최종 연봉</label>
-                                                <div class="code-edit"><%= item.SALARY %></div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    <!-- </div> -->
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>경력기간</label>
+                                            <div class="code-edit"><%= item.CAREER %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>직급</label>
+                                            <div class="code-edit"><%= item.POSITION %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>담당 업무</label>
+                                            <div class="code-edit"><%= item.JOBTYPE %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>근무 지역</label>
+                                            <div class="code-edit"><%= item.WORKREGION %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>최종 연봉</label>
+                                            <div class="code-edit"><%= item.SALARY %></div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
                                 </div>
-                                <% }) %>
                             </div>
                         </li>
                         <% }else{ %>
@@ -442,6 +439,36 @@
 <script>
     $(document).ready(function(){
         var hostName = `<%= hostName%>`
+
+        // $("#historyBtn").click(function(){
+        //     $(".additem-work").append(careerContent());
+        //     $('.code-edit').jqte();
+        // })
+        // var i = 1;
+        // function careerContent(){
+        //     var contentString = '';
+
+        //     contentString +='<div id="addhistory'+i+'"'+'class="additem">'
+        //     contentString +='<span class="icon clone" style="display: none;"><i class="fa fa-plus" aria-hidden="true"></i></span>'
+        //     contentString +='<span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>'
+        //     contentString +='<div class="code-edit-small">'
+        //     contentString +='<label>마트 이름</label>'
+        //     contentString +=`<div class="code-edit"><%= listCareer.COMPANY %></div>`
+        //     contentString +='<div class="row">'
+        //     contentString +='<div class="col-sm-6 col-md-4"><label>시작</label><div class="calendar"><input type="date" name="" class="form-control" value="" /></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-4"><label>끝</label><div class="calendar"><input type="date" class="form-control" value="" /></div></div>'
+        //     contentString +='<div class="col-md-4"><div class="checkbox"><label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-4"><label>경력기간</label><div class="code-edit"></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-4"><label>직급</label><div class="code-edit"></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-3"><label>담당 업무</label><div class="code-edit"></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-3"><label>근무 지역</label><div class="code-edit"></div></div>'
+        //     contentString +='<div class="col-sm-6 col-md-3"><label>최종 연봉</label><div class="code-edit"></div></div>'
+        //     contentString +='</div>'
+        //     contentString +='</div></div>'
+        //     i ++;
+        //     return contentString;
+        // }
+
         // 이미지 업로드 모달 클릭
         $("#imageuploadbtn").click(function(){
             $('#imgUploadModal').modal();
