@@ -329,7 +329,7 @@ select:focus,
     color: #fff;
     padding: 40px 0;
     overflow: hidden;
-    background-image: url(../images/bg/banner.jpg);
+    background-image: url(/assets/images/bg/mainbanner.jpg);
 }
 
 .page-title h1 {

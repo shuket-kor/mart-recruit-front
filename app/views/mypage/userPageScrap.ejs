@@ -1,0 +1,95 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/userPage.css">
+
+<%- contentFor('content') %>
+<%-include('module_UserPageInfo.js') %>
+
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <%-include('module_UserPageLeft.js') %>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="bookmark" id="bookmark">
+                        <div class="row">
+                            <% if (list) {
+                                list.forEach(item => { %>
+                                    <div class="col-md-4 remove-item">
+                                        <div class="job-item">
+                                            <span class="remove-icon" onclick="cancelScrap(<%=item.SEQ %>)"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                            <div class="item-overlay">
+                                                <div class="job-info">
+                                                    <a class="btn btn-primary" onclick="showDetail(<%=item.SEQ %>)"><%=item.CHARGE %></a>
+                                                    <span class="tr-title">
+                                                        <a href="#" onclick="showDetail(<%=item.SEQ %>)"><%=item.SUBJECT %></a>
+                                                    </span>
+                                                    <ul class="tr-list job-meta">
+                                                        <li><i class="fa fa-home" aria-hidden="true"></i><%=item.NAME %></li>
+                                                        <li><i class="fa fa-map-signs" aria-hidden="true"></i><%=item.ADDRESS %></li>
+                                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i><%=item.WORKSHIFT %> <%=item.WORKSHIFTTIME %></li>
+                                                        <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                                    </ul>
+                                                    <ul class="job-social tr-list listing-2" > 
+                                                        <li><a class="cursor-pointer" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                                    </ul>
+                                                </div>										
+                                            </div>
+                                            <div class="job-info">
+                                                <div class="company-logo">
+                                                    <%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h5>${item.NAME}</h5>` %> 
+                                                </div>
+                                                <span class="tr-title">
+                                                    <a href="#"><%=item.SUBJECT %></a>
+                                                </span>
+                                                <ul class="tr-list job-meta">
+                                                    <li><span><i class="fa fa-home" aria-hidden="true"></i></span><%=item.NAME %></li>
+                                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span><%=item.ADDRESS %></li>
+                                                    <li><span><i class="fa fa-clock-o" aria-hidden="true"></i></span><%=item.WORKSHIFT %><%=item.WORKSHIFTTIME %></li>
+                                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                                </ul>
+                                                <div class="time">
+                                                    <a href="#"><span><%=item.JOBKIND_NAME %></span></a>
+                                                    <span class="pull-right"><%=(item.ENDDATE) ? '~' + moment(item.ENDDATE).format('YY.MM.DD') : '채용시까지' %></td></span>
+                                                </div>																				
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                            <% });                               
+                            } else { %>
+                                <div class="section col-md-12">
+                                aaaa
+                                </div>
+                            <% } %>
+                        </div><!-- /.row -->					
+                    </div><!-- /.tab-pane -->
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
+
+<%- contentFor('script') %>
+<script>
+
+let showDetail = function(seq) {
+    window.open(`/recruit/detail?seq=${seq}`);
+}
+
+let cancelScrap = function(recruitSeq) {
+    doGetCallSync(`/recruit/cancelScrap?seq=${recruitSeq}`)
+    .success(function(json){
+        if (json.result == "success") 
+            self.location.reload();
+        else
+            alert("북마크에서 제거하는 도중에 오류가 발생했습니다.");
+    })
+    .fail(function(sender, message, details){
+        alert("북마크에서 제거하는 도중에 오류가 발생했습니다.");
+    });
+}
+</script>

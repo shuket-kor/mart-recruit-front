@@ -1,0 +1,29 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/userPage.css">
+
+<%- contentFor('content') %>
+<%-include('module_UserPageInfo.js') %>
+
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <%-include('module_UserPageLeft.js') %>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="tab-pane section close-account">
+                    <h1>Delete Your Account</h1>
+                    <span>Are you sure, you want to delete your account?</span>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-primary">Delete Account</a>
+                        <a href="#" class="btn button-cancle">Cancle</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
+
+<%- contentFor('script') %>
