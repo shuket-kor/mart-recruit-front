@@ -302,3 +302,9 @@ ol, ul, li {
 .tr-list > table {
     margin-bottom: 30px;
 }
+
+.display-information-form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}

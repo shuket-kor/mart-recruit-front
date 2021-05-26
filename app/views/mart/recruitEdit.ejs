@@ -440,7 +440,11 @@ let loadData = function() {
         $("#HIRINGSTEP").val('<%=recruitInfo.HIRINGSTEP %>');
         $("#REQUIREDOCS").val('<%=recruitInfo.REQUIREDOCS %>');        
         $("input:radio[name=ACTIVE]:input[value='<%=recruitInfo.ACTIVE %>']").attr("checked", true);
-    <% }%>
+    <% } else {%>
+        $("#HRONAME").val('<%=martInfo.HRONAME %>');
+        $("#HROCONTACT").val('<%=martInfo.HROCONTACT %>');
+        $("#HROEMAIL").val('<%=martInfo.HROEMAIL %>');
+    <% } %>
 }
 
 let saveData = function() {
@@ -468,7 +472,8 @@ let saveData = function() {
     }
 
     if (invalidate > 0) {
-        $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
+        // $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
+        $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].focus();
         return;
     } else  {
         $("#contentForSummerNote").val($('#CONTENT').summernote('code'));

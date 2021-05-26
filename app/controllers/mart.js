@@ -233,5 +233,16 @@ module.exports = {
         })
     },
 
-
+    async updateLogo(req, res, next) {
+        const SEQ = req.body.SEQ;
+        const location = req.body.location;
+        const LOGOFILE = location + "/" + req.body.LOGOFILE;
+        
+        const returnData = await martService.updateLogo(req.cookies.xToken, SEQ, LOGOFILE);
+        
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
 }

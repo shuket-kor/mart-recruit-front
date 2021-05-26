@@ -18,19 +18,19 @@
                     <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
                     <div class="updated-info">
                         <span class="pull-left">이력서의 마지막 업데이트</span>
-                        <span class="pull-right"><%=moment(userInfo.MODIFIED).format('YYYY.MM.DD HH:mm:ss') %></span>
+                        <span class="pull-right"><%=moment(resumeInfo.MODIFIED).format('YYYY.MM.DD HH:mm:ss') %></span>
                     </div>
                 </div><!-- /.resume-last-updated -->
 
-                <% if (userInfo.CERTIFICATE == 'Y') { %> 
+                <% if (resumeInfo.CERTIFICATE == 'Y') { %> 
                     <div class="alert alert-warning">
                         <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
                         <div class="updated-info">
                             <span class="pull-left">이 이력서는 인증되었습니다</span>
-                            <span class="pull-right"><%=moment(userInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
+                            <span class="pull-right"><%=moment(resumeInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
                         </div>
                     </div><!-- /.resume-last-updated -->
-                <%} else if (userInfo.CAREERCERTIFICATE) { %>
+                <%} else if (resumeInfo.CAREERCERTIFICATE) { %>
                     <div class="alert alert-dark">
                         <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
                         <div class="updated-info">
@@ -48,25 +48,25 @@
 
                     <div class="change-photo pull-left">
                         <div class="user-image">
-                            <%-(userInfo.PHOTO) ? `<img src="${hostName}/api/files/get/${userInfo.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
+                            <%-(resumeInfo.PHOTO) ? `<img src="${hostName}/api/files/get/${resumeInfo.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
                         </div>
                     </div>
                     <div>
                         <dl class="row">
                             <dt class="col-sm-3">이름</dt>
-                            <dd class="col-sm-9"><%=userInfo.NAME %> (<%=userInfo.GENDER %>) / <%=userInfo.BIRTHYEAR %>년 생 (<%=(new Date()).getFullYear() - userInfo.BIRTHYEAR * 1.0 %>)</dd>
+                            <dd class="col-sm-9"><%=resumeInfo.NAME %> (<%=resumeInfo.GENDER %>) / <%=resumeInfo.BIRTHYEAR %>년 생 (<%=(new Date()).getFullYear() - resumeInfo.BIRTHYEAR * 1.0 %>)</dd>
                             
                             <dt class="col-sm-3">주소</dt>
-                            <dd class="col-sm-9">(<%=userInfo.POSTCODE %>) <%=userInfo.ADDRESS %> <%=userInfo.ADDRESSEXTRA %></dd>
+                            <dd class="col-sm-9">(<%=resumeInfo.POSTCODE %>) <%=resumeInfo.ADDRESS %> <%=resumeInfo.ADDRESSEXTRA %></dd>
                             
                             <dt class="col-sm-3">연락처</dt>
-                            <dd class="col-sm-9"><%=userInfo.CONTACT %></dd>
+                            <dd class="col-sm-9"><%=resumeInfo.CONTACT %></dd>
                             
                             <dt class="col-sm-3">이메일</dt>
-                            <dd class="col-sm-9"><%=userInfo.EMAIL %></dd>
+                            <dd class="col-sm-9"><%=resumeInfo.EMAIL %></dd>
                             
                             <dt class="col-sm-3">학력</dt>
-                            <dd class="col-sm-9"><%=userInfo.EDUCATION %> (<%=userInfo.EDUCATIONSCHOOL %>)</dd>
+                            <dd class="col-sm-9"><%=resumeInfo.EDUCATION %> (<%=resumeInfo.EDUCATIONSCHOOL %>)</dd>
                             </dl>                                
                     </div>
                 </div><!-- /.display-information -->
@@ -79,11 +79,11 @@
                             <div class="media-body">
                                 <span class="tr-title">이력서 정보</span>
                                 <ul class="tr-list">
-                                    <li><span class="left">경력여부</span><span class="middle">:</span> <span class="right"><%=userInfo.CARRER_NAME %></span></li>
-                                    <li><span class="left">보유기술 </span><span class="middle">:</span> <span class="right"><%=userInfo.TECHNICAL %></span></li>
-                                    <li><span class="left">자격증</span><span class="middle">:</span> <span class="right"><%=userInfo.LICENSE %></span></li>
-                                    <li><span class="left">보훈대상</span><span class="middle">:</span> <span class="right"><%=userInfo.ISWELFARE %></span></li>
-                                    <li><span class="left">병역사항</span><span class="middle">:</span> <span class="right"><%=userInfo.ISMILITALY %></span></li>
+                                    <li><span class="left">경력여부</span><span class="middle">:</span> <span class="right"><%=resumeInfo.CARRER_NAME %></span></li>
+                                    <li><span class="left">보유기술 </span><span class="middle">:</span> <span class="right"><%=resumeInfo.TECHNICAL %></span></li>
+                                    <li><span class="left">자격증</span><span class="middle">:</span> <span class="right"><%=resumeInfo.LICENSE %></span></li>
+                                    <li><span class="left">보훈대상</span><span class="middle">:</span> <span class="right"><%=resumeInfo.ISWELFARE %></span></li>
+                                    <li><span class="left">병역사항</span><span class="middle">:</span> <span class="right"><%=resumeInfo.ISMILITALY %></span></li>
                                 </ul>							    	
                             </div>
                         </li><!-- /.personal-deatils -->
@@ -128,7 +128,7 @@
                             </div>  
                             <div class="media-body">
                                 <span class="tr-title">자기 소개서</span>
-                                <div class="introduce"><%-userInfo.INTRODUCE %></div>
+                                <div class="introduce"><%-resumeInfo.INTRODUCE %></div>
                             </div>
                         </li><!-- /.career-objective -->
                         <li class="career-objective media">
@@ -137,7 +137,7 @@
                             </div>  
                             <div class="media-body">
                                 <span class="tr-title">인증용 파일</span>
-                                <div class="introduce"><%-(userInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${userInfo.CAREERCERTIFICATE}' target='_blank'>` : '제출되지 않았습니다' %></div>
+                                <div class="introduce"><%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'>` : '제출되지 않았습니다' %></div>
                             </div>
                         </li><!-- /.career-objective -->
                     </ul>  
