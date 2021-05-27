@@ -17,7 +17,7 @@ module.exports = {
         const keyword = (req.query.keyword) ? req.query.keyword : '';
 
         // 검색된 공고의 최신 4개를 얻어온다. 관련 공고를 표시하기 위하여 사용
-        const returnData_Top = await recruitService.list(req.cookies.xToken, regions, jobKinds, workingTypes, searchType, keyword, 1, 4);
+        const returnData_Top = await recruitService.list(req.cookies.xToken, 'Y', regions, jobKinds, workingTypes, searchType, keyword, 1, 4);
         // 공고 상세를 얻는다
         const recruitInfo = await recruitService.get(req.cookies.xToken, seq);
         // 현재 사용자가 있으면 그 사용자가 이 공고에 지원했는지, 북마크를 했는지 여부를 가져온다

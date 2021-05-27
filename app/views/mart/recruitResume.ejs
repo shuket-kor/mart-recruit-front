@@ -2,21 +2,13 @@
 <link rel="stylesheet" href="/assets/css/mart.css">
 
 <%- contentFor('content') %>
-<div class="tr-breadcrumb bg-image section-before">
-    <div class="container">
-        <div class="breadcrumb-info text-center">
-            <div class="breadcrumb-logo">
-                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
-            </div>
-        </div>
-    </div><!-- /.container -->
-</div><!-- /.tr-breadcrumb -->	
+<%- include('module_martInfo.ejs') %>
 
-<div class="section-info">
+<div class="section-info m-t-20">
     <div class="container">
         <div class="recruit-info-row">
             <div class="info-recruit">
-                <h3><%=recruitInfo.SUBJECT %></h3>
+                <h3><i class="fa fa-quote-left"></i> <%=recruitInfo.SUBJECT %> <i class="fa fa-quote-right"></i></h3>
                 <div class="date">
                     <%=moment(recruitInfo.STARTDATE).format('YYYY.MM.DD') %> ~ <%=(recruitInfo.ENDDATE) ? moment(recruitInfo.ENDDATE).format('YYYY.MM.DD') : '채용시까지' %> / 
                     <%=moment(recruitInfo.MODIFIED).format('YYYY.MM.DD') %>  수정 <br>

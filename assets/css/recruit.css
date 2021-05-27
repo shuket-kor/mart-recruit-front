@@ -87,3 +87,15 @@
     border-color:#c82333
 }
 
+.button-recruit-list {
+    width: 100%;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    background: white;
+    font-family: "Malgun Gothic",sans-serif !important;
+    font-size: 20px !important;
+    font-weight: bold;
+    letter-spacing: -2px;
+    line-height: 54px;
+    cursor: pointer;
+}

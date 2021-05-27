@@ -211,7 +211,7 @@ module.exports = class resumeService {
                 },
                 responseType: 'json'
             });
-            return 0;
+            return true;
         } catch (error) {
             logger.writeLog('error', `services/resumeService/increaseViewCount: ${error}`);
             

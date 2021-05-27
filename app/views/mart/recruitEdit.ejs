@@ -3,22 +3,7 @@
 <link href="/plugins/summernote-0.8.18-dist/summernote.min.css" rel="stylesheet" />
 
 <%- contentFor('content') %>
-<div class="tr-breadcrumb bg-image section-before">
-    <div class="container">
-        <div class="breadcrumb-info text-center">
-            <div class="breadcrumb-logo">
-                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
-            </div>
-            <div class="page-title">
-                <h1><%=martInfo.NAME %></h1>
-            </div>		
-            <ul class="job-meta tr-list list-inline">
-                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=martInfo.POSTCODE %>) <%=martInfo.ADDRESS %> <%=martInfo.ADDRESSEXTRA %></li>
-                <li><i class="fa fa-phone" aria-hidden="true"></i><%=martInfo.CONTACT %></li>
-            </ul>
-        </div>
-    </div><!-- /.container -->
-</div><!-- /.tr-breadcrumb -->	
+<%- include('module_martInfo.ejs') %>
 
 <form name="recruit" id="recruit" action="/mart/recruitProcess" method="POST">
 <input type="hidden" name="workType" id="workType" value="CREATE">
@@ -455,7 +440,11 @@ let loadData = function() {
         $("#HIRINGSTEP").val('<%=recruitInfo.HIRINGSTEP %>');
         $("#REQUIREDOCS").val('<%=recruitInfo.REQUIREDOCS %>');        
         $("input:radio[name=ACTIVE]:input[value='<%=recruitInfo.ACTIVE %>']").attr("checked", true);
-    <% }%>
+    <% } else {%>
+        $("#HRONAME").val('<%=martInfo.HRONAME %>');
+        $("#HROCONTACT").val('<%=martInfo.HROCONTACT %>');
+        $("#HROEMAIL").val('<%=martInfo.HROEMAIL %>');
+    <% } %>
 }
 
 let saveData = function() {
@@ -483,7 +472,8 @@ let saveData = function() {
     }
 
     if (invalidate > 0) {
-        $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
+        // $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
+        $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].focus();
         return;
     } else  {
         $("#contentForSummerNote").val($('#CONTENT').summernote('code'));

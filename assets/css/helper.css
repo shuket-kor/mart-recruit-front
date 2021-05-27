@@ -115,6 +115,21 @@
   .font-13 {
     font-size: 13px;
   }
+  .width-50 {
+    width: 50px !important;
+  }
+  .width-70 {
+    width: 70px !important;
+  }
+  .width-100 {
+    width: 100px !important;
+  }
+  .width-120 {
+    width: 120px !important;
+  }
+  .width-150 {
+    width: 150px !important;
+  }
   .wrapper-md {
     padding: 20px;
   }

@@ -2049,7 +2049,7 @@ select:focus,
 }
 
 .account-content {
-    padding: 35px 30px;
+    padding: 35px 20px;
     border-radius: 4px;
     background-color: #fff;
 }
@@ -2057,7 +2057,7 @@ select:focus,
 .user-account .form-control,
 .user-account .dropdown {
     padding: 5px 20px;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     margin-bottom: 30px;
     background-color: #fcfcfc;
 }
@@ -2501,7 +2501,7 @@ select:focus,
 }
 
 .change-photo .upload-photo {
-    margin-top: 45px;
+    margin-top: 10px;
 }
 
 .change-photo .upload-photo .btn {
@@ -2772,6 +2772,7 @@ select:focus,
     float: left;
     margin-bottom: 0;
     margin-right: 10px;
+    max-width: 150px;
 }
 
 .apply-job .job-info,
@@ -3571,4 +3572,75 @@ button.btn-primary,
 .goto-list-button-area {
     padding-top: 40px;
     padding-bottom: 40px;
+}
+
+.main-title-icon {
+    width: 50px;
+}
+
+.tr-banner-main {
+    color: #fff;
+    padding: 100px 0;
+    background-image: url(/assets/images/bg/mainbanner2.jpg);
+}
+
+.tr-banner-recruit {
+    color: #fff;
+    padding: 50px 0;
+    background-image: url(/assets/images/bg/mainbanner3.jpg);
+}
+
+.tr-banner-recruit-detail {
+    color: #fff;
+    padding: 50px 0;
+    background-image: url(/assets/images/bg/mainbanner4.jpg);
+}
+
+.bg-image .job-meta {
+    margin-top: 20px;
+}
+
+.bg-image .job-meta li {
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    color: #DDD;
+}
+
+.tr-banner-recruit-security {
+    color: #fff;
+    padding: 50px 0;
+    background-image: url(/assets/images/bg/mainbanner5.jpg);
+}
+
+.tr-banner-recruit-notice {
+    color: #fff;
+    padding: 50px 0;
+    background-image: url(/assets/images/bg/mainbanner6.jpg);
+}
+
+.tr-breadcrumb-user-page {
+    color: #fff;
+    padding: 30px 0;
+    overflow: hidden;
+    background-image: url(/assets/images/bg/mainbanner7.jpg);
+}
+
+.tr-breadcrumb-mart-page {
+    color: #fff;
+    padding: 50px 0;
+    overflow: hidden;
+    background-image: url(/assets/images/bg/mainbanner8.jpg);
+}
+
+.tr-breadcrumb-mart-page .job-meta {
+    margin-top: 10px;
+}
+
+.tr-breadcrumb-mart-page .job-meta li {
+    color: #888;
+}
+
+.tr-breadcrumb-mart-page .breadcrumb-logo {
+    margin-bottom: 10px;
 }

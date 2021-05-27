@@ -2,186 +2,55 @@
 <link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
-<%-include('module_UserPageInfo.js') %>
+<%-include('module_userPageInfo.ejs') %>
 
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <%-include('module_UserPageLeft.js') %>
+                    <%-include('module_userPageLeft.ejs') %>
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
                 <div class="apply-job">
-                    <div class="job-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/1.png" alt="images" class="img-fluid">
-                                    </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
+                    <% if (!list) { %>
+                        <div class="col-md-12 alert alert-warning account-info">
+                            <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-clone"></i></div></span>
+                            <div class="updated-info">
+                                <span class="pull-left">지원한 공고가 없습니다.</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/2.png" alt="images" class="img-fluid">
+                    <% } else {
+                        list.forEach(item => { %>
+                            <div class="job-item">
+                                <div class="job-info">
+                                    <div class="left-content">
+										<div class="clearfix">
+											<div class="company-logo">
+												<%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${item.NAME}</h2>` %> 
+                                                <span><a href="/recruit/detail?seq=<%=item.SEQ %>" target="_blank" class="btn btn-primary"><%=item.WORKINGTYPE_NAME %></a></span>
+											</div>
+											<span class="tr-title">
+												<a href="/recruit/detail?seq=<%=item.SEQ %>" target="_blank"><%=item.SUBJECT %></a><span><a href="/recruit/detail?seq=<%=item.SEQ %>" target="_blank"><%=item.JOBKIND_NAME %></a></span>
+											</span>
+											
+										</div>
+										<ul class="tr-list job-meta">
+                                            <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>(<%=item.POSTCODE %>) <%=item.ADDRESS %> <%=item.ADDRESSEXTRA %></li>
+                                            <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>경력여부: <%=item.CAREER_NAME %></li>
+                                            <li><span><i class="fa fa-money" aria-hidden="true"></i></span><%=item.SALARYTYPE %> <%=item.SALARY %></li>
+                                        </ul>										
                                     </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/3.png" alt="images" class="img-fluid">
+                                    <div class="right-content text-right">
+                                        <a href="#" class="btn btn-outline-danger" onclick="cancelApply(<%=item.SEQ %>)">지원 취소</a>
+                                        <span class="applied"><%=moment(item.APPLYDATE).format('YYYY.MM.DD HH:mm:ss') %> 지원함</span>
                                     </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
                                 </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
                             </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/4.png" alt="images" class="img-fluid">
-                                    </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/5.png" alt="images" class="img-fluid">
-                                    </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/6.png" alt="images" class="img-fluid">
-                                    </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-item remove-item">
-                        <div class="job-info">
-                            <div class="left-content">
-                                <div class="clearfix">
-                                    <div class="company-logo">
-                                        <img src="images/job/7.png" alt="images" class="img-fluid">
-                                    </div>
-                                    <span class="tr-title">
-                                        <a href="job-details.html">Design Associate</a><span><a href="#">Loop</a></span>
-                                    </span>
-                                    <span><a href="#" class="btn btn-primary">Part Time</a></span>
-                                </div>
-                                <ul class="tr-list job-meta">
-                                    <li><span><i class="fa fa-map-signs" aria-hidden="true"></i></span>San Francisco, CA, US</li>
-                                    <li><span><i class="fa fa-briefcase" aria-hidden="true"></i></span>Mid Level</li>
-                                    <li><span><i class="fa fa-money" aria-hidden="true"></i></span>$5,000 - $6,000</li>
-                                </ul>										
-                            </div>
-                            <div class="right-content">
-                                <a href="#" class="btn button-cancle">Delete application</a>
-                                <span class="applied">Applied: 3 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>						
+                            <%  })
+                    } %>
+
                 </div><!-- /.tab-pane -->
         
             </div>
@@ -190,3 +59,20 @@
 </div><!-- /.tr-profile -->	
 
 <%- contentFor('script') %>
+<script>
+let cancelApply = function(recruitSeq) {
+    if (confirm("지원을 취소하시겠습니까?")) {
+        doGetCallSync(`/recruit/cancelApply?seq=${recruitSeq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("지원한 구인 공고에서 지원을 취소하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("지원한 구인 공고에서 지원을 취소하는 도중에 오류가 발생했습니다.");
+        });
+    }
+}
+
+</script>

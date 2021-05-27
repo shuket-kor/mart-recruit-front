@@ -2,23 +2,23 @@
 <link rel="stylesheet" href="/assets/css/userPage.css">
 
 <%- contentFor('content') %>
-<%-include('module_UserPageInfo.js') %>
+<%-include('module_userPageInfo.ejs') %>
 
 <div class="tr-profile section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-lg-3">
                 <div class="tr-sidebar">
-                    <%-include('module_UserPageLeft.js') %>
+                    <%-include('module_userPageLeft.ejs') %>
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
                 <div class="tab-pane section close-account">
-                    <h1>Delete Your Account</h1>
-                    <span>Are you sure, you want to delete your account?</span>
+                    <h1>계정 사용 중지</h1>
+                    <span><p>다시 사용하려면 관리자에게 문의해야만 합니다.</p><p>정말로 탈퇴하시겠습니까?</p></span>
                     <div class="buttons">
-                        <a href="#" class="btn btn-primary">Delete Account</a>
-                        <a href="#" class="btn button-cancle">Cancle</a>
+                        <button type="button" class="btn btn-warning" id="accountClose">계정 사용 중지</button>
+                        <button type="button" class="btn button-cancle" id="cancelClose">취소</button>
                     </div>
                 </div>
             </div>
@@ -27,3 +27,29 @@
 </div><!-- /.tr-profile -->	
 
 <%- contentFor('script') %>
+<script>
+    $(document).ready(function() {
+        $("#accountClose").click(closeAccount);
+        $("#cancelClose").click(cancelClose);
+    });
+
+    let closeAccount = function() {
+        if (confirm("정말로 계정을 사용 중단하고 탈퇴하시겠습니까?")) {
+            doGetCallSync(`/users/close`)
+            .success(function(json){
+                if (json.result == "success") 
+                    self.location = "/auth/logout";
+                else
+                    alert("계정을 삭제하고 탈퇴하는 도중에 오류가 발생했습니다.");
+            })
+            .fail(function(sender, message, details){
+                alert("계정을 삭제하고 탈퇴하는 도중에 오류가 발생했습니다.");
+            });
+        }
+    }
+
+    let cancelClose = function() {
+        self.location = "/mypage/user";
+    }
+
+</script>

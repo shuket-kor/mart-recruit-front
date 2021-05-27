@@ -14,6 +14,11 @@ module.exports = {
         const returnData_Top = await recruitService.list(req.cookies.xToken, 'Y', null, null, null, searchType, keyword, 1, 8);
         // 페이지에 따른 리스트를 얻는다
         const returnData = await recruitService.list(req.cookies.xToken, 'Y', null, null, null, searchType, keyword, currentPage, rowCount);
+        if (returnData) {
+            if (returnData.list.length > 8) {
+                for (let i=0; i < 8; i++) {returnData.list.shift();} 
+            }
+        }
 
         res.render('main', {
             layout: 'layouts/default',

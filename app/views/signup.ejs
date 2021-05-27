@@ -72,8 +72,10 @@
                             <div>
                                 <p>기업 인증</p>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="사업자 등록번호" name="bizno" id="bizno" name="bizno" maxlength="12" />
+                            <div class="form-group form-inline">
+                                <input type="text" class="form-control width-100 m-r-10 numberonly" name="bizno1" id="bizno1" name="bizno" maxlength="3" /> 
+                                <input type="text" class="form-control width-70 m-r-10 numberonly" name="bizno2" id="bizno2" name="bizno" maxlength="2" /> 
+                                <input type="text" class="form-control width-120 numberonly" name="bizno3" id="bizno3" name="bizno" maxlength="5" />
                             </div>
                             <!-- <div>
                                 <button type="button" id="bizNocheck">사업자번호 체크</button>
@@ -107,7 +109,11 @@
 
 <%- contentFor('script') %>
 <script>
+    let message = '<%=message %>';
+
     $(document).ready(function () {
+        if (message.length > 0) { alert("회원 가입이 실패했습니다. 다시 시도해 주시기 바랍니다."); }
+
         // 아이디 중복 체크
         var idcheckflag = false;
         var usermartflag = true;
@@ -177,11 +183,10 @@
         });
         $("#mart-login").click(function () {
             // 사업자번호 정상인지 체크만 하는 부분.
-            var pBizno = $("#bizno").val(); //사업자번호
-            if (!checkCorporateRegistrationNumber(pBizno.replaceAll("-", ""))) {
+            var pBizno = $("#bizno1").val() + $("#bizno2").val() + $("#bizno3").val(); //사업자번호
+            if (!checkCorporateRegistrationNumber(pBizno)) {
                 alert("유효한 사업자번호를 입력하세요");
-                $("#bizno").focus();
-                $("#bizno").val("");
+                $("#bizno1").focus();
                 return;
             }
 

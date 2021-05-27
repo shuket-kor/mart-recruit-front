@@ -2,15 +2,7 @@
 <link rel="stylesheet" href="/assets/css/mart.css">
 
 <%- contentFor('content') %>
-<div class="tr-breadcrumb bg-image section-before">
-    <div class="container">
-        <div class="breadcrumb-info text-center">
-            <div class="breadcrumb-logo">
-                <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
-            </div>
-        </div>
-    </div><!-- /.container -->
-</div><!-- /.tr-breadcrumb -->	
+<%- include('module_martInfo.ejs') %>
 
 <div class="tr-profile section-padding">
     <div class="container">

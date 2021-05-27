@@ -1,15 +1,13 @@
-<%- contentFor('title') %>
-
 <%- contentFor('style') %>
 
 <%- contentFor('content') %>
-    <div class="tr-breadcrumb bg-image section-before"><!-- 상단 배너 예시 -->
+    <div class="tr-banner-recruit-notice bg-image section-before">
         <div class="container">
             <div class="breadcrumb-info text-center">
                 <div class="breadcrumb-logo">
                 </div>
                 <div class="page-title">
-                    <h1></h1>
+                    <h1>공지사항</h1>
                 </div>		
                 <ul class="job-meta tr-list list-inline">
                 </ul>
@@ -19,31 +17,31 @@
         </div><!-- /.container -->
     </div><!-- /.tr-breadcrumb -->
 
-
-
     <div class="tr-profile section-padding" >
         <div class="container">
             <div class="all-view" style="padding:15px 0;">
                 <div class="container">
-                    <div class="section-title">
-                        <h1>공지사항</h1>
-                    </div><!-- /.section-title -->
                     <div class="section">
-                        <% if(list){list.forEach(item => {%>
+                        <% if (list) {
+                            list.forEach(item => { %>
                         <ul class="tr-list resume-info" style="padding-bottom: 35px !important;">
                             <li class="career-objective media" >
                                 <div class="icon">
-                                    <i class="fa fa-black-tie" aria-hidden="true"></i>
-                                </div>  <!-- /.icon -->
-                                
+                                    <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                </div>  <!-- /.icon -->                    
                                 <div class="media-body">
                                     <span class="tr-title" style="margin-bottom: 35px !important;"><%=item.SUBJECT %></span>
+                                    
                                     <p><%- item.CONTENT %></p> <br>
-                                    <p>작성일 : <%= moment(item.CREATED).format('YYYY-MM-DD HH:mm:ss') %></p>
                                 </div><!-- /.media-body -->
+                                <div class="icpull-righton">
+                                    <span class=""><%= moment(item.CREATED).format('YYYY.MM.DD HH:mm:ss') %></span>
+                                </div>  <!-- /.icon -->                    
                             </li><!-- /.career-objective -->                                                   
                         </ul>
-                        <% })} %>					
+                        <hr>
+                        <% })
+                    } %>					
                     </div><!-- /.section -->
                 </div><!-- /.container -->
             </div><!-- /.all-view -->

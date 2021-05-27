@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, '/assets/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
-app.set('baseTitle', '마트협회구인구직');
+app.set('baseTitle', '마트협회구인구직 ');
 if (process.env.NODE_ENV == 'develope') {
   process.env.APIHOST = 'http://localhost:3000';
 } else {
@@ -40,8 +40,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/notice', require('./routes/notice'));
 app.use('/recruit', require('./routes/recruit'));
-app.use('/mypage', require('./routes/mypage'));
 app.use('/mart', require('./routes/mart'));
+app.use('/mypage', require('./routes/mypage'));
+app.use('/martPage', require('./routes/martPage'));
 
 app.use(
   morgan('combined', 

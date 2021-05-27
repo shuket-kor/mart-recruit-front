@@ -1,5 +1,7 @@
 const { logger } = require('../config/logger');
+const userService = require('../services/users');
 const resumeService = require('../services/resume');
+const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
 const recruitService = require('../services/recruit.js');
 const moment = require('moment');
@@ -10,7 +12,8 @@ module.exports = {
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
         // 사용자 정보를 포함한 이력서 정보이다
-        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const userInfo = await userService.get(req.cookies.xToken, userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
 
         res.render('mypage/userPage', {
             layout: 'layouts/default',
@@ -19,6 +22,7 @@ module.exports = {
             moment: moment,
             hostName: process.env.APIHOST,
             userInfo: userInfo,
+            resumeInfo: resumeInfo,
         });
     },
 
@@ -166,8 +170,8 @@ module.exports = {
     async resumegetByUserSeq(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const userInfo = await resumeService.getByUserSeq(userSeq);
-        const listCareer = await resumeService.listCareer(userInfo.SEQ);
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
 
         res.render('mypage/userPageResume', {
             layout: 'layouts/default',
@@ -175,7 +179,7 @@ module.exports = {
             user: req.user,
             moment: moment,
             hostName: process.env.APIHOST,
-            userInfo: userInfo,
+            resumeInfo: resumeInfo,
             listCareer: listCareer
         })
     },
@@ -183,7 +187,7 @@ module.exports = {
     async scrap(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
         const scrapList = await scrapService.scrapList(req.cookies.xToken, userSeq);
 
         console.log(scrapList.list);
@@ -193,7 +197,7 @@ module.exports = {
             user: req.user,
             moment: moment,
             hostName: process.env.APIHOST,
-            userInfo: userInfo,
+            resumeInfo: resumeInfo,
             list: scrapList.list
         })
     },
@@ -202,7 +206,8 @@ module.exports = {
     async apply(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+        const applyList = await recruitService.listUserApply(req.cookies.xToken, userSeq);
 
         res.render('mypage/userPageApply', {
             layout: 'layouts/default',
@@ -210,8 +215,8 @@ module.exports = {
             user: req.user,
             moment: moment,
             hostName: process.env.APIHOST,
-            userInfo: userInfo,
-
+            resumeInfo: resumeInfo,
+            list : applyList.list
         })
     },
 
@@ -219,7 +224,7 @@ module.exports = {
     async closeAccount(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const userInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
 
         res.render('mypage/userPageCloseAccount', {
             layout: 'layouts/default',
@@ -227,7 +232,7 @@ module.exports = {
             user: req.user,
             moment: moment,
             hostName: process.env.APIHOST,
-            userInfo: userInfo,
+            resumeInfo: resumeInfo,
 
         })
     },
