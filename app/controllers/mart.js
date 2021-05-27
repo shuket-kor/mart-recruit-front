@@ -192,7 +192,7 @@ module.exports = {
     async recruitResumeView(req, res, next) {
         const recruitSeq = req.query.recruitSeq;
         const resumeSeq = req.query.resumeSeq;
-        const listPage = (req.query.page) ? req.query.listPage : 1; // 이것은 지원자 목록 페이지의 페이지 번호이다 
+        const listPage = (req.query.listPage) ? req.query.listPage : 1; // 이것은 지원자 목록 페이지의 페이지 번호이다 
         const currentPage = (req.query.page) ? req.query.page : 1; // 이것은 이력서 상세 좌측의 이력서 목록의 페이지 번호이다
         const step = req.query.step;
 

@@ -1,7 +1,7 @@
 <%- contentFor('style') %>
 
 <%- contentFor('content') %>
-<div class="tr-banner section-before bg-image">
+<div class="tr-banner-main section-before bg-image">
     <div class="container">
         <div class="banner-content text-center">
             <h1>The Best Way to Get a Job at the Marts</h1>
@@ -26,8 +26,8 @@
 <div class="jobs-listing section-padding">
     <div class="container">
 
-        <div class="job-topbar">
-            <p class="h2">Recently New Jobs</p>
+        <div class="job-topbar shadow p-3 mb-5 bg-white rounded">            
+            <p class="h4"><i class="fa fa-chalkboard"></i> Recently New Jobs</p>
         </div>
 
         <div class="tab-content tr-job-posted">
@@ -85,8 +85,8 @@
             </div>
         </div>
 
-        <div class="job-topbar">
-            <span class="pull-left"><p class="h2">Jobs List</p></span>
+        <div class="job-topbar shadow p-3 mb-5 bg-white rounded">
+            <span class="pull-left"><p class="h4"><i class="fa fa-list-alt"></i> Jobs List</p></span>
             <ul class="nav nav-tabs job-tabs" role="tablist">
                 <li>총 <%=numeral(totalCount).format('0,0') %> 개의 공고가 있습니다.</li>
             </ul>				
