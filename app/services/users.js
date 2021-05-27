@@ -20,11 +20,12 @@ module.exports = class userService {
             if (body.result === "success") {
                 return body;
             } else {
-                logger.writeLog("error", `FRONT - services/login: ${body.data}`);
-                return body;
+                logger.writeLog("error", `FRONT - userService/login: ${body.data}`);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `FRONT - services/login: ${error}`);
+            logger.writeLog("error", `FRONT - userService/login: ${error}`);
+            return null;
         }
     }
 
@@ -44,13 +45,13 @@ module.exports = class userService {
             });
             // console.log(body)
             if (body.result === "success") {
-                logger.writeLog("error", `FRONT_TRY - services/authorizatoin: ${body}`);
+                logger.writeLog("error", `FRONT_TRY - userService/authorizatoin: ${body}`);
                 // 인증에 성공하면 data에 담겨온 토큰을 리턴
                 return body;
             } else {
                 //실패
                 console.log(body.data);
-                logger.writeLog("error", `FRONT_TRY - services/authorizatoin: ${error}`);
+                logger.writeLog("error", `FRONT_TRY - userService/authorizatoin: ${error}`);
                 return null;
             }
         } catch (error) {
@@ -79,11 +80,12 @@ module.exports = class userService {
                 return body;
             } else {
                 //실패
-                logger.writeLog("error", ` FRONT - services/getUser: ${body.result}`);
+                logger.writeLog("error", ` FRONT - userService/getUser: ${body.result}`);
                 return null;
             }
         } catch (error) {
-            logger.writeLog("error", ` FRONT - services/getUserService: ${error}`);
+            logger.writeLog("error", ` FRONT - userService/getUser: ${error}`);
+            return null;
         }
     }
     // 유저 생성
@@ -107,42 +109,16 @@ module.exports = class userService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog("error", `services/create: `);
-                return body.data;
+                logger.writeLog("error", `userService/create: `);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/create: ${error}`);
+            logger.writeLog("error", `userService/create: ${error}`);
+            return null;
         }
     }
 
-    // 마트 생성
-    // static async martCreate(seq, bizno) {
-    //     try {
-    //         var apiURL = "";
-    //         if (process.env.NODE_ENV == "develope") apiURL = "http://localhost:3000/api/mart/create";
-    //         else apiURL = `http://localhost:3000/api/mart/create`;
-
-    //         const {body} = await got.post(apiURL, {
-    //             json: {
-    //                 userSeq: seq,
-    //                 regNo:bizno
-    //             },
-    //             responseType: "json",
-    //         });
-    //         // console.log(body)
-    //         if (body.result === "success") {
-    //             return body.data;
-    //         } else {
-    //             //실패
-    //             logger.writeLog("error", `services/martCreate: `);
-    //             return body.data;
-    //         }
-    //     } catch (error) {
-    //         logger.writeLog("error", `services/martCreate: ${error}`);
-    //     }
-    // }
-
-    // 
+    // 아이디 체크
     static async checkid(userId) {
         try {
             var apiURL = "";
@@ -160,11 +136,12 @@ module.exports = class userService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog("error", `services/create: `);
-                return body.data;
+                logger.writeLog("error", `userService/checkid: `);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/create: ${error}`);
+            logger.writeLog("error", `userService/checkid: ${error}`);
+            return null;
         }
     }
     // 유저 수정
@@ -188,11 +165,12 @@ module.exports = class userService {
                 return data;
             } else {
                 //실패
-                logger.writeLog("error", `services/updateService/update: ${result}`);
-                return body;
+                logger.writeLog("error", `updateService/update: ${result}`);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/updateService/update: ${error}`);
+            logger.writeLog("error", `updateService/update: ${error}`);
+            return null;
         }
     }
     // 유저 삭제
@@ -212,11 +190,12 @@ module.exports = class userService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog("error", `services/removeService/delete: ${removeUser.body.result}`);
-                return body;
+                logger.writeLog("error", `userService/delete: ${removeUser.body.result}`);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/removeService/delete: ${error}`);
+            logger.writeLog("error", `userService/delete: ${error}`);
+            return null;
         }
     }
 
@@ -239,11 +218,12 @@ module.exports = class userService {
                 return body;
             } else {
                 //실패
-                logger.writeLog("error", `services/bizNoCheck: ${body}`);
-                return body;
+                logger.writeLog("error", `userService/bizNoCheck: ${body}`);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/bizNoCheck: ${error}`);
+            logger.writeLog("error", `userService/bizNoCheck: ${error}`);
+            return null;
         }
     }
     

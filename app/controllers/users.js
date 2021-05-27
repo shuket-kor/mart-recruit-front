@@ -39,7 +39,6 @@ module.exports = {
             result: (userCheckId == null) ? 'fail' : 'success',
             data: userCheckId
         });
-        // res.redirect('/signup');
     },
     // 유저 수정
     async update(req, res, next) {

@@ -1,0 +1,671 @@
+<%- contentFor('style') %> <%- contentFor('content') %>
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <%-include('module_UserPageLeft.js') %>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div style="display: none;">
+                    <input id="seqseq" value="<% user %>)" name="user-seq">
+                </div>
+                <div role="tabpanel" class="tab-pane edit-resume section">
+                    <ul class="tr-list resume-info">
+                        <!-- 이력서 제목 및 이미지 -->
+                        <li class="personal-deatils code-edit-small">
+                            <div class="media-body">
+                                <span class="tr-title">이력서</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>제목<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="code-edit" name="subject" id="subject"><%= get.SUBJECT %></div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="change-photo">
+                                            <div class="user-image">
+                                                <% if (get.PHOTO) {%><img src='<%=hostName %>/api/files/get/<%=get.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                                            </div>
+                                            <div class="btn btn-primary" id="imageuploadbtn">이미지 업로드</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 개인정보 -->
+                        <li class="personal-deatils code-edit-small">
+                            <div class="media-body">
+                                <span class="tr-title">개인정보</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>이름<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="code-edit" name="name" id="name"><%= get.NAME %></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>연락처<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="code-edit" name="contact" id="contact"><%= get.CONTACT %></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>이메일<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="code-edit" name="email" id="email"><%= get.EMAIL %></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>성별<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="code-edit" name="gender" id="gender" ><%= get.GENDER %></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>주소<span class="pull-right">:</span> </label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="postCode" placeholder="우편번호" value="<%= get.POSTCODE %>">
+                                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                                        <input type="text" id="address" placeholder="주소" value="<%= get.ADDRESS %>"><br>
+                                        <input type="text" id="addressExtra" placeholder="상세주소" value="<%= get.ADDRESSEXTRA %>">
+                                        <input type="text" style="display: none;" id="sample6_extraAddress" placeholder="참고항목">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 학력사항  -->
+                        <li class="education-background code-edit-small">
+                            <div class="media-body additem-edu">
+                                <span class="tr-title">학력 사항</span>
+                                <div class="media-body additem-edu">
+                                    <div class="code-edit-small">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>학위</label>
+                                            </div>
+                                            <div class="col-sm-8"> 
+                                                <select class="selectpicker">
+                                                    <option id="eduOption1" value="초등학교 졸업">초등학교 졸업</option>
+                                                    <option id="eduOption2" value="중학교 졸업">중학교 졸업</option>
+                                                    <option id="eduOption3" value="고등학교 졸업">고등학교 졸업</option>
+                                                    <option id="eduOption4" value="대학교 졸업">대학교 졸업</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>최종학력<span class="pull-right">:</span> </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="code-edit" id="EDUCATIONSCHOOL" name="EDUCATIONSCHOOL"><%= get.EDUCATIONSCHOOL %></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.additem -->
+                        </li>
+
+                        <!-- 희망연봉 및 근무지역 -->
+                        <li class="hope code-edit-small">
+                            <div class="media-body">
+                            <span class="tr-title">희망연봉 및 희망 근무지역</span>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>희망 연봉<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="salary" id="salary"><%= get.SALARY %></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>희망 근무지역<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="WORKINGTYPE_NAMES" id="WORKINGTYPENAMES"><%= get.WORKINGTYPE_NAMES %></div>
+                                </div>
+                            </div>
+                        </div>
+                        </li>
+
+                        <!-- 보유기술 및 자격증 -->
+                        <li class="qualification code-edit-small">
+                            <div class="media-body">
+                            <span class="tr-title">보유기술 및 자격증</span>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>보유기술<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="TECHNICAL" id="technical"><%= get.TECHNICAL %></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>자격증<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="LICENSE" id="license"><%= get.LICENSE %></div>
+                                </div>
+                            </div>
+                        </div>
+                        </li>
+
+                        <!-- 취업 우대사항 -->
+                        <li class="findjob code-edit-small">
+                            <div class="media-body">
+                            <span class="tr-title">취업 우대사항</span>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>보훈대상<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="ISWELFARE" id="isWelfare"><%= get.ISWELFARE %></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>병역<span class="pull-right">:</span> </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="code-edit" name="ISMILITALY" id="isMilitaly"><%= get.ISMILITALY %></div>
+                                </div>
+                            </div>
+                        </div>
+                        </li>
+
+                        <!-- 증명서류 -->
+                        <li class="career-objective">
+                            <div class="media-body">
+                                <span class="tr-title">4대보험 증명 서류</span>
+                                <div class="btn btn-primary" id="certificateUploadBtn">증명서 업로드</div>
+                            </div>
+                        </li>
+
+                        <!-- 자기소개 -->
+                        <li class="personal-deatils">
+                            <div class="media-body">
+                                <span class="tr-title">소개</span>
+                                <div class="code-edit" name="" id="introduce"><%= get.INTRODUCE %></div>
+                            </div>
+                        </li>
+                        
+                        <!-- 경력사항 -->
+                        
+                        <% if(listCareer){ %>
+                            <!-- 경력이 있다면 디폴트 경력 체크, value = 3 -->
+                        <div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-primary" id="option1">
+                                    <input type="radio" name="carrerSeq"  value="2" autocomplete="off" > 신입
+                                </label>
+                                <label class="btn btn-primary active" id="option2">
+                                    <input type="radio" name="carrerSeq" value="3" autocomplete="off" checked> 경력
+                                </label>
+                            </div>
+                        </div>
+
+                        <li class="work-history" id="work-history">
+                            <div class="media-body additem-work">
+                                <span class="tr-title">경력</span>
+                                <div id="addhistory" class="additem">
+                                    <!-- <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
+                                    <!-- <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+                                    <span id="careerCreateBtn" class="careerCreateBtn" ><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <% listCareer.forEach(item => { %>
+                                    <span class="careerRemoveBtn" onclick="careerRemove()"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <div class="code-edit-small" >
+                                        <label>마트 이름</label>
+                                        <div class="code-edit"><%= item.COMPANY %></div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-4">
+                                                <label>시작</label>
+                                                <div class="calendar">
+                                                    <input type="date" name="" class="form-control" value="<%= moment(item.WORKSTART).format('YYYY-MM-DD') %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-4">
+                                                <label>끝</label>
+                                                <div class="calendar">
+                                                    <input type="date" class="form-control" value="<%= moment(item.WORKEND).format('YYYY-MM-DD') %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>경력기간</label>
+                                            <div class="code-edit"><%= item.CAREER %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>직급</label>
+                                            <div class="code-edit"><%= item.POSITION %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>담당 업무</label>
+                                            <div class="code-edit"><%= item.JOBTYPE %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>근무 지역</label>
+                                            <div class="code-edit"><%= item.WORKREGION %></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <label>최종 연봉</label>
+                                            <div class="code-edit"><%= item.SALARY %></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <% }) %>
+                            </div>
+                        </li>
+                        <% }else{ %>
+                            <div>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active" id="option1">
+                                        <input type="radio" name="carrerSeq"  value="2" autocomplete="off" checked> 신입
+                                    </label>
+                                    <label class="btn btn-primary" id="option2">
+                                        <input type="radio" name="carrerSeq"  value="3" autocomplete="off"> 경력
+                                    </label>
+                                </div>
+                            </div>
+                            <li class="work-history" style="display: none;" id="work-history">
+                                <div class="media-body additem-work">
+                                    <span class="tr-title">경력</span>
+                                    <div id="addhistory" class="additem">
+                                        <span id="clone" class="icon clone"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="icon remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <div class="code-edit-small">
+                                            <label>직종</label>
+                                            <div class="code-edit"></div>
+                                            <label>마트 이름</label>
+                                            <div class="code-edit"></div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>시작</label>
+                                                    <div class="calendar">
+                                                        <input type="date" name="" class="form-control" value="" />
+                                                    </div>
+                                                    <!-- calendar -->
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <label>끝</label>
+                                                    <div class="calendar">
+                                                        <input type="date" class="form-control" value="" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox">
+                                                        <label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>경력기간</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>직종</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>직급</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>담당 업무</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>근무 지역</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label>최종 연봉</label>
+                                                <div class="code-edit"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <% } %>
+                        <!-- /.work-history -->
+                    </ul>
+                    <div class="buttons pull-right">
+                        <button class="btn button-cancle">취소</button>
+                        <button id="resume-update-btn" class="btn btn-primary">수정</button>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.tr-profile -->
+</div>
+
+<!-- 이미지 업로드 모달창 -->
+<input type="hidden" id="createType" />
+<div id="imgUploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imgUploadModal" aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="imgUploadModal-Title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="upload-photo">
+                                <!-- <label class="btn btn-primary" for="upload-photo" >사진 업로드</label> -->
+                                <input type="file" id="upload-photo">
+                                <span class="max-size">Max 20 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="imgUploadBtn">저장</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- 4대보험 증명서 모달창 -->
+<input type="hidden" id="createType" />
+<div id="certificateUploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="certificateUploadModal" aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="certificateUploadModal-Title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="upload-certificate">
+                                <!-- <label class="btn btn-primary" for="upload-photo" >사진 업로드</label> -->
+                                <input type="file" id="upload-certificate">
+                                <span class="max-size">Max 20 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="ctfUploadBtn">저장</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<%- contentFor('script') %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    $(document).ready(function(){
+        var hostName = `<%= hostName%>`
+
+        function careerContent(){
+            var contentString = '';
+            contentString +='<span class="careerRemoveBtn" onclick="careerRemove()"><i class="fa fa-times" aria-hidden="true"></i></span>'
+            contentString +='<div class="code-edit-small">'
+            contentString +='<label>마트 이름</label>'
+            contentString +=`<div class="code-edit"></div>`
+            contentString +='<div class="row">'
+            contentString +='<div class="col-sm-6 col-md-4"><label>시작</label><div class="calendar"><input type="date" name="" class="form-control" value="" /></div></div>'
+            contentString +='<div class="col-sm-6 col-md-4"><label>끝</label><div class="calendar"><input type="date" class="form-control" value="" /></div></div>'
+            contentString +='<div class="col-md-4"><div class="checkbox"><label for="logged-1"><div type="checkbox" name="logged-1" id="logged-1" />재직중입니다.</label></div></div>'
+            contentString +='<div class="col-sm-6 col-md-4"><label>경력기간</label><div class="code-edit"></div></div>'
+            contentString +='<div class="col-sm-6 col-md-4"><label>직급</label><div class="code-edit"></div></div>'
+            contentString +='<div class="col-sm-6 col-md-3"><label>담당 업무</label><div class="code-edit"></div></div>'
+            contentString +='<div class="col-sm-6 col-md-3"><label>근무 지역</label><div class="code-edit"></div></div>'
+            contentString +='<div class="col-sm-6 col-md-3"><label>최종 연봉</label><div class="code-edit"></div></div>'
+            contentString +='</div></div>'
+            return contentString;
+        }
+
+        $("#careerCreateBtn").click(function(){
+            $(".additem").append(careerContent());
+            $('.code-edit').jqte();
+        });
+        $(".careerRemoveBtn").click(function(){
+            careerRemove()
+        })
+        
+        // 이미지 업로드 모달 클릭
+        $("#imageuploadbtn").click(function(){
+            $('#imgUploadModal').modal();
+        });
+        // 4대보험 증명서류 업로드 모달 클릭
+        $("#certificateUploadBtn").click(function(){
+            $('#certificateUploadModal').modal();
+        });
+        // 이미지 업로드 모달안의 완료버튼 클릭
+        // $("#imgUploadBtn").click(function(){
+        //     uploadImage();
+        // });
+        // 4대보험 증명서류 모달안의 완료버튼 클릭
+        $("#ctfUploadBtn").click(function(){
+            uploadCertificate();
+        });
+        // 신입 버튼 클릭시
+        $("#option1").click(function(){
+            $("#work-history").css('display','none');
+        });
+        // 경력 버튼 클릭시
+        $("#option2").click(function(){
+            $("#work-history").css('display','block');
+        });
+
+        // let userseq = user.Seq;
+        let userseq = <%= user.Seq %>
+        console.log(userseq);
+        $("#resume-update-btn").click(function(){
+            // 수정 완료 클릭시 > api로 호출하는 front 로직 수행(body) >  POST로 (body) api로 전송하여 이력서 seq로 업데이트
+            doPostCallSync("/mypage/user/edit/", {
+                            seq: userseq,
+                            subject: $("#subject").val(),
+                            name: $("#name").val(),
+                            contact: $("#contact").val(),
+                            email: $("#email").val(),
+                            postCode: $("#postCode").val(),
+                            address: $("#address").val(),
+                            addressExtra: $("#addressExtra").val(),
+                            //  드랍다운 버튼형식 유지할지?
+                            education: $("#selectpicker").val(),
+                            educcationSchool: $("#EDUCATIONSCHOOL").val(),
+                            // 경력이 있다면?? 확인 필요. 
+                            carrerSeq: $('input[name="carrerSeq"]:checked').val(),
+                            technical: $("#technical").val(),
+                            license: $("#license").val(),
+                            isWelfare: $("#isWelfare").val(),
+                            isMilitaly: $("#isMilitaly").val(),
+                            introduce: $("#introduce").val(),
+                            // 1, 2, 3      ||||||||| 정규직, 계약직, 일용직
+                            // 선택하는곳 만들어야함. 해결
+                            workingTypeSeqs: $("#").val(),
+                            workingTypeNames: $("#").val(),
+                            // 희망연봉
+                            salary: $("#salary").val()
+                        })
+                        .success(function(json){
+                            if (json.result == "success"){
+                                location.reload();
+                            }
+                        })
+                        .fail(function(sender, message, details){
+                            alert("이력서 업데이트 오류 발생..");
+                            return false;
+                        });
+        })
+    })
+
+    function careerRemove(){
+        console.log(this);
+        console.log($(this).next());
+        // console.log(this.nextSibling());
+        // this.nextSibling.remove();
+        // this.nextSibling.remove();
+        // this.remove();
+    }
+    // 이력서수정 >> 이미지 업로드 
+    function uploadImage(){
+        var resumeseq = <%= get.SEQ%>
+        console.log(resumeseq);
+        var resumeImage = null;
+        var titleImage = null;
+        // 파일이 있으면 먼저 업로드한다 
+        if ($("#upload-photo").val() != "") {
+            var formData = new FormData();
+            formData.append("location", 'resume');
+            formData.append("uploadFile", $('#upload-photo')[0].files[0]);
+            $.ajax({
+                url: 'http://localhost:3000' + '/api/files/uploadSingle',  
+                type: 'POST',
+                dataType: "json",
+                data: formData,
+                async: false,
+                success:function(json){
+                    console.log(json.data.fieldname);
+                    // 업로드가 성공했으면 정보를 업데이트
+                    if (json.result == "success") {
+                        resumeImage = json.data.filename;
+                    doPostCallSync("/mypage/user/updateimage", {
+                        SEQ: resumeseq,
+                        location: 'resume',
+                        RESUMEFILE: resumeImage
+                    })
+                    .success(function(json){
+                        if (json.result == "success") location.reload();
+                    })
+                    .fail(function(sender, message, details){
+                        alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
+                    });                         
+                }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            }); 
+        }
+    }
+    
+    // 4대보험 증명 서류
+    function uploadCertificate(){
+        var resumeseq = <%= get.SEQ%>
+        console.log(resumeseq);
+        var certificate = null;
+        var titleImage = null;
+        // 파일이 있으면 먼저 업로드한다 
+        if ($("#upload-certificate").val() != "") {
+            var formData = new FormData();
+            formData.append("location", 'certificate');
+            formData.append("uploadFile", $('#upload-certificate')[0].files[0]);
+            $.ajax({
+                url: 'http://localhost:3000' + '/api/files/uploadSingle',  
+                type: 'POST',
+                dataType: "json",
+                data: formData,
+                async: false,
+                success:function(json){
+                    // alert("에이작스는 성공함.");
+                    // console.log(json.data.fieldname);
+                    // 업로드가 성공했으면 정보를 업데이트
+                    if (json.result == "success") {
+                        certificate = json.data.filename;
+                    doPostCallSync("/mypage/user/updatecertificate", {
+                        SEQ: resumeseq,
+                        location: 'certificate',
+                        RESUMEFILE: certificate
+                    })
+                    .success(function(json){
+                        if (json.result == "success") location.reload();
+                    })
+                    .fail(function(sender, message, details){
+                        alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
+                    });                         
+                }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            }); 
+        }
+    }
+    // 주소 API 적용
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postCode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addressExtra").focus();
+            }
+        }).open();
+    }
+</script>

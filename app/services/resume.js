@@ -12,7 +12,7 @@ module.exports = class resumeService {
             } else {
                 //실패
                 logger.writeLog("error", `services/resumeService/get: ${body.result}`);
-                return body.data;
+                return null;
             }
         } catch (error) {
             logger.writeLog("error", `services/resumeService/get: ${error}`);
@@ -28,7 +28,7 @@ module.exports = class resumeService {
             } else {
                 //실패
                 logger.writeLog("error", `services/resumeService/getByUserSeq: ${body.result}`);
-                return body.data;
+                return null;
             }
         } catch (error) {
             logger.writeLog("error", `services/resumeService/getByUserSeq: ${error}`);
@@ -44,15 +44,15 @@ module.exports = class resumeService {
             } else {
                 //실패
                 logger.writeLog("error", `services/resumeService/get: ${body.result}`);
-                return body.data;
+                return null;
             }
         } catch (error) {
             logger.writeLog("error", `services/resumeService/get: ${error}`);
             return null;
         }
     }
-    static async update(seq, subject, photo, name, contact, email,
-        postCode, address, addressExtra, education, educcationSchool, carrerSeq, technical, license,
+    static async update(seq, subject, name, contact, email, gender,
+        postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
         isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary){
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/update`;
@@ -60,16 +60,16 @@ module.exports = class resumeService {
                 json: { 
                     seq: seq,
                     subject: subject,
-                    photo: photo,
                     name: name,
                     contact: contact,
                     email: email,
+                    gender: gender,
                     postCode: postCode,
                     address: address,
                     addressExtra: addressExtra,
                     education: education,
                     educcationSchool: educcationSchool,
-                    carrerSeq: carrerSeq,
+                    careerSeq: careerSeq,
                     technical: technical,
                     license: license,
                     isWelfare: isWelfare,
@@ -86,7 +86,7 @@ module.exports = class resumeService {
             } else {
                 //실패
                 logger.writeLog("error", `services/resumeService/update: ${body.result}`);
-                return body.data;
+                return null;
             }
         } catch (error) {
             logger.writeLog("error", `services/resumeService/update: ${error}`);
@@ -119,6 +119,7 @@ module.exports = class resumeService {
             }
         } catch (error) {
             logger.writeLog('error', `services/resumeService/updateImage: ${error}`);
+            return null;
         }
     }  
     static async updatecertificate(token, SEQ, RESUMEFILE) {
@@ -147,6 +148,7 @@ module.exports = class resumeService {
             }
         } catch (error) {
             logger.writeLog('error', `services/resumeService/updatecertificate: ${error}`);
+            return null;
         }
     }  
     
@@ -158,11 +160,11 @@ module.exports = class resumeService {
                 return body.data;
             } else {
                 //실패
-                logger.writeLog("error", `services/resumeService/getCareer: ${body.result}`);
-                return body.data;
+                logger.writeLog("error", `services/resumeService/listCareer: ${body.result}`);
+                return null;
             }
         } catch (error) {
-            logger.writeLog("error", `services/resumeService/getCareer: ${error}`);
+            logger.writeLog("error", `services/resumeService/listCareer: ${error}`);
             return null;
         }
     }
@@ -192,6 +194,7 @@ module.exports = class resumeService {
             }
         } catch (error) {
             logger.writeLog('error', `services/resumeService/listForRecruit: ${error}`);
+            return null;
         }
     } 
     static async increaseViewCount(seq) {
@@ -211,7 +214,115 @@ module.exports = class resumeService {
             return 0;
         } catch (error) {
             logger.writeLog('error', `services/resumeService/increaseViewCount: ${error}`);
+            
+        }
+    }
+    static async removeCareer(resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/removeCareer`;
+
+            const {body} = got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    seq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/resumeSeq: ${error}`);
+            return null;
         }
     }  
+    static async updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/updateCareer`;
 
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    seq: resumeSeq,
+                    company: company,
+                    workStart: workStart,
+                    workEnd: workEnd,
+                    career: career,
+                    position: position,
+                    jobType: jobType,
+                    workRegion: workRegion,
+                    charge: charge,
+                    salaly: salaly
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/updateCareer: ${error}`);
+            return null;
+        }
+    }
+    static async createCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/addCareer`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    resumeSeq: resumeSeq,
+                    company: company,
+                    workStart: workStart,
+                    workEnd: workEnd,
+                    career: career,
+                    position: position,
+                    jobType: jobType,
+                    workRegion: workRegion,
+                    charge: charge,
+                    salaly: salaly
+                },
+                responseType: 'json'
+            });
+            return body;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/createCareer: ${error}`);
+            return null;
+        }
+    }
+    static async getCareer(token ,resumeSeq) {
+        try {
+            // console.log("userseq ? ? ? ? ? ? ? 정상  4나옴" + resumeSeq );
+            var apiURL = `${process.env.APIHOST}/api/resume/getCareer`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    seq: resumeSeq                    
+                },
+                responseType: 'json'
+            });
+            
+            if(body.result === "success") {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog("error", `FRONT - services/resumeService/getCareer: ${body}`);
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `FRONT - services/resumeService/getCareer: ${error}`);
+            return null;
+        }
+    }
+    
 };

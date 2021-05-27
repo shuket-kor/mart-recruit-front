@@ -1,6 +1,7 @@
 const { logger } = require('../config/logger');
 const resumeService = require('../services/resume');
 const scrapService = require('../services/scrap');
+const recruitService = require('../services/recruit.js');
 const moment = require('moment');
 module.exports = {
     
@@ -25,16 +26,16 @@ module.exports = {
     async userEdit(req, res, next){
         let seq = req.body.seq
         let subject = req.body.subject;
-        let photo = req.body.photo;
         let name = req.body.name;
         let contact = req.body.contact;
         let email = req.body.email;
+        let gender = req.body.gender;
         let postCode = req.body.postCode;
         let address = req.body.address;
         let addressExtra = req.body.addressExtra;
         let education = req.body.education;
         let educcationSchool = req.body.educcationSchool;
-        let carrerSeq = req.body.carrerSeq;
+        let careerSeq = req.body.careerSeq;
         let technical = req.body.technical;
         let license = req.body.license;
         let isWelfare = req.body.isWelfare;
@@ -45,9 +46,9 @@ module.exports = {
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
-        
-        const userEdit = await resumeService.update(seq, subject, photo, name, contact, email,
-            postCode, address, addressExtra, education, educcationSchool, carrerSeq, technical, license,
+
+        const userEdit = await resumeService.update(seq, subject, name, contact, email, gender,
+            postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
             isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary);
         
         res.redirect('/mypage/user/resume');
@@ -56,24 +57,45 @@ module.exports = {
     async edit(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        const getByUserSeq = await resumeService.getByUserSeq(user_seq);
-        let resumeSeq = getByUserSeq.SEQ;
+        const userInfo = await resumeService.getByUserSeq(user_seq);
+        let resumeSeq = userInfo.SEQ;
+        // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(resumeSeq);
-        let careerCnt = listCareer.length;
-        console.log(listCareer);
-        res.render('mypage/userpageresumeedit', {
+        const workingTypeList = await recruitService.listWorkingType();
+
+        res.render('mypage/userPageEdit', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            get: getByUserSeq,
+            userInfo: userInfo,
             moment: moment,
             hostName: process.env.APIHOST,
             listCareer: listCareer,
-            careerCnt: careerCnt
-            
+            // careerCnt: careerCnt,
+            workingTypeList: workingTypeList
         })
     },
+    async createCareer(req, res, next){
+        let resumeSeq = req.body.resumeSeq;
+        let company = req.body.company;
+        let workStart = req.body.workStart;
+        let workEnd = req.body.workEnd;
+        let career = req.body.career;
+        let position = req.body.position;
+        let jobType = req.body.jobType;
+        let workRegion = req.body.workRegion;
+        let charge = req.body.charge;
+        let salaly = req.body.salaly;
 
+        const returnData = await resumeService.createCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+
+    },
+    
     // 이력서 수정 > 사진 업로드 모달에서 사진 업로드
     async updateImage(req, res, next){
         const SEQ = req.body.SEQ;
@@ -99,7 +121,48 @@ module.exports = {
         });
     },
     
+    async getCareer(req, res, next){
+        let resumeSeq = req.query.seq;
+        
+        const returnData = await resumeService.getCareer(req.cookies.xToken, resumeSeq);
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+        
+    },
+    async removeCareer(req, res, next){
 
+        // let userSeq = req.user.Seq;
+        let resumeSeq = req.body.resumeSeq;
+        const returnData = await resumeService.removeCareer(resumeSeq);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+        
+    },
+    async updateCareer(req, res, next){
+        let resumeSeq = req.body.resumeSeq;
+        let company = req.body.company;
+        let workStart = req.body.workStart;
+        let workEnd = req.body.workEnd;
+        let career = req.body.career;
+        let position = req.body.position;
+        let jobType = req.body.jobType;
+        let workRegion = req.body.workRegion;
+        let charge = req.body.charge;
+        let salaly = req.body.salaly;
+        
+        const returnData = await resumeService.updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+    
     async resumegetByUserSeq(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
@@ -181,5 +244,7 @@ module.exports = {
             user: req.user
         })
     }
+
+    
 
 };

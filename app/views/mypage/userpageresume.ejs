@@ -112,7 +112,7 @@
                                         <% }) %>
                                 </div>
                             </div>
-                        </li><!-- /.work-history -->	
+                        </li>
                         <% } %>
                         <li class="career-objective media">
                             <div class="icon">
@@ -122,7 +122,7 @@
                                 <span class="tr-title">자기 소개서</span>
                                 <div class="introduce"><%-userInfo.INTRODUCE %></div>
                             </div>
-                        </li><!-- /.career-objective -->
+                        </li>
                         <li class="career-objective media">
                             <div class="icon">
                                 <i class="fa fa-file-word" aria-hidden="true"></i>
@@ -131,7 +131,7 @@
                                 <span class="tr-title">인증용 파일</span>
                                 <div class="introduce"><%-(userInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${userInfo.CAREERCERTIFICATE}' target='_blank'>` : '제출되지 않았습니다' %></div>
                             </div>
-                        </li><!-- /.career-objective -->
+                        </li>
                     </ul>  
 
                 </div>

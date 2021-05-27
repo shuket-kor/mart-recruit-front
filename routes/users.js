@@ -13,7 +13,6 @@ router.post('/usercreate', create);
 // 마이페이지
 router.get('/mypage',verify,  mypage);
 
-// 로그인 페이지
 
 // router.get('/logout', logout)
 router.get('/userlist', list);
