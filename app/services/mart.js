@@ -156,6 +156,35 @@ module.exports = class martService {
         }
     } 
     
+    static async getJobRequest(token, martSeq, userSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/mart/getJobRequest`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    userSeq: userSeq,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body;
+            } else {
+                //실패
+                logger.writeLog('error', `services/martService.getJobRequest: ${martSeq} to ${userSeq} // 입사 지원 요청 정보 리턴 실패`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/martService.getJobRequest: ${error}`);
+        }
+    } 
+
     static async removeJobRequest(token, martSeq, userSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/mart/removeJobRequest`;

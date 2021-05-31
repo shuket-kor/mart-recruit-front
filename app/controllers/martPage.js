@@ -106,6 +106,9 @@ module.exports = {
         const resumeInfo = await resumeService.get(resumeSeq);
         const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
 
+        const jobRequest = await martService.getJobRequest(req.cookies.xToken, martInfo.SEQ, resumeInfo.USER_SEQ);
+        const resumeScrap = await resumeService.getScrap(req.cookies.xToken, martInfo.SEQ, resumeInfo.SEQ);
+
         res.render('martPage/scrapDetail', {
             layout: 'layouts/default',
             title: title,
@@ -115,7 +118,9 @@ module.exports = {
             userInfo: userInfo,
             martInfo: martInfo,
             resumeInfo: resumeInfo,
-            listCareer: listCareer
+            listCareer: listCareer,
+            jobRequest : jobRequest,
+            resumeScrap: resumeScrap,
         });
     },
 }

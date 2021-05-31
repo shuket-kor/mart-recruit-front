@@ -8,6 +8,8 @@ const rowCount = 10;
 
 module.exports = {
     async list(req, res, next) {
+        if (req.user.Type != 'M') res.redirect("/");
+        
         const currentPage = (req.query.page) ? req.query.page : 1;
         const regions = (req.query.regions) ? req.query.regions : '';
         const jobKinds = (req.query.jobKinds) ? req.query.jobKinds : '';
@@ -41,6 +43,9 @@ module.exports = {
     },
 
     async detail(req, res, next) {
+        if (req.user.Type != 'M') res.redirect("/");
+        let martInfo = await martService.getMartByUser(req.cookies.xToken, req.user.Seq);
+
         const regions = (req.query.regions) ? req.query.regions : '';
         const jobKinds = (req.query.jobKinds) ? req.query.jobKinds : '';
         const certificate = (req.query.certificate) ? req.query.certificate : '';
@@ -56,6 +61,8 @@ module.exports = {
 
         // 좌측에 나타날 이력서 리스트를 얻는다
         const returnData = await resumeService.list(req.cookies.xToken, regions, null, jobKinds, certificate, currentPage, 5);
+        const jobRequest = await martService.getJobRequest(req.cookies.xToken, martInfo.SEQ, resumeInfo.USER_SEQ);
+        const resumeScrap = await resumeService.getScrap(req.cookies.xToken, martInfo.SEQ, resumeInfo.SEQ);
 
         res.render('resume/detail', {
             layout: 'layouts/default',
@@ -71,6 +78,8 @@ module.exports = {
             list: (returnData) ? returnData.list : null,
             resumeInfo: resumeInfo,
             listCareer: listCareer,
+            jobRequest: jobRequest,
+            resumeScrap: resumeScrap,
             rowCount: 5,
             listPage: listPage,
             page: currentPage

@@ -155,11 +155,22 @@
                         <div class="section">
                             <div class="alert alert-light text-center" role="alert">
                                 <p>개인 정보 보호에 의해 개인 정보는 더 이상 제공되지 않습니다.</p>
-                                <h3><i class="fa fa-quote-left"></i> 입사 지원 요청 <i class="fa fa-quote-right"></i></h3>을 통하여 지원된 이력서만 상세 정보를 열람할 수 있습니다.
-                            </div>
+                                <% if (!jobRequest) { %> 
+                                <h3><i class="fa fa-quote-left"></i> 입사 지원 요청 <i class="fa fa-quote-right"></i></h3>을 통하여 구직자가 지원하면, 지원자 채용을 통해서 상세 정보를 열람할 수 있습니다.
+                                <% } else { %> 
+                                <h3><i class="fa fa-quote-left"></i> 입사 지원 요청되어 있습니다 <i class="fa fa-quote-right"></i></h3><%=moment(jobRequest.CREATED).format('YYYY.MM.DD HH.mm.ss') %> 입사 지원을 요청했습니다.
+                                <%}%>
+                                <% if (resumeScrap) { %> 
+                                <p><%=moment(resumeScrap.CREATED).format('YYYY.MM.DD HH.mm.ss') %> 스크랩했습니다.</p>
+                                <%}%>
+                                </div>
                             <div class="buttons text-center">
-                                <button type="button" class="btn btn-outline-secondary" id="button-scrap" onclick="scrap(<%=resumeInfo.SEQ %>)">스크랩</button>
-                                <button type="button" class="btn btn-success" id="button-request" onclick="jobRequest(<%=resumeInfo.USER_SEQ %>)">입사 지원 요청</button>
+                                <% if (!resumeScrap) { %> 
+                                    <button type="button" class="btn btn-outline-secondary" id="button-scrap" onclick="scrap(<%=resumeInfo.SEQ %>)">스크랩</button>
+                                <% }%>
+                                <% if (!jobRequest) { %> 
+                                    <button type="button" class="btn btn-success" id="button-request" onclick="jobRequest(<%=resumeInfo.USER_SEQ %>)">입사 지원 요청</button>
+                                <% }%>
                             </div>
                             <hr>								
                             <div class="goto-list-button-area text-center">

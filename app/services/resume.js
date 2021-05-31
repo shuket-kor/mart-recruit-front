@@ -366,6 +366,29 @@ module.exports = class resumeService {
             return null;
         }
     }  
+    static async getScrap(token, martSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/getScrap`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService.getScrap: ${error}`);
+            return null;
+        }
+    }  
     static async removeScrap(token, martSeq, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/removeScrap`;
