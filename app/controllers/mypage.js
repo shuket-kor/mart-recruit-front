@@ -3,7 +3,6 @@ const userService = require('../services/users');
 const resumeService = require('../services/resume');
 const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
-const recruitService = require('../services/recruit.js');
 const moment = require('moment');
 module.exports = {
     
@@ -44,38 +43,38 @@ module.exports = {
         let license = req.body.license;
         let isWelfare = req.body.isWelfare;
         let isMilitaly = req.body.isMilitaly;
-        let carrerCertificate = req.body.carrerCertificate;
         let introduce = req.body.introduce;
         let workingTypeSeqs = req.body.workingTypeSeqs;
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
-
-        const userEdit = await resumeService.update(seq, subject, name, contact, email, gender,
+        const returnData = await resumeService.update(seq, subject, name, contact, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
-            isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary);
-        
-        res.redirect('/mypage/user/resume');
+            isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
     },
 
     async edit(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
-        const userInfo = await resumeService.getByUserSeq(user_seq);
-        let resumeSeq = userInfo.SEQ;
+        const resumeInfo = await resumeService.getByUserSeq(user_seq);
+        let resumeSeq = resumeInfo.SEQ;
         // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(resumeSeq);
         const workingTypeList = await recruitService.listWorkingType();
-
+        
         res.render('mypage/userPageEdit', {
             layout: 'layouts/default',
             title: title,
             user: req.user,
-            userInfo: userInfo,
+            resumeInfo: resumeInfo,
             moment: moment,
             hostName: process.env.APIHOST,
             listCareer: listCareer,
-            // careerCnt: careerCnt,
             workingTypeList: workingTypeList
         })
     },
@@ -117,7 +116,11 @@ module.exports = {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
+        console.log(SEQ);
+        console.log(location);
+        console.log(RESUMEFILE);
         const returnData = await resumeService.updatecertificate(req.cookies.xToken, SEQ, RESUMEFILE);
+        
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -137,7 +140,6 @@ module.exports = {
     },
     async removeCareer(req, res, next){
 
-        // let userSeq = req.user.Seq;
         let resumeSeq = req.body.resumeSeq;
         const returnData = await resumeService.removeCareer(resumeSeq);
 

@@ -53,7 +53,7 @@ module.exports = class resumeService {
     }
     static async update(seq, subject, name, contact, email, gender,
         postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
-        isWelfare, isMilitaly, carrerCertificate, introduce, workingTypeSeqs, workingTypeNames, salary){
+        isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary){
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/update`;
             const { body } = await got.post(apiURL, {
@@ -74,7 +74,6 @@ module.exports = class resumeService {
                     license: license,
                     isWelfare: isWelfare,
                     isMilitaly: isMilitaly,
-                    carrerCertificate: carrerCertificate,
                     introduce: introduce,
                     workingTypeSeqs: workingTypeSeqs,
                     workingTypeNames: workingTypeNames,
@@ -231,10 +230,9 @@ module.exports = class resumeService {
                 },
                 responseType: 'json'
             });
-            return body.data;
+            return true;
         } catch (error) {
             logger.writeLog('error', `services/resumeService/resumeSeq: ${error}`);
-            return null;
         }
     }  
     static async updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {

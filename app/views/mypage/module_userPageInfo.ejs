@@ -2,7 +2,7 @@
     <div class="container">
         <div class="breadcrumb-info text-center">
             <div class="user-image">
-                <img src='<%=(resumeInfo.PHOTO) ? `${hostName}/api/files/get/${resumeInfo.PHOTO}` : `/assets/images/others/author.png` %>' alt="Image" class="img-fluid"></img>
+                <img id='profile-main' src='<%=(resumeInfo.PHOTO) ? `${hostName}/api/files/get/${resumeInfo.PHOTO}` : `/assets/images/others/author.png` %>' alt="Image" class="img-fluid"></img>
             </div>
             <div class="user-title">
                 <h3><%-(resumeInfo.NAME) ? resumeInfo.NAME : '' %></h3>
