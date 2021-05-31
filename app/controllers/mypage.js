@@ -3,7 +3,6 @@ const userService = require('../services/users');
 const resumeService = require('../services/resume');
 const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
-const recruitService = require('../services/recruit.js');
 const moment = require('moment');
 module.exports = {
     

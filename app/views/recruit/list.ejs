@@ -42,8 +42,8 @@
                 <% if (regionList) {
                     regionList.forEach(item => {%>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="workingRegion" value="<%=item.SEQ %>" id="workingRegion_<%=item.SEQ %>" >
-                            <label class="form-check-label" for="workingRegion"><%=item.NAME %></label>
+                            <input class="form-check-input" type="checkbox" name="workingRegion" value="<%=item.SEQ %>" id="workingRegionc" >
+                            <label class="form-check-label" for="workingRegion_<%=item.SEQ %>"><%=item.NAME %></label>
                         </div>
                 <%}) } %>
                     </div>
@@ -59,7 +59,7 @@
                     jobKindList.forEach(item => {%>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="jobKind" value="<%=item.SEQ %>" id="jobKind_<%=item.SEQ %>" >
-                            <label class="form-check-label" for="jobKind"><%=item.NAME %></label>
+                            <label class="form-check-label" for="jobKind_<%=item.SEQ %>"><%=item.NAME %></label>
                         </div>
                 <%}) } %>
                     </div>
@@ -75,7 +75,7 @@
                     workingTypeList.forEach(item => {%>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="workingType" value="<%=item.SEQ %>" id="workingType_<%=item.SEQ %>" >
-                            <label class="form-check-label" for="workingType"><%=item.NAME %></label>
+                            <label class="form-check-label" for="workingType_<%=item.SEQ %>"><%=item.NAME %></label>
                         </div>
                 <%}) } %>
                     </div>

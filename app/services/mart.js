@@ -126,4 +126,98 @@ module.exports = class martService {
             logger.writeLog('error', `services/martService/updateLogo: ${error}`);
         }
     } 
+
+    static async createJobRequest(token, martSeq, userSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/mart/createJobRequest`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    userSeq: userSeq,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body;
+            } else {
+                //실패
+                logger.writeLog('error', `services/martService.createJobRequest: ${martSeq} to ${userSeq} // 입사 지원 요청 실패`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/martService.createJobRequest: ${error}`);
+        }
+    } 
+    
+    static async removeJobRequest(token, martSeq, userSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/mart/removeJobRequest`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    userSeq: userSeq,
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body;
+            } else {
+                //실패
+                logger.writeLog('error', `services/martService.removeJobRequest: ${martSeq} to ${userSeq} // 입사 지원 요청 삭제 실패`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/martService.removeJobRequest: ${error}`);
+        }
+    } 
+
+    static async listJobRequest(token, martSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listJobRequest`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json : {
+                    key : secretKey,
+                    martSeq: martSeq,
+                },
+                responseType: 'json'
+            });
+            if (body) {
+                if (body.result === 'success') {
+                    return body.data;
+                } else {
+                    //실패
+                    logger.writeLog('error', `services/resumeService.listJobRequest: ${body.result}`);           
+                    return null;
+                }
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService.listJobRequest: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService.listJobRequest: ${error}`);
+            return null;
+        }
+    } 
+
 }

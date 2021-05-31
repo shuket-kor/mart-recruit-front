@@ -1,6 +1,7 @@
 const { logger } = require('../config/logger');
 const martService = require('../services/mart');
 const userService = require('../services/users');
+const resumeService = require('../services/resume');
 const moment = require('moment');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
         let userSeq = req.user.Seq;
 
         let userInfo = await userService.get(req.cookies.xToken, userSeq);
+        if (userInfo.USERTYPE != 'M') res.redirect("/");
         let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
 
         res.render('martPage/userInfo', {
@@ -28,6 +30,7 @@ module.exports = {
         let message = (req.query.message) ? req.query.message : '';
 
         let userInfo = await userService.get(req.cookies.xToken, userSeq);
+        if (userInfo.USERTYPE != 'M') res.redirect("/");
         let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);        
 
         res.render('martPage/martInfo', {
@@ -65,5 +68,54 @@ module.exports = {
         } else {
             res.redirect("/martPage/martInfo?message=2");
         }        
-    }
+    },
+
+    async scrap(req, res, next) {
+        let title = '마트 페이지';
+        let userSeq = req.user.Seq;
+
+        let userInfo = await userService.get(req.cookies.xToken, userSeq);
+        if (userInfo.USERTYPE != 'M') res.redirect("/");
+        let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
+        let resumeList = await resumeService.listScrap(req.cookies.xToken, martInfo.SEQ);
+
+        res.render('martPage/scrap', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
+            martInfo: martInfo,
+            list: resumeList,
+        });
+    },
+    
+    async scrapDetail(req, res, next) {
+        let title = '마트 페이지';
+        let userSeq = req.user.Seq;
+        let resumeSeq = req.query.resumeSeq;
+
+        let userInfo = await userService.get(req.cookies.xToken, userSeq);
+        if (userInfo.USERTYPE != 'M') res.redirect("/");
+        let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
+
+        await resumeService.increaseViewCount(resumeSeq);
+
+        // 이력서 정보를 얻는다
+        const resumeInfo = await resumeService.get(resumeSeq);
+        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+
+        res.render('martPage/scrapDetail', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            userInfo: userInfo,
+            martInfo: martInfo,
+            resumeInfo: resumeInfo,
+            listCareer: listCareer
+        });
+    },
 }

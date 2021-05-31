@@ -1,6 +1,7 @@
 const moment = require('moment');
 const numeral = require('numeral');
 const logger = require('../config/logger.js');
+const commonService = require('../services/common.js');
 const recruitService = require('../services/recruit.js');
 const rowCount = 10;
 
@@ -55,11 +56,11 @@ module.exports = {
         const active = 'Y';
 
         // 지역 리스트를 얻는다
-        const regionList = await recruitService.listWorkingRegion();
+        const regionList = await commonService.listWorkingRegion();
         // 업종 리스트를 얻는다
-        const jobKindList = await recruitService.listJobKind();
+        const jobKindList = await commonService.listJobKind();
         // 근무 형태 리스트를 얻는다
-        const workingTypeList = await recruitService.listWorkingType();
+        const workingTypeList = await commonService.listWorkingType();
         // 최신 8개의 리스트를 따로 얻는다
         const returnData_Top = await recruitService.list(req.cookies.xToken, active, regions, jobKinds, workingTypes, searchType, keyword, 1, 8);
         // 페이지에 따른 리스트를 얻는다
@@ -97,11 +98,11 @@ module.exports = {
         const keyword = (req.query.keyword) ? req.query.keyword : '';
 
         // 지역 리스트를 얻는다
-        const regionList = await recruitService.listWorkingRegion();
+        const regionList = await commonService.listWorkingRegion();
         // 업종 리스트를 얻는다
-        const jobKindList = await recruitService.listJobKind();
+        const jobKindList = await commonService.listJobKind();
         // 근무 형태 리스트를 얻는다
-        const workingTypeList = await recruitService.listWorkingType();
+        const workingTypeList = await commonService.listWorkingType();
 
 
         // 로그인한 사용자의 이력서를 얻는다

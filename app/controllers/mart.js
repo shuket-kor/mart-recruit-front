@@ -47,9 +47,9 @@ module.exports = {
         if (!martInfo) res.redirect("/error?message=NoMartInfo")
 
         // 기초 정보를 얻는다
-        let jobKindList = await commonService.getJobKind();
-        let regionList = await commonService.getWorkingRegion();
-        let workingTypeList = await commonService.getWorkingType();
+        let jobKindList = await commonService.listJobKind();
+        let regionList = await commonService.listWorkingRegion();
+        let workingTypeList = await commonService.listWorkingType();
 
         // 마트의 공고  정보를 얻는다
         let recruitInfo = null;
@@ -80,9 +80,9 @@ module.exports = {
         if (!martInfo) res.redirect("/error?message=NoMartInfo")
 
         // 기초 정보를 얻는다
-        let jobKindList = await commonService.getJobKind();
-        let regionList = await commonService.getWorkingRegion();
-        let workingTypeList = await commonService.getWorkingType();
+        let jobKindList = await commonService.listJobKind();
+        let regionList = await commonService.listWorkingRegion();
+        let workingTypeList = await commonService.listWorkingType();
 
         // 공고 정보를 얻는다
         let recruitInfo = await recruitService.get(req.cookies.xToken, recruitSeq);
@@ -239,6 +239,26 @@ module.exports = {
         const LOGOFILE = location + "/" + req.body.LOGOFILE;
         
         const returnData = await martService.updateLogo(req.cookies.xToken, SEQ, LOGOFILE);
+        
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+
+    async resumeList(req, res, next) {
+        const userSeq = req.user.Seq;
+       
+    },
+
+    async createJobRequest(req, res, next) {
+        const userSeq = req.user.Seq;
+        const martSeq = req.query.martSeq;
+        const targetUserSeq = req.query.userSeq;
+
+        let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
+       
+        const returnData = await martService.createJobRequest(req.cookies.xToken, martInfo.SEQ, targetUserSeq);
         
         res.json({
             result: (returnData == null) ? 'fail' : 'success',

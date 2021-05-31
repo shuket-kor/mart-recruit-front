@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { recruitList, recruitCreate, recruitEdit, recruitProcess, recruitResume, recruitResumeView, updateLogo } = require('../app/controllers/mart.js');
+const { recruitList, recruitCreate, recruitEdit, recruitProcess, recruitResume, recruitResumeView, updateLogo, createJobRequest} = require('../app/controllers/mart.js');
 
 // 지원자 채용
 router.get('/recruit', verify, redirectLogin, recruitList);
@@ -24,5 +24,7 @@ router.get('/recruitResumeView', verify, redirectLogin, recruitResumeView);
 
 // 마트의 로고 변경
 router.post('/updateLogo', verify, redirectLogin, updateLogo);
+
+router.get('/createJobRequest', verify, createJobRequest);
 
 module.exports = router;
