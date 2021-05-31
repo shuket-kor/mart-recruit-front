@@ -3,57 +3,6 @@ const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
 
 module.exports = class recruitService {
-    static async listWorkingRegion() {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/workingRegion/list`;
-
-            const {body} = await got.post(apiURL, {responseType: 'json'});
-            if (body.result === 'success') {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog('error', `services/recruitService/listWorkingRegion: ${body.result}`);           
-                return body.data;
-            }
-        } catch (error) {
-            logger.writeLog('error', `services/recruitService/listWorkingRegion: ${error}`);
-            return null;
-        }
-    } 
-    static async listJobKind() {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/jobKind/list`;
-
-            const {body} = await got.post(apiURL, {responseType: 'json'});
-            if (body.result === 'success') {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog('error', `services/recruitService/listJobKind: ${body.result}`);           
-                return body.data;
-            }
-        } catch (error) {
-            logger.writeLog('error', `services/recruitService/listJobKind: ${error}`);
-            return null;
-        }
-    } 
-    static async listWorkingType() {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/workingType/list`;
-
-            const {body} = await got.post(apiURL, {responseType: 'json'});
-            if (body.result === 'success') {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog('error', `services/recruitService/listWorkingType: ${body.result}`);           
-                return body.data;
-            }
-        } catch (error) {
-            logger.writeLog('error', `services/recruitService/listWorkingType: ${error}`);
-            return null;
-        }
-    } 
     static async get(token, seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/get`;

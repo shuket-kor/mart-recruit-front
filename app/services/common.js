@@ -2,7 +2,7 @@ const logger = require('../config/logger.js');
 const got = require('got');
 
 module.exports = class commonService {
-    static async getWorkingRegion() {
+    static async listWorkingRegion() {
         try {
             var apiURL = `${process.env.APIHOST}/api/workingRegion/list`;
 
@@ -19,7 +19,7 @@ module.exports = class commonService {
             return null;
         }
     }      
-    static async getWorkingType() {
+    static async listWorkingType() {
         try {
             var apiURL = `${process.env.APIHOST}/api/workingType/list`;
 
@@ -36,7 +36,7 @@ module.exports = class commonService {
             return null;
         }
     }  
-    static async getJobKind() {
+    static async listJobKind() {
         try {
             var apiURL = `${process.env.APIHOST}/api/jobKind/list`;
 

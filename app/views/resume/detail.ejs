@@ -1,0 +1,246 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/mart.css">
+
+<%- contentFor('content') %>
+<div class="tr-banner-recruit bg-image section-before">
+    <div class="container">
+        <div class="breadcrumb-info text-center">
+            <div class="page-title">
+                <h1>Resume announcements</h1>
+            </div>		
+        </div>
+    </div><!-- /.container -->
+</div><!-- tr-breadcrumb -->
+
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="resume-list resume-list-section">
+                    <% if (list) {
+                        list.forEach(item => {
+                            let NAME = item.NAME.substring(0, item.NAME.length / 2) + "**";
+                             %>
+                            <div class="card clearfix text-center cursor-pointer <%=(item.SEQ == resumeInfo.SEQ) ? '' : 'in' %>active" onclick="showResume(<%=item.SEQ %>)">
+                                <div class="user-image pull-left m-r-10">
+                                <%-(item.PHOTO) ? `<img src="${hostName}/api/files/get/${item.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
+                                </div>
+                                <% if (item.CERTIFICATE == 'Y') { %> 
+                                <div class="pull-right">
+                                    <span class="badge badge-warning">CERTIFICATED</span>
+                                </div>
+                                <% } %>
+                                <div class="text-left">
+                                    <div class="name"><%=NAME %></div>
+                                    <div class="age small"><%=(new Date()).getFullYear() - item.BIRTHYEAR * 1.0 %>, <%=item.GENDER %></div>
+                                    <div class="apply small"><%=moment(item.APPLYDATE).format('YYYY.MM.DD') %> 지원</div>
+                                    <div class="read small"><%-(item.READING == 'N') ? `<span class='text-primary'>미열람</span>` : '열람' %></div>
+                                </div>
+                            </div>
+                        <%})
+                    } %>
+                    <div>
+                        <nav aria-label="Page navigation" style="text-align: center; margin: 0 auto;">
+                            <ul class="pagination justify-content-center" id="resume-page"></ul>
+                        </nav>       
+                    </div>
+                </div><!-- /.tr-sidebar -->        		
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in show active account-info" id="account-info">	
+                        <div class="section resume-last-updated">
+                            <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
+                            <div class="updated-info">
+                                <span class="pull-left">이력서의 마지막 업데이트</span>
+                                <span class="pull-right"><%=moment(resumeInfo.MODIFIED).format('YYYY.MM.DD HH:mm:ss') %></span>
+                            </div>
+                        </div><!-- /.resume-last-updated -->
+
+                        <% if (resumeInfo.CERTIFICATE == 'Y') { %> 
+                            <div class="alert alert-warning">
+                                <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-check"></i></div></span>
+                                <div class="updated-info">
+                                    <span class="pull-left">이 이력서는 인증되었습니다</span>
+                                    <span class="pull-right"><%=moment(resumeInfo.CERTIFICATEDATE).format('YYYY.MM.DD') %> CERTIFICATED</span>
+                                </div>
+                            </div><!-- /.resume-last-updated -->
+                        <%}%>
+
+                        <div class="section display-information">
+                            <div class="title title-after">
+                                <div class="icon"><img src="/assets/images/icons/2.png" alt="Icon" class="img-fluid"></div> 
+                                <span>기본 정보</span>
+                            </div>
+
+                            <div class="change-photo pull-left">
+                                <div class="user-image">
+                                    <%-(resumeInfo.PHOTO) ? `<img src="${hostName}/api/files/get/${resumeInfo.PHOTO}" alt="Image" class="img-fluid">` : '<img src="/assets/images/others/author.png" alt="Image" class="img-fluid">' %>
+                                </div>
+                            </div>
+                            <div>
+                                <dl class="row">
+                                    <dt class="col-sm-3">이름</dt>
+                                    <dd class="col-sm-9"><%=resumeInfo.NAME.substring(0, resumeInfo.NAME.length / 2) + "**" %> (<%=resumeInfo.GENDER %>) / <%=resumeInfo.BIRTHYEAR %>년 생 (<%=(new Date()).getFullYear() - resumeInfo.BIRTHYEAR * 1.0 %>)</dd>
+                                  
+                                    <dt class="col-sm-3">주소</dt>
+                                    <dd class="col-sm-9">(<%=resumeInfo.POSTCODE %>) <%=resumeInfo.ADDRESS %> <%=resumeInfo.ADDRESSEXTRA %></dd>
+                                  
+                                    <dt class="col-sm-3">연락처</dt>
+                                    <dd class="col-sm-9"><%=resumeInfo.CONTACT.substring(0, resumeInfo.CONTACT.length / 2) + "*******" %> </dd>
+                                  
+                                    <dt class="col-sm-3">이메일</dt>
+                                    <dd class="col-sm-9"><%=resumeInfo.EMAIL.substring(0, resumeInfo.EMAIL.length / 2) + "*******" %></dd>
+                                  
+                                    <dt class="col-sm-3">학력</dt>
+                                    <dd class="col-sm-9"><%=resumeInfo.EDUCATION %> (<%=resumeInfo.EDUCATIONSCHOOL %>)</dd>
+                                  </dl>                                
+                            </div>
+                        </div><!-- /.display-information -->
+                        <div class="section">
+                            <ul class="tr-list resume-info">
+                                <li class="personal-deatils media">
+                                    <div class="icon">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="tr-title">이력서 정보</span>
+                                        <ul class="tr-list">
+                                            <li><span class="left">경력여부</span><span class="middle">:</span> <span class="right"><%=resumeInfo.CARRER_NAME %></span></li>
+                                            <li><span class="left">보유기술 </span><span class="middle">:</span> <span class="right"><%=resumeInfo.TECHNICAL %></span></li>
+                                            <li><span class="left">자격증</span><span class="middle">:</span> <span class="right"><%=resumeInfo.LICENSE %></span></li>
+                                            <li><span class="left">보훈대상</span><span class="middle">:</span> <span class="right"><%=resumeInfo.ISWELFARE %></span></li>
+                                            <li><span class="left">병역사항</span><span class="middle">:</span> <span class="right"><%=resumeInfo.ISMILITALY %></span></li>
+                                        </ul>							    	
+                                    </div>
+                                </li><!-- /.personal-deatils -->
+                                <li class="work-history media">
+                                    <div class="icon">
+                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="tr-title">근무 기록</span>
+                                        <div class="tr-list">
+                                            <% if (listCareer) {
+                                                listCareer.forEach(item => { %>
+                                                    
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th>근무처</th>
+                                                            <td><%=item.COMPANY %></td>
+                                                            <th>직급직책</th>
+                                                            <td><%=item.POSITION %></td>
+                                                            <th>근무 기간</th>
+                                                            <td colspan="3"><%=moment(item.WORKSTART).format('YYYY.MM.DD') %>~ <%=(item.WORKEND) ? moment(item.WORKEND).format('YYYY.MM.DD') : '재직 중' %></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>직종</th>
+                                                            <td><%=item.JOBTYPE %></td>
+                                                            <th>근무지역</th>
+                                                            <td><%=item.WORKREGION %></td>
+                                                            <th>담당업무</th>
+                                                            <td><%=item.WORKREGION %></td>
+                                                            <th>최종 급여</th>
+                                                            <td><%=item.SALARY %></td>
+                                                        </tr>
+                                                    </table>
+                                                <% })
+                                            } %>
+                                        </div>
+                                    </div>
+                                </li><!-- /.work-history -->	
+                            </ul>  
+
+                        </div>
+                        <div class="section">
+                            <div class="alert alert-light text-center" role="alert">
+                                <p>개인 정보 보호에 의해 개인 정보는 더 이상 제공되지 않습니다.</p>
+                                <% if (!jobRequest) { %> 
+                                <h3><i class="fa fa-quote-left"></i> 입사 지원 요청 <i class="fa fa-quote-right"></i></h3>을 통하여 구직자가 지원하면, 지원자 채용을 통해서 상세 정보를 열람할 수 있습니다.
+                                <% } else { %> 
+                                <h3><i class="fa fa-quote-left"></i> 입사 지원 요청되어 있습니다 <i class="fa fa-quote-right"></i></h3><%=moment(jobRequest.CREATED).format('YYYY.MM.DD HH.mm.ss') %> 입사 지원을 요청했습니다.
+                                <%}%>
+                                <% if (resumeScrap) { %> 
+                                <p><%=moment(resumeScrap.CREATED).format('YYYY.MM.DD HH.mm.ss') %> 스크랩했습니다.</p>
+                                <%}%>
+                                </div>
+                            <div class="buttons text-center">
+                                <% if (!resumeScrap) { %> 
+                                    <button type="button" class="btn btn-outline-secondary" id="button-scrap" onclick="scrap(<%=resumeInfo.SEQ %>)">스크랩</button>
+                                <% }%>
+                                <% if (!jobRequest) { %> 
+                                    <button type="button" class="btn btn-success" id="button-request" onclick="jobRequest(<%=resumeInfo.USER_SEQ %>)">입사 지원 요청</button>
+                                <% }%>
+                            </div>
+                            <hr>								
+                            <div class="goto-list-button-area text-center">
+                                <button type="button" class="btn btn-outline-secondary btn-lg btn-block" id="gotoList">목록으로 돌아가기</button>
+                            </div>								
+
+                        </div>
+                    </div><!-- /.tab-pane -->
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
+
+<%- contentFor('script') %>
+<script>
+let regions = [<%=regions %>];
+let jobKinds = [<%=jobKinds %>];
+let certificate = '<%=certificate %>';
+
+let totalCount =<%=totalCount %>; 
+let resumeSeq = <%=resumeInfo.SEQ %>;
+let listPage = <%=listPage %>;
+let page = <%=page %>;
+let rowCount = <%=rowCount %>;
+
+$(document).ready(function() {
+    // 페이저 만들기
+    if (totalCount <= rowCount) {
+        $('#resume-page').hide();
+    } else {
+        createPagination('resume-page', totalCount, rowCount, page, 5, `/resume/detail?seq=${resumeSeq}&regions=${regions}&jobKinds=${jobKinds}&certificate=${certificate}&listPage=${listPage}`);
+    }
+    $("#gotoList").click(function() {
+        self.location = `/resume/list?regions=${regions}&jobKinds=${jobKinds}&certificate=${certificate}&page=${listPage}`;
+    });
+})
+
+let showResume = function(resumeSeq) {
+    self.location = `/resume/detail?seq=${resumeSeq}&regions=${regions}&jobKinds=${jobKinds}&certificate=${certificate}&listPage=${listPage}&page=${page}`;
+}
+
+let scrap = function(resumeSeq) {
+    doGetCallSync(`/resume/scrap?resumeSeq=${resumeSeq}`)
+    .success(function(json){
+        if (json.result == "success") {
+            alert("이력서를 스크랩했습니다. 마트의 스크랩한 이력서에서 확인할 수 있습니다.");
+            $("#button-scrap").hide();
+        }
+        else
+            alert("이력서를 스크랩하는 도중 오류가 발생했습니다.");
+    })
+    .fail(function(sender, message, details){
+        alert("이력서를 스크랩하는 도중 오류가 발생했습니다.");
+    });
+}
+
+let jobRequest = function(userSeq) {
+    doGetCallSync(`/mart/createJobRequest?userSeq=${userSeq}`)
+    .success(function(json){
+        if (json.result == "success") {
+            alert("해당 이력서의 사용자에게 지원 요청을 보냈습니다.");
+            $("#button-request").hide();
+        }
+        else
+            alert("지원 요청을 하는 도중 오류가 발생했습니다.");
+    })
+    .fail(function(sender, message, details){
+        alert("지원 요청을 하는 도중 오류가 발생했습니다.");
+    });
+}
+
+</script>

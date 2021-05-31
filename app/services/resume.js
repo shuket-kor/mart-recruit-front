@@ -35,22 +35,6 @@ module.exports = class resumeService {
             return null;
         }
     }
-    static async get(user_seq) {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/resume/get`;
-            const { body } = await got.post(apiURL, { json: { seq: user_seq },responseType: "json" });
-            if (body.result === "success") {
-                return body.data;
-            } else {
-                //실패
-                logger.writeLog("error", `services/resumeService/get: ${body.result}`);
-                return null;
-            }
-        } catch (error) {
-            logger.writeLog("error", `services/resumeService/get: ${error}`);
-            return null;
-        }
-    }
     static async update(seq, subject, name, contact, email, gender,
         postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
         isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary){
@@ -168,6 +152,41 @@ module.exports = class resumeService {
         }
     }
 
+    
+    static async list(token, regions, name, jobKinds, certificate, page, rowCount) {
+        try {
+
+            var apiURL = `${process.env.APIHOST}/api/resume/list`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json : {
+                    regions: regions,
+                    name: name,
+                    jobKinds: jobKinds,
+                    certificate: certificate,
+                    page: page,
+                    rowCount: rowCount,
+                    key: secretKey
+                },
+                responseType: 'json'
+            });
+            if (body.result === 'success') {
+                return body.data;
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService/list: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/list: ${error}`);
+        }
+    }  
+ 
     static async listForRecruit(token, recruitSeq, step) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/listForRecruit`;
@@ -220,7 +239,7 @@ module.exports = class resumeService {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/removeCareer`;
 
-            const {body} = got.post(apiURL, {
+            const {body} = await got.post(apiURL, {
                 headers: {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
@@ -322,5 +341,107 @@ module.exports = class resumeService {
             return null;
         }
     }
-    
+    static async createScrap(token, martSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/createScrap`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/resumeSeq: ${error}`);
+            return null;
+        }
+    }  
+    static async getScrap(token, martSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/getScrap`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService.getScrap: ${error}`);
+            return null;
+        }
+    }  
+    static async removeScrap(token, martSeq, resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/removeScrap`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: {
+                    key: secretKey,
+                    martSeq: martSeq,
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService.removeScrap: ${error}`);
+            return null;
+        }
+    }  
+    static async listScrap(token, martSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listScrap`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json : {
+                    key : secretKey,
+                    martSeq: martSeq,
+                },
+                responseType: 'json'
+            });
+            if (body) {
+                if (body.result === 'success') {
+                    return body.data;
+                } else {
+                    //실패
+                    logger.writeLog('error', `services/resumeService.listScrap: ${body.result}`);           
+                    return null;
+                }
+            } else {
+                //실패
+                logger.writeLog('error', `services/resumeService.listScrap: ${body.result}`);           
+                return null;
+            }
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService.listScrap: ${error}`);
+            return null;
+        }
+    } 
 };
