@@ -2421,7 +2421,8 @@ select:focus,
 }
 
 .personal-deatils label {
-    width: 100%;
+    /* width: 100%;  kmg 수정 20210601*/
+    width: 70%;
     font-weight: normal;
     margin-top: 10px;
     color: #2d3038;
@@ -2526,8 +2527,8 @@ select:focus,
     margin-bottom: 20px;
 }
 
-.resume-info>li{
-    margin-bottom: 30px;;
+.resume-info > li {
+    margin-bottom: 30px;
 }
 
 .resume-info .introduce {
@@ -3604,7 +3605,7 @@ button.btn-primary,
     font-size: 14px;
     display: inline-block;
     margin-right: 15px;
-    color: #DDD;
+    color: #ddd;
 }
 
 .tr-banner-recruit-security {
