@@ -214,9 +214,9 @@ module.exports = class martService {
         }
     } 
 
-    static async listJobRequest(token, martSeq) {
+    static async listJobRequest(token, userSeq) {
         try {
-            var apiURL = `${process.env.APIHOST}/api/resume/listJobRequest`;
+            var apiURL = `${process.env.APIHOST}/api/mart/listJobRequest`;
 
             const {body} = await got.post(apiURL, {
                 headers: {
@@ -226,7 +226,7 @@ module.exports = class martService {
                     'Authorization': token
                 }, json : {
                     key : secretKey,
-                    martSeq: martSeq,
+                    userSeq: userSeq,
                 },
                 responseType: 'json'
             });

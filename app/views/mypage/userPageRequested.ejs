@@ -1,0 +1,65 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/assets/css/userPage.css">
+
+<%- contentFor('content') %>
+<%-include('module_userPageInfo.ejs') %>
+
+<div class="tr-profile section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-sidebar">
+                    <%-include('module_userPageLeft.ejs') %>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="apply-job">
+                    <% if (!list) { %>
+                        <div class="col-md-12 alert alert-warning account-info">
+                            <span class="icon pull-left"><div class="text-warning font-big"><i class="fa fa-clone"></i></div></span>
+                            <div class="updated-info">
+                                <span class="pull-left">요청받은 내역이 없습니다.</span>
+                            </div>
+                        </div>
+                    <% } else {
+                        list.forEach(item => { %>
+                            <div class="job-item">
+                                <div class="job-info">
+                                    <div class="left-content">
+										<div class="clearfix">
+											<div class="company-logo">
+												<%-(item.LOGOFILE) ? `<img src='${hostName}/api/files/get/${item.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${item.NAME}</h2>` %> 
+											</div>
+											<span class="tr-title">
+												<a href="/recruit/detail?seq=<%=item.SEQ %>" target="_blank"><%=item.NAME %></a>
+											</span>
+											
+										</div>
+										<div><span><i class="fa fa-map-signs" aria-hidden="true"></i></span> (<%=item.POSTCODE %>) <%=item.ADDRESS %> <%=item.ADDRESSEXTRA %></div>
+                                        <div><span><i class="fa fa-briefcase" aria-hidden="true"></i></span> 사업자 번호: <%=item.REGNO %></div>
+                                        <div><span><i class="fa fa-phone" aria-hidden="true"></i></span> <%=item.HRONAME %> <%=item.HRORANK %> <%=item.CONTACT %></div>
+                                        </ul>										
+                                    </div>
+                                    <div class="right-content text-right">
+                                        <a href="#" class="btn btn-outline-dark" onclick="showRequest(<%=item.SEQ %>)">공고 보기</a>
+                                        <span class="applied"><%=moment(item.MART_JOBREQUEST_CREATED).format('YYYY.MM.DD HH:mm:ss') %> 요청됨</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <%  })
+                    } %>
+
+                </div><!-- /.tab-pane -->
+        
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.tr-profile -->	
+
+<%- contentFor('script') %>
+<script>
+let showRequest = function(martSeq) {
+    self.location = `/mypage/user/recruit?martSeq=${martSeq}`;
+}
+
+</script>
