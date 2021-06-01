@@ -35,7 +35,7 @@ module.exports = class resumeService {
             return null;
         }
     }
-    static async update(seq, subject, name, contact, email, gender,
+    static async update(seq, subject, name, contact, birthyear, email, gender,
         postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
         isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary){
         try {
@@ -46,6 +46,7 @@ module.exports = class resumeService {
                     subject: subject,
                     name: name,
                     contact: contact,
+                    birthyear: birthyear,
                     email: email,
                     gender: gender,
                     postCode: postCode,

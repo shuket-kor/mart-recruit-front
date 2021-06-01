@@ -3,6 +3,7 @@ const userService = require('../services/users');
 const resumeService = require('../services/resume');
 const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
+const commonService = require('../services/common');
 const moment = require('moment');
 module.exports = {
     
@@ -31,6 +32,7 @@ module.exports = {
         let subject = req.body.subject;
         let name = req.body.name;
         let contact = req.body.contact;
+        let birthyear = req.body.birthyear;
         let email = req.body.email;
         let gender = req.body.gender;
         let postCode = req.body.postCode;
@@ -48,7 +50,7 @@ module.exports = {
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
-        const returnData = await resumeService.update(seq, subject, name, contact, email, gender,
+        const returnData = await resumeService.update(seq, subject, name, contact, birthyear, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
             isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary);
 
@@ -65,7 +67,7 @@ module.exports = {
         let resumeSeq = resumeInfo.SEQ;
         // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(resumeSeq);
-        const workingTypeList = await recruitService.listWorkingType();
+        const workingTypeList = await commonService.listWorkingType();
         
         res.render('mypage/userPageEdit', {
             layout: 'layouts/default',
@@ -174,7 +176,7 @@ module.exports = {
         let userSeq = req.user.Seq;
         const resumeInfo = await resumeService.getByUserSeq(userSeq);
         const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
-
+        console.log(resumeInfo);
         res.render('mypage/userPageResume', {
             layout: 'layouts/default',
             title: title,
