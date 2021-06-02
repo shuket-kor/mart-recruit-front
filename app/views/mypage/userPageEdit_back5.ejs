@@ -1,6 +1,6 @@
 <%- contentFor('style') %>
 <link rel="stylesheet" href="/assets/css/userPageEdit.css">
-<link href="/plugins/summernote-0.8.18-dist/summernote.min.css" rel="stylesheet" />
+
 
 <%- contentFor('content') %>
 
@@ -17,285 +17,296 @@
             <!-- 중앙 레이아웃 -->
             <div class="col-md-8 col-lg-9">
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in show active account-info">
-                        <div class="section resume-last-updated">
+                    <div style="display: none;">
+                        <input id="seqseq" value="<% user %>)" name="user-seq">
+                    </div>
+                    <div role="tabpanel" class="tab-pane edit-resume section">
                         <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
-                            <div class="row item">
-                                <label for="subject" class="col-sm-2 col-form-label title">이력서 이름</label>
-                                <div class="col-sm-6 data">
-                                    <input type="text" class="form-control" id="subject" name="subject" value="<%=resumeInfo.SUBJECT %>" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section display-information">
-                        <!-- 개인정보 -->
-                        <span class="tr-title">개인 정보</span>
-                        <div class="media-body">
-                            <div class="row">
-                                <div class="change-photo col-sm-4">
-                                    <div class="user-image user-photo">
-                                        <% if (resumeInfo.PHOTO) {%><img id='profile-photo'src='<%=hostName %>/api/files/get/<%=resumeInfo.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                        <ul class="tr-list resume-info">
+                            <!-- 이력서 -->
+                            <li class="personal-deatils code-edit-small">
+                                <span class="tr-title">이력서</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>제목<span class="pull-right">:</span> </label>
                                     </div>
-                                    <div class="upload-photo">
-                                        <label class="btn btn-primary photoUploadBtn" for="upload-photo" >사진 업로드</label>
-                                        <input type="file" id="upload-photo">
-                                        <!-- <span class="max-size">Max 20 MB</span> -->
+                                    <div class="col-sm-8">
+                                        <div class="code-edit" name="subject" id="subject"><%= resumeInfo.SUBJECT %></div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                            </li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane edit-resume section">
+                        <ul class="tr-list resume-info">
+                            <!-- 개인정보 -->
+                            <li class="personal-deatils code-edit-small">
+                                <span class="tr-title">개인 정보</span>
+                                <div class="media-body">
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <label>이름 </label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" id="name" name="name" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.NAME %>">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label>연락처</label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" name="contact" id="contact" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.CONTACT %>">
-                                        </div>
-                                        <div class="col-sm-3 birthyearDiv">
-                                            출생년도
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input class="form-control" name="birthyear" id="birthyear" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.BIRTHYEAR %>">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label>성별</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input class="form-control" name="gender" id="gender" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.GENDER %>">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label>이메일 </label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" name="email" id="email" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.EMAIL %>">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row item display-information-form-inline">
-                                <label for="HROEMAIL" class="col-sm-2 col-form-label title">주소</label>
-                                <div class="col-sm-2 data">
-                                    <input type="text" class="form-control width-100 numberonly" name="postCode" id="postCode" readonly value="<%=resumeInfo.POSTCODE %>" /> 
-                                </div>
-                                <div class="col-sm-2 data">
-                                    <button type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
-                                </div>
-                            </div>                           
-                            <div class="form-group row item">                                
-                                <div class="offset-sm-2 col-sm-10 data">
-                                    <input type="text" class="form-control numberonly" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
-                                    <input type="text" class="form-control numberonly" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
-                                </div>
-                            </div>
-
-                            <!-- 학력사항  -->
-                            <span class="tr-title">학력 사항</span>
-                            <div class="media-body additem-edu">
-                                <div class="media-body additem-edu">
-                                    <div class="code-edit-small">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <label>학위</label>
+                                        <div class="change-photo col-sm-4">
+                                            <div class="user-image">
+                                                <% if (resumeInfo.PHOTO) {%><img id='profile-photo'src='<%=hostName %>/api/files/get/<%=resumeInfo.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
                                             </div>
-                                            <div class="col-sm-8"> 
-                                                <select class="selectpicker btn btn-primary dropdown-toggle" id="select_pick">
-                                                    <option id="eduOption1" value="초등학교 졸업">초등학교 졸업</option>
-                                                    <option id="eduOption2" value="중학교 졸업">중학교 졸업</option>
-                                                    <option id="eduOption3" value="고등학교 졸업">고등학교 졸업</option>
-                                                    <option id="eduOption4" value="대학 이상 졸업">대학 이상 졸업</option>
-                                                </select>
+                                            <div class="upload-photo">
+                                                <label class="btn btn-primary" for="upload-photo" >사진 업로드</label>
+                                                <input type="file" id="upload-photo">
+                                                <!-- <span class="max-size">Max 20 MB</span> -->
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <label>최종학력<span class="pull-right">:</span> </label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="EDUCATIONSCHOOL" name="EDUCATIONSCHOOL" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.EDUCATIONSCHOOL %>">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label>이름 </label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="name" name="name" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.NAME %>">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>연락처</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" name="contact" id="contact" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.CONTACT %>">
+                                                </div>
+                                                <div class="col-sm-3 birthyearDiv">
+                                                    출생년도
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input class="form-control" name="birthyear" id="birthyear" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.BIRTHYEAR %>">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>성별</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input class="form-control" name="gender" id="gender" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.GENDER %>">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>이메일 </label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" name="email" id="email" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.EMAIL %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-4 findPostCode">
+                                                    <label>주소<span class="pull-right">:</span> </label>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <input type="button" class="btn btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <input class="form-control" name="postCode" id="postCode" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.POSTCODE %>">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" name="address" id="address" type="text" placeholder=".form-control-sm" placeholder="주소" value="<%= resumeInfo.ADDRESS %>">
+                                                        </div>
+                                                    </div>
+                                                        <input class="form-control" name="addressExtra" id="addressExtra" type="text" placeholder=".form-control-sm" placeholder="상세주소" value="<%= resumeInfo.ADDRESSEXTRA %>">
+                                                        <input type="text" style="display: none;" id="sample6_extraAddress" placeholder="참고항목">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
 
-                        <!-- 희망연봉 및 근무형태 -->
-                        <div class="media-body">
-                        <span class="tr-title">희망 사항</span>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>희망 연봉</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <input class="form-control" id="salary" name="salary" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.SALARY %>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>희망 근무형태</label>
-                            </div>
-                            <div class="col-sm-8 hopeWorkingType">
-                                <% if (workingTypeList) { workingTypeList.forEach(item => {%>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="workingType" value="<%=item.SEQ %>" id="workingType_<%=item.SEQ %>" >
-                                            <label class="form-check-label" for="workingType_<%=item.SEQ %>" id="workingTypeLabel_<%=item.SEQ %>"><%=item.NAME %></label>
+                            <!-- 학력사항  -->
+                            <li class="education-background code-edit-small">
+                                <span class="tr-title">학력 사항</span>
+                                <div class="media-body additem-edu">
+                                    <div class="media-body additem-edu">
+                                        <div class="code-edit-small">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label>학위</label>
+                                                </div>
+                                                <div class="col-sm-8"> 
+                                                    <select class="selectpicker" id="select_pick">
+                                                        <option id="eduOption1" value="초등학교 졸업">초등학교 졸업</option>
+                                                        <option id="eduOption2" value="중학교 졸업">중학교 졸업</option>
+                                                        <option id="eduOption3" value="고등학교 졸업">고등학교 졸업</option>
+                                                        <option id="eduOption4" value="대학 이상 졸업">대학 이상 졸업</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                <%})} %>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>희망 근무 지역</label>
-                            </div>
-                            <div class="col-sm-8 hopeRegion">
-                                <% if (regionList) {regionList.forEach(item => {%>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="workingRegion" value="<%=item.SEQ %>" id="workingRegion_<%=item.SEQ %>" >
-                                            <label class="form-check-label" for="workingRegion_<%=item.SEQ %>"><%=item.NAME %></label>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>최종학력<span class="pull-right">:</span> </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="EDUCATIONSCHOOL" name="EDUCATIONSCHOOL" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.EDUCATIONSCHOOL %>">
+                                            </div>
                                         </div>
-                                <%}) } %>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>희망 직종</label>
-                            </div>
-                            <div class="col-sm-8 hopeJobKind">
-                                <% if (jobKindList) {jobKindList.forEach(item => {%>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="jobKind" value="<%=item.SEQ %>" id="jobKind_<%=item.SEQ %>" >
-                                            <label class="form-check-label" for="jobKind_<%=item.SEQ %>"><%=item.NAME %></label>
-                                        </div>
-                                <%}) } %>
-                            </div>
-                        </div>
-                        <!-- 보유기술 및 자격증 -->
-                        <div class="media-body">
-                            <span class="tr-title">보유기술 및 자격증</span>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>보유기술</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="form-control" id="technical" name="TECHNICAL" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.TECHNICAL %>">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>자격증</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="form-control" id="license" name="LICENSE" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.LICENSE %>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 취업 우대사항 -->
-                        <div class="media-body">
-                            <span class="tr-title">취업 우대사항</span>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>보훈대상</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="form-control" id="isWelfare" name="ISWELFARE" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.ISWELFARE %>">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label>병역</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="form-control" id="isMilitaly" name="ISMILITALY" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.ISMILITALY %>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 증명서류 -->
-                        <div class="media-body">
-                            <span class="tr-title">4대보험 증명 서류</span>
-                            <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
-                                증명서 업로드 완료.
-                            <% } %>
-                            <div class="change-photo">
-                                <div class="upload-photo">
-                                    <label class="btn btn-primary" for="upload-certificate" >증명서 업로드</label>
-                                    <input type="file" id="upload-certificate">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 자기소개 -->
-                        <div class="media-body">
-                            <span class="tr-title">자기 소개</span>
-                            <div>
-                                <textarea type="text"  class="form-control content-text content-edit" name="introduce" id="introduce" val="<%= resumeInfo.INTRODUCE %>" ></textarea>
-                            </div>
-                        </div>
-                    
-                        <!-- 경력사항 -->
-                        <br>
-                        <div class="media-body additem-work">
-                            <span class="tr-title">경력</span>
-                            <% if(listCareer){%>
-                                <div>
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-primary" id="option1">
-                                            <input type="radio" name="carrerSeq"  value="2" autocomplete="off" > 신입
-                                        </label>
-                                        <label class="btn btn-primary active" id="option2">
-                                            <input type="radio" name="carrerSeq" value="3" autocomplete="off" checked> 경력
-                                        </label>
                                     </div>
                                 </div>
-                                <% } else{ %>
-                                <div>
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-primary active" id="option1">
-                                            <input type="radio" name="carrerSeq"  value="2" autocomplete="off" checked> 신입
-                                        </label>
-                                        <label class="btn btn-primary" id="option2">
-                                            <input type="radio" name="carrerSeq" value="3" autocomplete="off" > 경력
-                                        </label>
+                            </li>
+
+                            <!-- 희망연봉 및 근무형태 -->
+                            <li class="hope code-edit-small">
+                                <div class="media-body">
+                                <span class="tr-title">희망연봉 및 희망 근무지역</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>희망 연봉</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="salary" name="salary" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.SALARY %>">
                                     </div>
                                 </div>
-                                <% } %>
-                            <div id="addhistory" class="additem">
-                            <table id='careerTable'class="table table-hover" style="background-color: #faf7fa">
-                                <button type="button" class="btn btn-primary waves-effect waves-light m-l-10 btn-md pull-right" id="addUser" onclick="createCareer(<%= resumeInfo.SEQ %>)">경력 추가 <i class="fa fa-plus"></i></button>
-                                <tr style="background-color: #fff">
-                                    <td>근무처</td>
-                                    <td>직급/직책</td>
-                                    <td>직종</td>
-                                    <td>담당업무</td>
-                                    <td>근무지역</td>
-                                    <td>최종연봉</td>
-                                    <td>근무기간</td>
-                                    <td>ETC</td>
-                                </tr>
-                                <% if(listCareer){listCareer.forEach(item => { %>
-                                <tr id="career<%= item.SEQ%>">
-                                    <td id="company<%= item.SEQ%>"><%= item.COMPANY %></td>
-                                    <td id="position<%= item.SEQ%>"><%= item.POSITION %></td>
-                                    <td id="jobtype<%= item.SEQ%>"><%= item.JOBTYPE%></td>
-                                    <td id="charge<%= item.SEQ%>"><%= item.CHARGE %></td>
-                                    <td id="workregion<%= item.SEQ%>"><%= item.WORKREGION %></td>
-                                    <td id="salaly<%= item.SEQ%>"><%= item.SALARY %></td>
-                                    <td id="worktime<%= item.SEQ%>"><%=moment(item.WORKSTART).format('YYYY.MM.DD') %>~ <%=(item.WORKEND) ? moment(item.WORKEND).format('YYYY.MM.DD') : '재직 중' %></td>
-                                    <td class="actions">
-                                        <a class="on-default edit-row" onclick="javascript:editCareer(<%=item.SEQ %>);"><i class="fa fa-pencil"></i></a>
-                                        <a class="on-default remove-row" onclick="javascript:removeCareer(<%=item.SEQ %>);"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
-                                <% })} %>
-                            </table>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>희망 근무형태</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <% if (workingTypeList) { workingTypeList.forEach(item => {%>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="workingType" value="<%=item.SEQ %>" id="workingType_<%=item.SEQ %>" >
+                                                    <label class="form-check-label" for="workingType" id="workingTypeLabel_<%=item.SEQ %>"><%=item.NAME %></label>
+                                                </div>
+                                        <%})} %>
+                                    </div>
+                                </div>
+                            </div>
+                            </li>
+
+                            <!-- 보유기술 및 자격증 -->
+                            <li class="qualification code-edit-small">
+                                <div class="media-body">
+                                <span class="tr-title">보유기술 및 자격증</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>보유기술</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="technical" name="TECHNICAL" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.TECHNICAL %>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>자격증</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="license" name="LICENSE" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.LICENSE %>">
+                                    </div>
+                                </div>
+                            </div>
+                            </li>
+
+                            <!-- 취업 우대사항 -->
+                            <li class="findjob code-edit-small">
+                                <div class="media-body">
+                                <span class="tr-title">취업 우대사항</span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>보훈대상</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="isWelfare" name="ISWELFARE" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.ISWELFARE %>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>병역</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="isMilitaly" name="ISMILITALY" type="text" placeholder=".form-control-sm" value="<%= resumeInfo.ISMILITALY %>">
+                                    </div>
+                                </div>
+                            </div>
+                            </li>
+
+                            <!-- 증명서류 -->
+                            <li class="career-objective">
+                                <div class="media-body">
+                                    <span class="tr-title">4대보험 증명 서류</span>
+                                    <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
+                                        증명서 업로드 완료.
+                                    <% } %>
+                                    <div class="change-photo">
+                                        <div class="upload-photo">
+                                            <label class="btn btn-primary" for="upload-certificate" >증명서 업로드</label>
+                                            <input type="file" id="upload-certificate">
+                                            <!-- <span class="max-size">Max 20 MB</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- 자기소개 -->
+                            <li class="personal-deatils">
+                                <div class="media-body">
+                                    <span class="tr-title">소개</span>
+                                    <div class="code-edit" name="introduce" id="introduce"><%= resumeInfo.INTRODUCE %></div>
+                                </div>
+                            </li>
+                            
+                            <!-- 경력사항 -->
+                            <li class="work-history" id="work-history">
+                                <div class="media-body additem-work">
+                                    <span class="tr-title">경력</span>
+                                    <% if(listCareer){%>
+                                        <div>
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-primary" id="option1">
+                                                    <input type="radio" name="carrerSeq"  value="2" autocomplete="off" > 신입
+                                                </label>
+                                                <label class="btn btn-primary active" id="option2">
+                                                    <input type="radio" name="carrerSeq" value="3" autocomplete="off" checked> 경력
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <% } else{ %>
+                                        <div>
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-primary active" id="option1">
+                                                    <input type="radio" name="carrerSeq"  value="2" autocomplete="off" checked> 신입
+                                                </label>
+                                                <label class="btn btn-primary" id="option2">
+                                                    <input type="radio" name="carrerSeq" value="3" autocomplete="off" > 경력
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    <div id="addhistory" class="additem">
+                                    <table id='careerTable'class="table table-hover" style="background-color: #faf7fa">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light m-l-10 btn-md pull-right" id="addUser" onclick="createCareer(<%= resumeInfo.SEQ %>)">경력 추가 <i class="fa fa-plus"></i></button>
+                                        <tr style="background-color: #fff">
+                                            <td>근무처</td>
+                                            <td>직급/직책</td>
+                                            <td>직종</td>
+                                            <td>담당업무</td>
+                                            <td>근무지역</td>
+                                            <td>최종연봉</td>
+                                            <td>근무기간</td>
+                                            <td>ETC</td>
+                                        </tr>
+                                        <% if(listCareer){listCareer.forEach(item => { %>
+                                        <tr id="career<%= item.SEQ%>">
+                                            <td id="company<%= item.SEQ%>"><%= item.COMPANY %></td>
+                                            <td id="position<%= item.SEQ%>"><%= item.POSITION %></td>
+                                            <td id="jobtype<%= item.SEQ%>"><%= item.JOBTYPE%></td>
+                                            <td id="charge<%= item.SEQ%>"><%= item.CHARGE %></td>
+                                            <td id="workregion<%= item.SEQ%>"><%= item.WORKREGION %></td>
+                                            <td id="salaly<%= item.SEQ%>"><%= item.SALARY %></td>
+                                            <td id="worktime<%= item.SEQ%>"><%=moment(item.WORKSTART).format('YYYY.MM.DD') %>~ <%=(item.WORKEND) ? moment(item.WORKEND).format('YYYY.MM.DD') : '재직 중' %></td>
+                                            <td class="actions">
+                                                <a class="on-default edit-row" onclick="javascript:editCareer(<%=item.SEQ %>);"><i class="fa fa-pencil"></i></a>
+                                                <a class="on-default remove-row" onclick="javascript:removeCareer(<%=item.SEQ %>);"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% })} %>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="buttons pull-right">
+                            <button class="btn button-cancle">취소</button>
+                            <button id="resume-update-btn" class="btn btn-primary">수정</button>
                         </div>
-                        <button type="button" class="btn btn-lg btn-primary btn-block" id="resume-update-btn">정보 변경</button>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -502,32 +513,17 @@
 </div>
 
 <%- contentFor('script') %>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     $(document).ready(function(){
-        $('#introduce').summernote({
-            tabsize: 2,
-            height: 300
-        });
-        $('#introduce').summernote('code','<%= resumeInfo.INTRODUCE %>');
         // 이력서 교육 확인해서 초기 설정.
         var educationName = '<%= resumeInfo.EDUCATION %>';
         $('.selectpicker').val(educationName);
+
         // 정규직, 계약직, 일용직 확인해서 초기값 설정
-        let workingType = [<%= resumeInfo.WORKINGTYPE_SEQS %>];
+        let workingType = [<%= resumeInfo.WORKINGTYPE_SEQS%>];
         workingType.forEach(item => {
-            $('input:checkbox[id="workingType_' + item + '"]').prop("checked", true);
-        });
-
-        let jobKinds = [<%=resumeInfo.JOBKIND_SEQ %>];
-        jobKinds.forEach(item => {
-            $('input:checkbox[id="jobKind_' + item + '"]').prop("checked", true);
-        });
-
-        let regions = [<%=resumeInfo.WORKREGION_SEQ %>];
-        regions.forEach(item => {
-            $('input:checkbox[id="workingRegion_' + item + '"]').prop("checked", true);
+        $('input:checkbox[id="workingType_' + item + '"]').prop("checked", true);
         });
 
         // 변경되는 시점에 함수 실행. (프로필 사진이나 업로드파일 업로드 시.)
@@ -552,76 +548,42 @@
         $("#resume-update-btn").click(function(){
             let workingTypeSeqs = getWorkingTypes()
             let workingTypeNames = getWorkingTypeName()
-            let region = getRegions()
-            let jobkind = getJobKinds()
             let careerSeq = $('input[name="carrerSeq"]:checked').val()
-            let resumeSeq = '<%= resumeInfo.SEQ %>';
-            doPostCallSync("/mypage/user/updateJobKind", {
-                seq: resumeSeq,
-                jobKinds: jobkind
-            })
-            .success(function(json){
-                alert(JSON.stringify(json));
-                // if (json.result == "success"){
-                    // location.reload();
-                // }
-            })
-            .fail(function(sender, message, details){
-                alert("희망직종 업데이트 오류 발생.." + message);
-                return false;
-            });
-
-            doPostCallSync("/mypage/user/updateWorkingRegion", {
-                seq: resumeSeq,
-                regions: region
-            })
-            .success(function(json){
-                alert(JSON.stringify(json));
-                // if (json.result == "success"){
-                    // location.reload();
-                // }
-            })
-            .fail(function(sender, message, details){
-                alert("희망근무지역 업데이트 오류 발생.." + message);
-                return false;
-            });
 
             // 이력서 수정할때 벨리데이션
             // 수정 완료 클릭시 > api로 호출하는 front 로직 수행(body) >  POST로 (body) api로 전송하여 이력서 seq로 업데이트
             doPostCallSync("/mypage/user/edit", {
-                seq: userseq,
-                subject: $("#subject").val(),
-                name: $("#name").val(),
-                contact: $("#contact").val(),
-                birthyear : $("#birthyear").val(),
-                email: $("#email").val(),
-                gender: $("#gender").val(),
-                postCode: $("#postCode").val(),
-                address: $("#address").val(),
-                addressExtra: $("#addressExtra").val(),
-                education: $(".selectpicker").val(),
-                educcationSchool: $("#EDUCATIONSCHOOL").val(),
-                careerSeq: careerSeq,
-                technical: $("#technical").val(),
-                license: $("#license").val(),
-                isWelfare: $("#isWelfare").val(),
-                isMilitaly: $("#isMilitaly").val(),
-                introduce: $("#introduce").val(),
-                workingTypeSeqs: workingTypeSeqs,
-                workingTypeNames: workingTypeNames,
-                region: region,
-                jobkind: jobkind,
-                salary: $("#salary").val()
-            })
-            .success(function(json){
-                if (json.result == "success"){
-                    location.reload();
-                }
-            })
-            .fail(function(sender, message, details){
-                alert("이력서 업데이트 오류 발생.." + message);
-                return false;
-            });
+                            seq: userseq,
+                            subject: $("#subject").val(),
+                            name: $("#name").val(),
+                            contact: $("#contact").val(),
+                            birthyear : $("#birthyear").val(),
+                            email: $("#email").val(),
+                            gender: $("#gender").val(),
+                            postCode: $("#postCode").val(),
+                            address: $("#address").val(),
+                            addressExtra: $("#addressExtra").val(),
+                            education: $(".selectpicker").val(),
+                            educcationSchool: $("#EDUCATIONSCHOOL").val(),
+                            careerSeq: careerSeq,
+                            technical: $("#technical").val(),
+                            license: $("#license").val(),
+                            isWelfare: $("#isWelfare").val(),
+                            isMilitaly: $("#isMilitaly").val(),
+                            introduce: $("#introduce").val(),
+                            workingTypeSeqs: workingTypeSeqs,
+                            workingTypeNames: workingTypeNames,
+                            salary: $("#salary").val()
+                        })
+                        .success(function(json){
+                            if (json.result == "success"){
+                                location.reload();
+                            }
+                        })
+                        .fail(function(sender, message, details){
+                            alert("이력서 업데이트 오류 발생.." + message);
+                            return false;
+                        });
         })
     });
     let getWorkingTypes = function () {
@@ -640,7 +602,9 @@
         let checkWorkingTypeName = "";
         $('input:checkbox[name="workingType"]').each(function() {
             if(this.checked){
+                // checkWorkingTypeName += $("input:checkbox[name='workingType']:checked").next('label').text() + ", ";
                 checkWorkingTypeName += $("#workingTypeLabel_"+ this.value).html() + ", ";
+                
             }
         });
         
@@ -648,27 +612,6 @@
         return checkWorkingTypeName;
     } 
     
-    let getRegions = function () {
-    let checkRegion = "";
-    $('input:checkbox[name="workingRegion"]').each(function() {
-        if(this.checked){
-            checkRegion += this.value + ", "; 
-        }
-    });
-    if (checkRegion.length > 0) checkRegion = checkRegion.substring(0, checkRegion.length - 2);
-    return checkRegion;
-    }
-
-    let getJobKinds = function () {
-        let checkJobKind = "";
-        $('input:checkbox[name="jobKind"]').each(function() {
-            if(this.checked){
-                checkJobKind += this.value + ", "; 
-            }
-        });
-        if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 2);
-        return checkJobKind;
-    }
     // 경력 수정 버튼 클릭
     function editCareer(resumeSeq){
         $('#careerEditModal-Title').html("경력 수정");

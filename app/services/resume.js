@@ -19,6 +19,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async getByUserSeq(user_seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/getByUserSeq`;
@@ -35,6 +36,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async update(seq, subject, name, contact, birthyear, email, gender,
         postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
         isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary){
@@ -77,6 +79,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async updateImage(token, SEQ, RESUMEFILE) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateImage`;
@@ -106,6 +109,7 @@ module.exports = class resumeService {
             return null;
         }
     }  
+
     static async updatecertificate(token, SEQ, RESUMEFILE) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updatecertificate`;
@@ -153,7 +157,6 @@ module.exports = class resumeService {
         }
     }
 
-    
     static async list(token, regions, name, jobKinds, certificate, page, rowCount) {
         try {
 
@@ -216,6 +219,7 @@ module.exports = class resumeService {
             return null;
         }
     } 
+
     static async increaseViewCount(seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/increaseView`;
@@ -236,6 +240,7 @@ module.exports = class resumeService {
             
         }
     }
+
     static async removeCareer(resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/removeCareer`;
@@ -255,6 +260,93 @@ module.exports = class resumeService {
             logger.writeLog('error', `services/resumeService/resumeSeq: ${error}`);
         }
     }  
+
+    static async listRegion(resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listRegion`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    resumeSeq: resumeSeq
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/listRegion: ${error}`);
+            return null;
+        }
+    }
+
+    static async listJobKind(resumeSeq) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/listJobKind`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    resumeSeq: resumeSeq,
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/listJobKind: ${error}`);
+            return null;
+        }
+    }
+
+    static async updateWorkingRegion(seq, regions) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/updateRegion`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    seq: seq,
+                    regions: regions
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/updateWorkingRegion: ${error}`);
+            return null;
+        }
+    }
+
+    static async updateJobKind(seq, jobKinds) {
+        try {
+            var apiURL = `${process.env.APIHOST}/api/resume/updateJobKind`;
+
+            const {body} = await got.post(apiURL, {
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                }, json: {
+                    seq: seq,
+                    jobKinds: jobKinds
+                },
+                responseType: 'json'
+            });
+            return body.data;
+        } catch (error) {
+            logger.writeLog('error', `services/resumeService/updateJobKind: ${error}`);
+            return null;
+        }
+    }
+
     static async updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateCareer`;
@@ -284,6 +376,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async createCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/addCareer`;
@@ -313,6 +406,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async getCareer(token ,resumeSeq) {
         try {
             // console.log("userseq ? ? ? ? ? ? ? 정상  4나옴" + resumeSeq );
@@ -342,6 +436,7 @@ module.exports = class resumeService {
             return null;
         }
     }
+
     static async createScrap(token, martSeq, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/createScrap`;
@@ -365,6 +460,7 @@ module.exports = class resumeService {
             return null;
         }
     }  
+
     static async getScrap(token, martSeq, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/getScrap`;
@@ -388,6 +484,7 @@ module.exports = class resumeService {
             return null;
         }
     }  
+    
     static async removeScrap(token, martSeq, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/removeScrap`;
@@ -411,6 +508,7 @@ module.exports = class resumeService {
             return null;
         }
     }  
+
     static async listScrap(token, martSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/listScrap`;
@@ -445,4 +543,5 @@ module.exports = class resumeService {
             return null;
         }
     } 
+
 };

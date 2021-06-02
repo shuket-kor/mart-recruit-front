@@ -377,11 +377,11 @@ select:focus,
 }
 
 .user-image {
-    width: 130px;
-    height: 130px;
+    /* width: 130px;
+    height: 130px; */
     overflow: hidden;
     display: inline-block;
-    border-radius: 100%;
+    /* border-radius: 100%; */
     margin-bottom: 30px;
 }
 
@@ -2497,7 +2497,7 @@ select:focus,
 
 .change-photo .user-image {
     float: left;
-    margin: 0 20px 0 0;
+    /* margin: 0 0 0 0; */
     border: none;
 }
 
@@ -2509,7 +2509,7 @@ select:focus,
     font-size: 12px;
     cursor: pointer;
     margin-right: 15px;
-    padding: 10px 20px 7px;
+    padding: 10px 20px;
     text-transform: uppercase;
 }
 

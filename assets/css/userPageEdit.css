@@ -9,6 +9,31 @@
     line-height: 7;
 }
 
-.birthyearDiv {
+/* .birthyearDiv {
     line-height: 3;
+} */
+
+.selectpicker {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.photoUploadBtn {
+    width: 80%;
+}
+
+.user-photo {
+    width: 80%;
+}
+
+.hopeWorkingType {
+    margin-bottom: 20px;
+}
+
+.hopeRegion {
+    margin-bottom: 20px;
+}
+
+.hopeJobKind {
+    margin-bottom: 20px;
 }

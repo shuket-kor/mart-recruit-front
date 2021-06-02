@@ -60,14 +60,53 @@ module.exports = {
         });
     },
 
+    // updateWorkingRegion
+    async updateWorkingRegion(req, res, next){
+        let seq = req.body.seq
+        let regions = req.body.regions;
+
+        const returnData = await resumeService.updateWorkingRegion(seq, regions);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+
+    // updateWorkingJobKind
+    async updateJobKind(req, res, next){
+        let seq = req.body.seq
+        let jobKinds = req.body.jobKinds;
+
+        const returnData = await resumeService.updateJobKind(seq, jobKinds);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+
     async edit(req, res, next){
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
+        // 이력서 정보
         const resumeInfo = await resumeService.getByUserSeq(user_seq);
         let resumeSeq = resumeInfo.SEQ;
+
+        // const regions = await resumeService.listRegion(resumeSeq);
+        // console.log(regions);
+        // // 
+        // const jobKinds = await resumeService.listJobKind(resumeSeq);
+        // console.log(jobKinds);
+        
         // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(resumeSeq);
+        // 근무 형태 리스트를 얻는다
         const workingTypeList = await commonService.listWorkingType();
+        // 지역 리스트를 얻는다
+        const regionList = await commonService.listWorkingRegion();
+        // 업종 리스트를 얻는다
+        const jobKindList = await commonService.listJobKind();
         
         res.render('mypage/userPageEdit', {
             layout: 'layouts/default',
@@ -77,7 +116,9 @@ module.exports = {
             moment: moment,
             hostName: process.env.APIHOST,
             listCareer: listCareer,
-            workingTypeList: workingTypeList
+            workingTypeList: workingTypeList,
+            regionList: regionList,
+            jobKindList: jobKindList
         })
     },
     async createCareer(req, res, next){
@@ -176,7 +217,7 @@ module.exports = {
         let userSeq = req.user.Seq;
         const resumeInfo = await resumeService.getByUserSeq(userSeq);
         const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
-        console.log(resumeInfo);
+
         res.render('mypage/userPageResume', {
             layout: 'layouts/default',
             title: title,
