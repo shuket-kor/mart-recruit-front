@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
-const { martpage, userPage,  edit, userEdit, resumegetByUserSeq, apply, scrap, closeAccount,
-     updateImage, updatecertificate, removeCareer, updateCareer, createCareer, getCareer,
-     updateWorkingRegion, updateJobKind} = require('../app/controllers/mypage.js');
+const { userPage,  edit, userEdit, resumegetByUserSeq, apply, scrap, closeAccount, 
+    updateImage, updatecertificate, removeCareer, updateCareer, createCareer, getCareer,
+    requestedMartList, requestedRecruitList} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
 router.get('/user', verify, userPage);
@@ -32,13 +32,13 @@ router.get('/user/apply', verify, apply);
 router.get('/user/closeAccount', verify, closeAccount);
 
 // 경력 삭제
-router.post('/user/removeCareer', verify, removeCareer)
+router.post('/user/removeCareer', verify, removeCareer);
 
 // 경력 한개 가져오기
-router.get('/user/getCareer', verify, getCareer)
 
+router.get('/user/getCareer', verify, getCareer);
 // 경력 수정
-router.post('/user/updateCareer', verify, updateCareer)
+router.post('/user/updateCareer', verify, updateCareer);
 
 // 근무위치 수정
 router.post('/user/updateWorkingRegion', verify, updateWorkingRegion)
@@ -47,10 +47,10 @@ router.post('/user/updateWorkingRegion', verify, updateWorkingRegion)
 router.post('/user/updateJobKind', verify, updateJobKind)
 
 // 증명서 업로드
-router.post('/user/createCareer', verify, createCareer)
+router.post('/user/createCareer', verify, createCareer);
 
-// 마트 > 내정보
-router.get('/mart', verify, martpage);
+router.get('/user/requested', verify, redirectLogin, requestedMartList);
 
+router.get('/user/recruit', verify, redirectLogin, requestedRecruitList);
 
 module.exports = router;

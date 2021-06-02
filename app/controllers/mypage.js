@@ -3,8 +3,10 @@ const userService = require('../services/users');
 const resumeService = require('../services/resume');
 const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
+const martService = require('../services/mart');
 const commonService = require('../services/common');
 const moment = require('moment');
+
 module.exports = {
     
     // 유저 정보 페이지
@@ -265,10 +267,10 @@ module.exports = {
         })
     },
 
-    // 지원현황
+    // 탈퇴
     async closeAccount(req, res, next){
         let title = '마이 페이지';
-        let userSeq = req.user.Seq;
+        const userSeq = req.user.Seq;
         const resumeInfo = await resumeService.getByUserSeq(userSeq);
 
         res.render('mypage/userPageCloseAccount', {
@@ -282,19 +284,44 @@ module.exports = {
         })
     },
 
-    // 마트페이지
-    async martpage(req, res, next) {
-        let title = '마트 페이지';
+    async requestedMartList(req, res, next){
+        let title = '마이 페이지';
+        const userSeq = req.user.Seq;
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
 
-        // let martData = await resumeService.mart(seq);
+        let returnData = await martService.listJobRequest(req.cookies.xToken, userSeq);
 
-        res.render('mypage/martpage', {
+        res.render('mypage/userPageRequested', {
             layout: 'layouts/default',
             title: title,
-            user: req.user
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            resumeInfo: resumeInfo,
+            list: (returnData) ? returnData : null,
+
+        })
+    },
+        
+    async requestedRecruitList(req, res, next){
+        let title = '마이 페이지';
+        const martSeq = req.query.martSeq;
+        const userSeq = req.user.Seq;
+        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+
+        const martInfo = await martService.get(req.cookies.xToken, martSeq);
+        let returnData = await recruitService.listByMart(req.cookies.xToken, martSeq, 'Y', 1, 50);
+
+        res.render('mypage/userPageRecruit', {
+            layout: 'layouts/default',
+            title: title,
+            user: req.user,
+            moment: moment,
+            hostName: process.env.APIHOST,
+            resumeInfo: resumeInfo,
+            martInfo: martInfo,
+            list: (returnData) ? returnData.list : null,
+
         })
     }
-
-    
-
 };
