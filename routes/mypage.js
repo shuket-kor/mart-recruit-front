@@ -4,7 +4,7 @@ var router = express.Router();
 const { verify, redirectLogin, checkPermission } = require('../app/controllers/auth.js');
 const { userPage,  edit, userEdit, resumegetByUserSeq, apply, scrap, closeAccount, 
     updateImage, updatecertificate, removeCareer, updateCareer, createCareer, getCareer,
-    requestedMartList, requestedRecruitList} = require('../app/controllers/mypage.js');
+    requestedMartList, requestedRecruitList, updateWorkingRegion, updateJobKind} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
 router.get('/user', verify, userPage);
