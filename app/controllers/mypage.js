@@ -94,12 +94,6 @@ module.exports = {
         // 이력서 정보
         const resumeInfo = await resumeService.getByUserSeq(user_seq);
         let resumeSeq = resumeInfo.SEQ;
-
-        // const regions = await resumeService.listRegion(resumeSeq);
-        // console.log(regions);
-        // // 
-        // const jobKinds = await resumeService.listJobKind(resumeSeq);
-        // console.log(jobKinds);
         
         // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(resumeSeq);

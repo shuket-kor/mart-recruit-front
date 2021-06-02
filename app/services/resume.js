@@ -261,48 +261,6 @@ module.exports = class resumeService {
         }
     }  
 
-    static async listRegion(resumeSeq) {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/resume/listRegion`;
-
-            const {body} = await got.post(apiURL, {
-                headers: {
-                    'contentType': 'application/json',
-                    'User-Agent': 'DEVICE-AGENT',
-                    'userAgent': 'DEVICE-AGENT',
-                }, json: {
-                    resumeSeq: resumeSeq
-                },
-                responseType: 'json'
-            });
-            return body.data;
-        } catch (error) {
-            logger.writeLog('error', `services/resumeService/listRegion: ${error}`);
-            return null;
-        }
-    }
-
-    static async listJobKind(resumeSeq) {
-        try {
-            var apiURL = `${process.env.APIHOST}/api/resume/listJobKind`;
-
-            const {body} = await got.post(apiURL, {
-                headers: {
-                    'contentType': 'application/json',
-                    'User-Agent': 'DEVICE-AGENT',
-                    'userAgent': 'DEVICE-AGENT',
-                }, json: {
-                    resumeSeq: resumeSeq,
-                },
-                responseType: 'json'
-            });
-            return body.data;
-        } catch (error) {
-            logger.writeLog('error', `services/resumeService/listJobKind: ${error}`);
-            return null;
-        }
-    }
-
     static async updateWorkingRegion(seq, regions) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateRegion`;

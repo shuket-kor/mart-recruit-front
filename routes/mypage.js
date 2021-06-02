@@ -7,10 +7,10 @@ const { userPage,  edit, userEdit, resumegetByUserSeq, apply, scrap, closeAccoun
     requestedMartList, requestedRecruitList, updateWorkingRegion, updateJobKind} = require('../app/controllers/mypage.js');
 
 // 유저 > 내정보
-router.get('/user', verify, userPage);
+router.get('/user', verify, redirectLogin, userPage);
 
 // 이력서 수정
-router.get('/user/edit', verify, edit);
+router.get('/user/edit', verify, redirectLogin, edit);
 router.post('/user/edit', verify, userEdit);
 
 // 이미지 업데이트
@@ -20,16 +20,16 @@ router.post('/user/updateimage', verify, updateImage)
 router.post('/user/updatecertificate', verify, updatecertificate)
 
 // 한개 이력서 보기
-router.get('/user/resume', verify, resumegetByUserSeq);
+router.get('/user/resume', verify, redirectLogin, resumegetByUserSeq);
 
 // 북마크
-router.get('/user/scrap', verify, scrap);
+router.get('/user/scrap', verify, redirectLogin, scrap);
 
 // 지원 현황
-router.get('/user/apply', verify, apply);
+router.get('/user/apply', verify, redirectLogin, apply);
 
 // 지원 현황
-router.get('/user/closeAccount', verify, closeAccount);
+router.get('/user/closeAccount', verify, redirectLogin, closeAccount);
 
 // 경력 삭제
 router.post('/user/removeCareer', verify, removeCareer);

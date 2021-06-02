@@ -142,16 +142,5 @@ module.exports = {
         });
     },
 
-    async mypage(req, res, next){
-        let refer = (req.query.refer) ? req.query.refer : ''; 
-        
-        // 내 정보를 가져와야함.
-        res.render("users/mypage", {
-            layout: "layouts/default",
-            title: '한국마트협회 구인구직',
-            user: req.user,
-            refer: refer
-        });
-    },
     
 };

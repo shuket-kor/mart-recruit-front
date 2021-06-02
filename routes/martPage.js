@@ -5,13 +5,13 @@ const { verify, redirectLogin, checkPermission } = require('../app/controllers/a
 const { userInfo, martInfo, martUpdate, scrap, scrapDetail } = require('../app/controllers/martPage.js');
 
 // 유저 > 내정보
-router.get('/userInfo', verify, userInfo);
+router.get('/userInfo', verify, redirectLogin, userInfo);
 
-router.get('/martInfo', verify, martInfo);
+router.get('/martInfo', verify, redirectLogin, martInfo);
 
 router.post('/update', verify, martUpdate);
 
-router.get('/scrap', verify, scrap);
+router.get('/scrap', verify, redirectLogin, scrap);
 
 router.get('/scrapDetail', verify, scrapDetail);
 

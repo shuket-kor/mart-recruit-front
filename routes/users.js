@@ -11,7 +11,7 @@ router.get('/signup', signup);
 router.post('/usercreate', create);
 
 // 마이페이지
-router.get('/mypage',verify,  mypage);
+// router.get('/mypage',verify, mypage);
 
 router.get('/userlist', list);
 
