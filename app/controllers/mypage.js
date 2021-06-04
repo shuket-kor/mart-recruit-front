@@ -15,7 +15,7 @@ module.exports = {
         let userSeq = req.user.Seq;
         // 사용자 정보를 포함한 이력서 정보이다
         const userInfo = await userService.get(req.cookies.xToken, userSeq);
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
 
         res.render('mypage/userPage', {
             layout: 'layouts/default',
@@ -52,35 +52,9 @@ module.exports = {
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
-        const returnData = await resumeService.update(seq, subject, name, contact, birthyear, email, gender,
+        const returnData = await resumeService.update(req.cookies.xToken, seq, subject, name, contact, birthyear, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
             isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary);
-
-        res.json({
-            result: (returnData == null) ? 'fail' : 'success',
-            data: returnData
-        });
-    },
-
-    // updateWorkingRegion
-    async updateWorkingRegion(req, res, next){
-        let seq = req.body.seq
-        let regions = req.body.regions;
-
-        const returnData = await resumeService.updateWorkingRegion(seq, regions);
-
-        res.json({
-            result: (returnData == null) ? 'fail' : 'success',
-            data: returnData
-        });
-    },
-
-    // updateWorkingJobKind
-    async updateJobKind(req, res, next){
-        let seq = req.body.seq
-        let jobKinds = req.body.jobKinds;
-
-        const returnData = await resumeService.updateJobKind(seq, jobKinds);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -92,11 +66,11 @@ module.exports = {
         let title = '마이 페이지';
         let user_seq = req.user.Seq;
         // 이력서 정보
-        const resumeInfo = await resumeService.getByUserSeq(user_seq);
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, user_seq);
         let resumeSeq = resumeInfo.SEQ;
         
         // 경력이 있을때만 가져오면 됨.
-        const listCareer = await resumeService.listCareer(resumeSeq);
+        const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeSeq);
         // 근무 형태 리스트를 얻는다
         const workingTypeList = await commonService.listWorkingType();
         // 지역 리스트를 얻는다
@@ -117,6 +91,34 @@ module.exports = {
             jobKindList: jobKindList
         })
     },
+
+    // updateWorkingRegion
+    async updateWorkingRegion(req, res, next){
+        let seq = req.body.seq
+        let regions = req.body.regions;
+
+        const returnData = await resumeService.updateWorkingRegion(req.cookies.xToken, seq, regions);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+
+    // updateWorkingJobKind
+    async updateJobKind(req, res, next){
+        let seq = req.body.seq
+        let jobKinds = req.body.jobKinds;
+
+        const returnData = await resumeService.updateJobKind(req.cookies.xToken, seq, jobKinds);
+
+        res.json({
+            result: (returnData == null) ? 'fail' : 'success',
+            data: returnData
+        });
+    },
+
+    // 경력 추가
     async createCareer(req, res, next){
         let resumeSeq = req.body.resumeSeq;
         let company = req.body.company;
@@ -127,9 +129,9 @@ module.exports = {
         let jobType = req.body.jobType;
         let workRegion = req.body.workRegion;
         let charge = req.body.charge;
-        let salaly = req.body.salaly;
+        let salary = req.body.salary;
 
-        const returnData = await resumeService.createCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly);
+        const returnData = await resumeService.createCareer(req.cookies.xToken, resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salary);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -143,6 +145,7 @@ module.exports = {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
+
         const returnData = await resumeService.updateImage(req.cookies.xToken, SEQ, RESUMEFILE);
 
         res.json({
@@ -155,12 +158,9 @@ module.exports = {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
-        console.log(SEQ);
-        console.log(location);
-        console.log(RESUMEFILE);
+
         const returnData = await resumeService.updatecertificate(req.cookies.xToken, SEQ, RESUMEFILE);
         
-
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
             data: returnData
@@ -171,16 +171,20 @@ module.exports = {
         let resumeSeq = req.query.seq;
         
         const returnData = await resumeService.getCareer(req.cookies.xToken, resumeSeq);
+
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
             data: returnData
         });
         
     },
+
+    // 경력 삭제
     async removeCareer(req, res, next){
 
         let resumeSeq = req.body.resumeSeq;
-        const returnData = await resumeService.removeCareer(resumeSeq);
+
+        const returnData = await resumeService.removeCareer(req.cookies.xToken, resumeSeq);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -188,6 +192,8 @@ module.exports = {
         });
         
     },
+
+    // 경력 수정
     async updateCareer(req, res, next){
         let resumeSeq = req.body.resumeSeq;
         let company = req.body.company;
@@ -198,9 +204,9 @@ module.exports = {
         let jobType = req.body.jobType;
         let workRegion = req.body.workRegion;
         let charge = req.body.charge;
-        let salaly = req.body.salaly;
+        let salary = req.body.salary;
         
-        const returnData = await resumeService.updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly);
+        const returnData = await resumeService.updateCareer(req.cookies.xToken, resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salary);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
@@ -208,11 +214,13 @@ module.exports = {
         });
     },
     
+    // 
     async resumegetByUserSeq(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
-        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
+        const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeInfo.SEQ);
 
         res.render('mypage/userPageResume', {
             layout: 'layouts/default',
@@ -228,10 +236,10 @@ module.exports = {
     async scrap(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
         const scrapList = await scrapService.scrapList(req.cookies.xToken, userSeq);
 
-        console.log(scrapList.list);
         res.render('mypage/userPageScrap', {
             layout: 'layouts/default',
             title: title,
@@ -247,7 +255,8 @@ module.exports = {
     async apply(req, res, next){
         let title = '마이 페이지';
         let userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
         const applyList = await recruitService.listUserApply(req.cookies.xToken, userSeq);
 
         res.render('mypage/userPageApply', {
@@ -264,8 +273,9 @@ module.exports = {
     // 탈퇴
     async closeAccount(req, res, next){
         let title = '마이 페이지';
+
         const userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
 
         res.render('mypage/userPageCloseAccount', {
             layout: 'layouts/default',
@@ -280,8 +290,9 @@ module.exports = {
 
     async requestedMartList(req, res, next){
         let title = '마이 페이지';
+
         const userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
 
         let returnData = await martService.listJobRequest(req.cookies.xToken, userSeq);
 
@@ -293,17 +304,17 @@ module.exports = {
             hostName: process.env.APIHOST,
             resumeInfo: resumeInfo,
             list: (returnData) ? returnData : null,
-
         })
     },
         
     async requestedRecruitList(req, res, next){
         let title = '마이 페이지';
+
         const martSeq = req.query.martSeq;
         const userSeq = req.user.Seq;
-        const resumeInfo = await resumeService.getByUserSeq(userSeq);
-
+        const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
         const martInfo = await martService.get(req.cookies.xToken, martSeq);
+
         let returnData = await recruitService.listByMart(req.cookies.xToken, martSeq, 'Y', 1, 50);
 
         res.render('mypage/userPageRecruit', {
@@ -315,7 +326,6 @@ module.exports = {
             resumeInfo: resumeInfo,
             martInfo: martInfo,
             list: (returnData) ? returnData.list : null,
-
         })
     }
 };

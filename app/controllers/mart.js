@@ -199,8 +199,8 @@ module.exports = {
         await resumeService.increaseViewCount(resumeSeq);
         await recruitService.setRead(req.cookies.xToken, recruitSeq, resumeSeq);
         // 이력서 정보를 얻는다
-        const resumeInfo = await resumeService.get(resumeSeq);
-        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+        const resumeInfo = await resumeService.get(req.cookies.xToken, resumeSeq);
+        const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeInfo.SEQ);
         const applyInfo = await recruitService.getApply(req.cookies.xToken, recruitSeq, resumeSeq);
         if (applyInfo) applyInfo.STEPNAME = recruitService.applyStatus(applyInfo.STEP);
         // 공고 정보를 얻는다

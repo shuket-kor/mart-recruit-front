@@ -36,7 +36,7 @@ module.exports = {
             list: (returnData) ? returnData.list : null
         });
     },
-  
+
     async error(req, res, next) {
         let message = req.query.message;
 
@@ -46,7 +46,5 @@ module.exports = {
             user: req.user,
             message: message
         });
-      }
-  
-  
-  }
+    }
+}

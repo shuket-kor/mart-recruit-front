@@ -103,8 +103,8 @@ module.exports = {
         await resumeService.increaseViewCount(resumeSeq);
 
         // 이력서 정보를 얻는다
-        const resumeInfo = await resumeService.get(resumeSeq);
-        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+        const resumeInfo = await resumeService.get(req.cookies.xToken, resumeSeq);
+        const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeInfo.SEQ);
 
         const jobRequest = await martService.getJobRequest(req.cookies.xToken, martInfo.SEQ, resumeInfo.USER_SEQ);
         const resumeScrap = await resumeService.getScrap(req.cookies.xToken, martInfo.SEQ, resumeInfo.SEQ);

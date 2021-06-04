@@ -56,8 +56,8 @@ module.exports = {
 
         await resumeService.increaseViewCount(resumeSeq);
         // 이력서 정보를 얻는다
-        const resumeInfo = await resumeService.get(resumeSeq);
-        const listCareer = await resumeService.listCareer(resumeInfo.SEQ);
+        const resumeInfo = await resumeService.get(req.cookies.xToken, resumeSeq);
+        const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeInfo.SEQ);
 
         // 좌측에 나타날 이력서 리스트를 얻는다
         const returnData = await resumeService.list(req.cookies.xToken, regions, null, jobKinds, certificate, currentPage, 5);

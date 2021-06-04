@@ -35,8 +35,6 @@ module.exports = {
         let resultCode = (req.query.result) ? req.query.result : '0'; 
         let refer = (req.query.refer) ? req.query.refer : ''; 
 
-        // logger.writeLog("info", `controller/auth/login: login - ${resultCode}`);
-
         res.render("auth/login", {
             layout: "layouts/default",
             title: '한국마트협회 구인구직 - 로그인',

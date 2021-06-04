@@ -3,10 +3,19 @@ const secretKey = require('../config/secretKey').secretKey;
 const got = require("got");
 
 module.exports = class resumeService {
-    static async get(seq) {
+    static async get(token, seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/get`;
-            const { body } = await got.post(apiURL, { json: { seq: seq },responseType: "json" });
+            const { body } = await got.post(apiURL, { headers: {
+                'contentType': 'application/json',
+                'User-Agent': 'DEVICE-AGENT',
+                'userAgent': 'DEVICE-AGENT',
+                'Authorization': token
+            }, json:{ 
+                seq: seq,
+                key: secretKey
+            },
+            responseType: "json" });
             if (body.result === "success") {
                 return body.data;
             } else {
@@ -20,10 +29,20 @@ module.exports = class resumeService {
         }
     }
 
-    static async getByUserSeq(user_seq) {
+    static async getByUserSeq(token, user_seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/getByUserSeq`;
-            const { body } = await got.post(apiURL, { json: { seq: user_seq },responseType: "json" });
+            const { body } = await got.post(apiURL, { 
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: { 
+                    seq: user_seq,
+                    key: secretKey
+                    
+                },responseType: "json" });
             if (body.result === "success") {
                 return body.data;
             } else {
@@ -37,13 +56,18 @@ module.exports = class resumeService {
         }
     }
 
-    static async update(seq, subject, name, contact, birthyear, email, gender,
+    static async update(token, seq, subject, name, contact, birthyear, email, gender,
         postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
         isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary){
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/update`;
             const { body } = await got.post(apiURL, {
-                json: { 
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: { 
                     seq: seq,
                     subject: subject,
                     name: name,
@@ -64,7 +88,8 @@ module.exports = class resumeService {
                     introduce: introduce,
                     workingTypeSeqs: workingTypeSeqs,
                     workingTypeNames: workingTypeNames,
-                    salary: salary
+                    salary: salary,
+                    key: secretKey
                     }
                 ,responseType: "json" });
             if (body.result === "success") {
@@ -140,10 +165,19 @@ module.exports = class resumeService {
         }
     }  
     
-    static async listCareer(resumeSeq) {
+    static async listCareer(token, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/listCareer`;
-            const { body } = await got.post(apiURL, { json: { resumeSeq: resumeSeq },responseType: "json" });
+            const { body } = await got.post(apiURL, { 
+                headers: {
+                    'contentType': 'application/json',
+                    'User-Agent': 'DEVICE-AGENT',
+                    'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
+                }, json: { 
+                    resumeSeq: resumeSeq,
+                    key: secretKey
+                },responseType: "json" });
             if (body.result === "success") {
                 return body.data;
             } else {
@@ -203,7 +237,8 @@ module.exports = class resumeService {
                     'Authorization': token
                 }, json : {
                     recruitSeq: recruitSeq,
-                    step: step
+                    step: step,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -241,7 +276,7 @@ module.exports = class resumeService {
         }
     }
 
-    static async removeCareer(resumeSeq) {
+    static async removeCareer(token, resumeSeq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/removeCareer`;
 
@@ -250,8 +285,10 @@ module.exports = class resumeService {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
                     'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
                 }, json: {
                     seq: resumeSeq,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -261,7 +298,7 @@ module.exports = class resumeService {
         }
     }  
 
-    static async updateWorkingRegion(seq, regions) {
+    static async updateWorkingRegion(token, seq, regions) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateRegion`;
 
@@ -270,9 +307,11 @@ module.exports = class resumeService {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
                     'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
                 }, json: {
                     seq: seq,
-                    regions: regions
+                    regions: regions,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -283,7 +322,7 @@ module.exports = class resumeService {
         }
     }
 
-    static async updateJobKind(seq, jobKinds) {
+    static async updateJobKind(token, seq, jobKinds) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateJobKind`;
 
@@ -292,9 +331,11 @@ module.exports = class resumeService {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
                     'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
                 }, json: {
                     seq: seq,
-                    jobKinds: jobKinds
+                    jobKinds: jobKinds,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -305,7 +346,7 @@ module.exports = class resumeService {
         }
     }
 
-    static async updateCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
+    static async updateCareer(token, resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salary) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/updateCareer`;
 
@@ -314,6 +355,7 @@ module.exports = class resumeService {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
                     'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
                 }, json: {
                     seq: resumeSeq,
                     company: company,
@@ -324,7 +366,8 @@ module.exports = class resumeService {
                     jobType: jobType,
                     workRegion: workRegion,
                     charge: charge,
-                    salaly: salaly
+                    salary: salary,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -335,7 +378,7 @@ module.exports = class resumeService {
         }
     }
 
-    static async createCareer(resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salaly) {
+    static async createCareer(token, resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salary) {
         try {
             var apiURL = `${process.env.APIHOST}/api/resume/addCareer`;
 
@@ -344,6 +387,7 @@ module.exports = class resumeService {
                     'contentType': 'application/json',
                     'User-Agent': 'DEVICE-AGENT',
                     'userAgent': 'DEVICE-AGENT',
+                    'Authorization': token
                 }, json: {
                     resumeSeq: resumeSeq,
                     company: company,
@@ -354,7 +398,8 @@ module.exports = class resumeService {
                     jobType: jobType,
                     workRegion: workRegion,
                     charge: charge,
-                    salaly: salaly
+                    salary: salary,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
@@ -377,7 +422,8 @@ module.exports = class resumeService {
                     'userAgent': 'DEVICE-AGENT',
                     'Authorization': token
                 }, json: {
-                    seq: resumeSeq                    
+                    seq: resumeSeq,
+                    key: secretKey                   
                 },
                 responseType: 'json'
             });

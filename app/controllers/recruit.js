@@ -107,9 +107,7 @@ module.exports = {
 
         // 로그인한 사용자의 이력서를 얻는다
         // const resumeInfo = 
-
-
-
+        
         // 최신 8개의 리스트를 따로 얻는다
         const returnData_Top = await recruitService.list(req.cookies.xToken, regions, jobKinds, workingTypes, searchType, keyword, 1, 8);
         // 페이지에 따른 리스트를 얻는다

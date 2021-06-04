@@ -64,7 +64,7 @@
                             <% if (status && status.ISAPPLY){ %>
                                 <div class="alert alert-danger" role="alert">
                                     이 공고는 <%=moment(status.APPLYDATE).format('YYYY.MM.DD HH:mm:ss') %>에 지원했습니다
-                                  </div>                                
+                                </div>                                
                             <% } %>
                         </div><!-- /.widger -->
                         <div class="widget short-info">
@@ -82,12 +82,13 @@
                         <%} else {%> 
                             <button type="button" class="button-apply button-recruit-apply">입사 지원</button>
                         <%}%> 
-                        <button type="button" class="button-list button-recruit-list m-t-20">목록 보기</button>
+                        <!-- <button type="button" class="button-list button-recruit-list m-t-20">목록 보기</button> -->
+                        <button type="button" class="button-recruit-list m-t-20">목록 보기</button>
                     </div><!-- /.widget-area -->
                 </div><!-- /.tr-sidebar -->
             </div>
         </div><!-- row -->
-       
+
         <div class="tr-job-posted similar-jobs">
             <span class="tr-title">유사한 구인 공고</span>
             <div class="row">
