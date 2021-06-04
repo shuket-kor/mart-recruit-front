@@ -556,7 +556,9 @@
 
         // 정규식
         var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        var phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
+        var phoneRegExp = /^\d{3}\d{3,4}\d{4}$/;
+        var birthyearRegExp = /^\d{4}$/;
+
         // 변경되는 시점에 함수 실행. (프로필 사진이나 업로드파일 업로드 시.)
         $("#upload-photo").change(uploadImage)
         $("#upload-certificate").change(uploadCertificate)
@@ -578,6 +580,10 @@
         let userseq = '<%= user.Seq %>'
         $("#resume-update-btn").click(function(){
 
+            trimCheck()
+            nullCheck()
+            specialCheck()
+
             if(!emailRegExp.test($("#email").val())){
                 alert("정확한 Email을 입력하여 주세요.")
                 return false;
@@ -586,6 +592,11 @@
                 alert("정확한 핸드폰번호를 입력하여 주세요.")
                 return false;
             };
+            if(!birthyearRegExp.test($("#birthyear").val())){
+                alert(`출생년도를 입력하여 주세요.
+                Ex) 1992`);
+                return false;
+            }
             
             let workingTypeSeqs = getWorkingTypes()
             let workingTypeNames = getWorkingTypeName()
@@ -593,7 +604,7 @@
             let jobkind = getJobKinds()
             let careerSeq = $('input[name="carrerSeq"]:checked').val()
             let resumeSeq = '<%= resumeInfo.SEQ %>';
-
+            
             doPostCallSync("/mypage/user/updateJobKind", {
                 seq: resumeSeq,
                 jobKinds: jobkind
@@ -701,6 +712,203 @@
         if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 2);
         return checkJobKind;
     }
+    
+    // 트림 체크 함수
+    function trimCheck(){
+        $($('#subject').val($('#subject').val().trim()))
+        $($('#name').val($('#name').val().trim()))
+        $($('#contact').val($('#contact').val().trim()))
+        $($('#email').val($('#email').val().trim()))
+        $($('#birthyear').val($('#birthyear').val().trim()))
+        $($('#EDUCATIONSCHOOL').val($('#EDUCATIONSCHOOL').val().trim()))
+        $($('#technical').val($('#technical').val().trim()))
+        $($('#isWelfare').val($('#isWelfare').val().trim()))
+        $($('#isMilitaly').val($('#isMilitaly').val().trim()))
+        $($('#introduce').val($('#introduce').val().trim()))
+    }
+    // 널 체크
+    function nullCheck(){
+        if(!$('#subject').val()){
+            alert(`이력서 제목을 입력해주세요.`);
+            return false
+        };
+        if(!$('#name').val()){
+            alert(`이름을 입력해주세요.`);
+            return false
+        };
+        if(!$('#contact').val()){
+            alert(`연락처를 입력해주세요.`);
+            return false
+        };
+        if(!$('#email').val()){
+            alert(`이메일을 입력해주세요.`);
+            return false
+        };
+        if(!$('#birthyear').val()){
+            alert(`태어난해를 입력해주세요.`);
+            return false
+        };
+        if(!$('#EDUCATIONSCHOOL').val()){
+            alert(`학교 이름을 입력해주세요.`);
+            return false
+        };
+        if(!$('#technical').val()){
+            alert(`보유 기술을 입력해주세요.`);
+            return false
+        };
+        if(!$('#isWelfare').val()){
+            alert(`보훈대상을 입력해주세요.`);
+            return false
+        };
+        if(!$('#isMilitaly').val()){
+            alert(`병역을 입력해주세요.`);
+            return false
+        };
+        if(!$('#introduce').val()){
+            alert(`자기소개을 입력해주세요.`);
+            return false
+        };
+    }
+    // 특수문자 체크
+    function specialCheck(){
+        function checkSpecial(str) {
+            var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+
+            if(special_pattern.test(str) == true) {
+                return true;
+            } else {
+                alert(`특수문자는 사용할 수 업습니다.`);
+                return false;
+            }
+        }
+        checkSpecial($('#name').val());
+        checkSpecial($('#EDUCATIONSCHOOL').val());
+        checkSpecial($('#technical').val());
+        checkSpecial($('#isWelfare').val());
+        checkSpecial($('#isMilitaly').val());
+        checkSpecial($('#name').val());
+    }
+    // 트림 체크 함수
+    function TrimCheckAddCareer(){
+        $($('#create-company').val($('#create-company').val().trim()))
+        $($('#create-career').val($('#create-career').val().trim()))
+        $($('#create-position').val($('#create-position').val().trim()))
+        $($('#create-jobType').val($('#create-jobType').val().trim()))
+        $($('#create-charge').val($('#create-charge').val().trim()))
+        $($('#create-workregion').val($('#create-workregion').val().trim()))
+        $($('#create-salary').val($('#create-salary').val().trim()))
+    }
+    // 널 체크
+    function nullCheckAddCareer(){
+        if(!$('#create-company').val()){
+            alert(`마트의 이름을 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-career').val()){
+            alert(`경력을 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-position').val()){
+            alert(`직무를 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-jobType').val()){
+            alert(`직종을 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-charge').val()){
+            alert(`담당업무를 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-workregion').val()){
+            alert(`마트의 지역을 입력해주세요.`);
+            return false
+        };
+        if(!$('#create-salary').val()){
+            alert(`최종 연봉을 입력해주세요.`);
+            return false
+        };
+    }
+    // 특수문자 체크
+    function specialCheckAddCareer(){
+        function checkSpecial(str) {
+            var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+
+            if(special_pattern.test(str) == true) {
+                return true;
+            } else {
+                alert(`특수문자는 사용할 수 업습니다.`);
+                return false;
+            }
+        }
+        checkSpecial($('#create-career').val());
+        checkSpecial($('#create-position').val());
+        checkSpecial($('#create-jobType').val());
+        checkSpecial($('#create-charge').val());
+        checkSpecial($('#create-workregion').val());
+        checkSpecial($('#create-salary').val());
+    }
+    // 트림 체크 함수
+    function TrimCheckEditCareer(){
+        $($('#edit-company').val($('#edit-company').val().trim()))
+        $($('#edit-career').val($('#edit-career').val().trim()))
+        $($('#edit-position').val($('#edit-position').val().trim()))
+        $($('#edit-jobType').val($('#edit-jobType').val().trim()))
+        $($('#edit-charge').val($('#edit-charge').val().trim()))
+        $($('#edit-workregion').val($('#edit-workregion').val().trim()))
+        $($('#edit-salary').val($('#edit-salary').val().trim()))
+    }
+    // 널 체크
+    function nullCheckEditCareer(){
+        if(!$('#edit-company').val()){
+            alert(`마트의 이름을 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-career').val()){
+            alert(`경력을 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-position').val()){
+            alert(`직무를 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-jobType').val()){
+            alert(`직종을 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-charge').val()){
+            alert(`담당업무를 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-workregion').val()){
+            alert(`마트의 지역을 입력해주세요.`);
+            return false
+        };
+        if(!$('#edit-salary').val()){
+            alert(`최종 연봉을 입력해주세요.`);
+            return false
+        };
+    }
+    // 특수문자 체크
+    function specialCheckEditCareer(){
+        function checkSpecial(str) {
+            var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+
+            if(special_pattern.test(str) == true) {
+                return true;
+            } else {
+                alert(`특수문자는 사용할 수 업습니다.`);
+                return false;
+            }
+        }
+        checkSpecial($('#edit-career').val());
+        checkSpecial($('#edit-position').val());
+        checkSpecial($('#edit-jobType').val());
+        checkSpecial($('#edit-charge').val());
+        checkSpecial($('#edit-workregion').val());
+        checkSpecial($('#edit-salary').val());
+    }
+    
     // 경력 수정 버튼 클릭
     function editCareer(resumeSeq){
         $('#careerEditModal-Title').html("경력 수정");
@@ -733,32 +941,35 @@
     // 경력 수정 확인 버튼 클릭
     function careerEditSaveBtn(){
         if (confirm("경력을 수정하시겠습니까? ")){
-                doPostCallSync("/mypage/user/updateCareer", {
-                    resumeSeq: $("#edit-resumeseq").val(),
-                    company: $("#edit-company").val(),
-                    workStart : $("#edit-workstart").val(),
-                    workEnd : $("#edit-workend").val(),
-                    career : $("#edit-career").val(),
-                    position : $("#edit-position").val(),
-                    jobType : $("#edit-jobType").val(),
-                    workRegion : $("#edit-workregion").val(),
-                    charge : $("#edit-charge").val(),
-                    salary : $("#edit-salary").val()
-                    })
-                    .success(function(json){
-                        var editNumber = $("#edit-resumeseq").val();
-                        $("#careerRemoveCancelBtn").trigger('click');
-                        $("#company"+editNumber).text($("#edit-company").val());
-                        $("#position"+editNumber).text($("#edit-position").val());
-                        $("#jobType"+editNumber).text($("#edit-jobType").val());
-                        $("#charge"+editNumber).text($("#edit-charge").val());
-                        $("#salary"+editNumber).text($("#edit-salary").val());
-                        $("#worktime"+editNumber).text($("#edit-workstart").val()+'~'+("#edit-workend").val());
-                    })
-                    .fail(function(sender, message, details){
-                        alert("유저 수정 오류 발생..");
-                        return false;
-                    });
+            TrimCheckAddCareer()
+            nullCheckAddCareer()
+            specialCheckAddCareer()
+            doPostCallSync("/mypage/user/updateCareer", {
+                resumeSeq: $("#edit-resumeseq").val(),
+                company: $("#edit-company").val(),
+                workStart : $("#edit-workstart").val(),
+                workEnd : $("#edit-workend").val(),
+                career : $("#edit-career").val(),
+                position : $("#edit-position").val(),
+                jobType : $("#edit-jobType").val(),
+                workRegion : $("#edit-workregion").val(),
+                charge : $("#edit-charge").val(),
+                salary : $("#edit-salary").val()
+                })
+                .success(function(json){
+                    var editNumber = $("#edit-resumeseq").val();
+                    $("#careerRemoveCancelBtn").trigger('click');
+                    $("#company"+editNumber).text($("#edit-company").val());
+                    $("#position"+editNumber).text($("#edit-position").val());
+                    $("#jobType"+editNumber).text($("#edit-jobType").val());
+                    $("#charge"+editNumber).text($("#edit-charge").val());
+                    $("#salary"+editNumber).text($("#edit-salary").val());
+                    $("#worktime"+editNumber).text($("#edit-workstart").val()+'~'+("#edit-workend").val());
+                })
+                .fail(function(sender, message, details){
+                    alert("유저 수정 오류 발생..");
+                    return false;
+                });
             }
     }
 
@@ -771,41 +982,44 @@
 
     // 경력 추가 확인 버튼 클릭
     function createCareerOkay(){
-            doPostCallSync("/mypage/user/createCareer", {
-                resumeSeq: $("#create-seq").val(),
-                company: $("#create-company").val(),
-                workStart : $("#create-workstart").val(),
-                workEnd : $("#create-workend").val(),
-                career : $("#create-career").val(),
-                position : $("#create-position").val(),
-                jobType : $("#create-jobType").val(),
-                workRegion : $("#create-workregion").val(),
-                charge : $("#create-charge").val(),
-                salary : $("#create-salary").val()
-                })
-                .success(function(json){
-                    if (json.result == "success"){
-                        $("#careerCreateCancelBtn").trigger('click');
-                        var str = ''
-                        str += `<tr id="career${json.data.data}"> `;
-                        str += `<td id="company${json.data.data}">${$("#create-company").val()}</td>`;
-                        str += `<td id="position${json.data.data}">${$("#create-position").val()}</td>`;
-                        str += `<td id="jobtype${json.data.data}">${$("#create-jobType").val()}</td>`;
-                        str += `<td id="charge${json.data.data}">${$("#create-charge").val()}</td>`;
-                        str += `<td id="workregion${json.data.data}">${$("#create-workregion").val()}</td>`;
-                        str += `<td id="salary${json.data.data}">${$("#create-salary").val()}</td>`;
-                        str += `<td id="worktime${json.data.data}">${$("#create-workstart").val() }~${$("#create-workend").val()}</td>`;
-                        str += `<td class="actions">`;
-                        str += `<a class="on-default edit-row" onclick="javascript:editCareer(${json.data.data});"><i class="fa fa-pencil"></i></a>`;
-                        str += `<a class="on-default remove-row" onclick="javascript:removeCareer(${json.data.data});"><i class="fa fa-trash-o"></i></a>`;
-                        str += `</td>`; 
-                        $('#careerTable').append(str);
-                    }
-                })
-                .fail(function(sender, message, details){
-                    alert("경력 생성 오류 발생.");
-                    return false;
-                });
+        TrimCheckEditCareer()
+        nullCheckEditCareer()
+        specialCheckEditCareer()
+        doPostCallSync("/mypage/user/createCareer", {
+            resumeSeq: $("#create-seq").val(),
+            company: $("#create-company").val(),
+            workStart : $("#create-workstart").val(),
+            workEnd : $("#create-workend").val(),
+            career : $("#create-career").val(),
+            position : $("#create-position").val(),
+            jobType : $("#create-jobType").val(),
+            workRegion : $("#create-workregion").val(),
+            charge : $("#create-charge").val(),
+            salary : $("#create-salary").val()
+            })
+            .success(function(json){
+                if (json.result == "success"){
+                    $("#careerCreateCancelBtn").trigger('click');
+                    var str = ''
+                    str += `<tr id="career${json.data.data}"> `;
+                    str += `<td id="company${json.data.data}">${$("#create-company").val()}</td>`;
+                    str += `<td id="position${json.data.data}">${$("#create-position").val()}</td>`;
+                    str += `<td id="jobtype${json.data.data}">${$("#create-jobType").val()}</td>`;
+                    str += `<td id="charge${json.data.data}">${$("#create-charge").val()}</td>`;
+                    str += `<td id="workregion${json.data.data}">${$("#create-workregion").val()}</td>`;
+                    str += `<td id="salary${json.data.data}">${$("#create-salary").val()}</td>`;
+                    str += `<td id="worktime${json.data.data}">${$("#create-workstart").val() }~${$("#create-workend").val()}</td>`;
+                    str += `<td class="actions">`;
+                    str += `<a class="on-default edit-row" onclick="javascript:editCareer(${json.data.data});"><i class="fa fa-pencil"></i></a>`;
+                    str += `<a class="on-default remove-row" onclick="javascript:removeCareer(${json.data.data});"><i class="fa fa-trash-o"></i></a>`;
+                    str += `</td>`; 
+                    $('#careerTable').append(str);
+                }
+            })
+            .fail(function(sender, message, details){
+                alert("경력 생성 오류 발생.");
+                return false;
+            });
     }
 
     // 경력 삭제
