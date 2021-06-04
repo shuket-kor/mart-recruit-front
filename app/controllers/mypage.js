@@ -5,6 +5,7 @@ const recruitService = require('../services/recruit');
 const scrapService = require('../services/scrap');
 const martService = require('../services/mart');
 const commonService = require('../services/common');
+
 const moment = require('moment');
 
 module.exports = {
@@ -51,7 +52,8 @@ module.exports = {
         let workingTypeSeqs = req.body.workingTypeSeqs;
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
-
+        
+        
         const returnData = await resumeService.update(req.cookies.xToken, seq, subject, name, contact, birthyear, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
             isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary);
