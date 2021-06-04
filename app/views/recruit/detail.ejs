@@ -21,14 +21,14 @@
             <% if (!user || user.Type == "U") {%>
             <div class="buttons">
                 <% if (status && status.ISAPPLY){ %>
-                    <a class="btn btn-danger button-cancel-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>지원 취소</a>
+                    <a class="btn btn-danger button-cancel-apply"><i class="fa fa-briefcase" aria-hidden="true"></i> 지원 취소</a>
                 <%} else {%> 
-                    <a class="btn btn-apply button-apply"><i class="fa fa-briefcase" aria-hidden="true"></i>입사 지원하기</a>
+                    <a class="btn btn-apply <%=(user) ? 'button-apply' : 'button-need-login' %>"><i class="fa fa-briefcase" aria-hidden="true"></i> 입사 지원하기</a>
                 <%}%> 
                 <% if (status && status.ISSCRAP){ %>
-                    <a class="btn btn-seconday button-cancel-scrap" onclick="cancelScrap(<%=recruitInfo.SEQ %>)"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 제거</a>
+                    <a class="btn btn-warning button-cancel-scrap"><i class="fa fa-bookmark" aria-hidden="true"></i> 즐겨찾기 제거</a>
                 <%} else {%> 
-                    <a class="btn button-bookmark button-scrap" onclick="scrap(<%=recruitInfo.SEQ %>)"><i class="fa fa-bookmark" aria-hidden="true"></i>즐겨찾기 등록</a>
+                    <a class="btn button-bookmark <%=(user) ? 'button-scrap' : 'button-need-login' %>"><i class="fa fa-bookmark" aria-hidden="true"></i> 즐겨찾기 등록</a>
                 <%}%> 
                 </div>		
             <%} %>
@@ -158,8 +158,18 @@ $(document).ready(function() {
     $(".button-apply").click(apply);
     $(".button-cancel-apply").click(cancelApply);
     $(".button-list").click(gotoList);
+
+    $(".button-scrap").click(scrap);
+    $(".button-cancel-scrap").click(cancelScrap);
+    
+    $(".button-need-login").click(needLogin);
     ShowMessage;
 });
+
+let needLogin = function() {
+    alert("먼저 로그인해야 합니다.");
+    return false;
+}
 
 let apply = function() {
     if (confirm("이 구인 공고에 지원하시겠습니까?")) {
@@ -191,8 +201,8 @@ let cancelApply = function() {
     }
 }
 
-let scrap = function(recruitSeq) {
-    doGetCallSync(`/recruit/scrap?seq=${recruitSeq}`)
+let scrap = function() {
+    doGetCallSync(`/recruit/scrap?seq=${seq}`)
     .success(function(json){
         if (json.result == "success") 
             self.location.reload();
@@ -204,8 +214,8 @@ let scrap = function(recruitSeq) {
     });
 }
 
-let cancelScrap = function(recruitSeq) {
-    doGetCallSync(`/recruit/cancelScrap?seq=${recruitSeq}`)
+let cancelScrap = function() {
+    doGetCallSync(`/recruit/cancelScrap?seq=${seq}`)
     .success(function(json){
         if (json.result == "success") 
             self.location.reload();
