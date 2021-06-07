@@ -17,7 +17,7 @@ module.exports = {
         // 사용자 정보를 포함한 이력서 정보이다
         const userInfo = await userService.get(req.cookies.xToken, userSeq);
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
-
+        console.log(userInfo);
         res.render('mypage/userPage', {
             layout: 'layouts/default',
             title: title,
@@ -52,7 +52,7 @@ module.exports = {
         let workingTypeSeqs = req.body.workingTypeSeqs;
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
-        
+
         
         const returnData = await resumeService.update(req.cookies.xToken, seq, subject, name, contact, birthyear, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
