@@ -52,7 +52,11 @@
                                         <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                     </ul>
                                     <ul class="job-social tr-list listing-2" > 
-                                        <li><a href="#"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                        <% if (user) { %>
+                                            <% if (user.Type == 'U') { %>
+                                                <li><a class="cursor-pointer" onclick="scrap(<%=item.SEQ %>)" ><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <%} %>
+                                        <% }%>
                                         <li><a href="#" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>										
@@ -157,6 +161,20 @@ function search() {
 
 function showDetail(seq) {
     window.open(`/recruit/detail?seq=${seq}&searchType=${searchType}&keyword=${keyword}`);
+}
+let scrap = function(seq) {
+    if (confirm("이 구인 공고를 북마크를 하겠습니까?")) {
+        doGetCallSync(`/recruit/scrap?seq=${seq}`)
+        .success(function(json){
+            if (json.result == "success") 
+                self.location.reload();
+            else
+                alert("구인 공고를 북마크하는 도중에 오류가 발생했습니다.");
+        })
+        .fail(function(sender, message, details){
+            alert("구인 공고를 북마크하는 도중에 오류가 발생했습니다.");
+        });
+    }
 }
 
 </script>

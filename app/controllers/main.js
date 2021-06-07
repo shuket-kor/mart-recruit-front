@@ -19,7 +19,6 @@ module.exports = {
                 for (let i=0; i < 8; i++) {returnData.list.shift();} 
             }
         }
-
         res.render('main', {
             layout: 'layouts/default',
             title: '한국마트협회 구인구직',
