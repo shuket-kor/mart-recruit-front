@@ -65,7 +65,7 @@ module.exports = {
         const returnData_Top = await recruitService.list(req.cookies.xToken, active, regions, jobKinds, workingTypes, searchType, keyword, 1, 8);
         // 페이지에 따른 리스트를 얻는다
         const returnData = await recruitService.list(req.cookies.xToken, active, regions, jobKinds, workingTypes, searchType, keyword, currentPage, rowCount);
-        console.log(returnData);
+        
         res.render('recruit/list', {
             layout: 'layouts/default',
             title: req.app.get('baseTitle') + ' 지역별공고',
