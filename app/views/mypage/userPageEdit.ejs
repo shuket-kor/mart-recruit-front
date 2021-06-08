@@ -1053,7 +1053,7 @@
             formData.append("location", 'resume');
             formData.append("uploadFile", $('#upload-photo')[0].files[0]);
             $.ajax({
-                url: 'http://localhost:3000' + '/api/files/uploadSingle',  
+                url: '<%=hostName %>/api/files/uploadSingle',  
                 type: 'POST',
                 dataType: "json",
                 data: formData,
@@ -1071,8 +1071,8 @@
                         if (json.result == "success") {
                             console.log(JSON.stringify(json))
                             // location.reload();
-                            $("#profile-photo").attr('src',`http://localhost:3000/api/files/get/+${json.data}`)
-                            $("#profile-main").attr('src',`http://localhost:3000/api/files/get/+${json.data}`)
+                            $("#profile-photo").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
+                            $("#profile-main").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
                         }
                     })
                     .fail(function(sender, message, details){
@@ -1098,7 +1098,7 @@
             formData.append("location", 'certificate');
             formData.append("uploadFile", $('#upload-certificate')[0].files[0]);
             $.ajax({
-                url: 'http://localhost:3000/api/files/uploadSingle',  
+                url: '<%=hostName %>/api/files/uploadSingle',  
                 type: 'POST',
                 dataType: "json",
                 data: formData,
