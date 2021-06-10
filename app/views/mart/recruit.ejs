@@ -15,13 +15,13 @@
             <div id="tab_main" class="tab_main">
                 <ul class="tabListBar" data-fixed="fixed">
                     <li class="<%=(active == 'Y') ? 'select' : '' %>">
-                        <a type="button" class="inTab" href="/mart/recruit?active=Y"><span>진행 중 (<%=(activeInfo) ? activeInfo.ACTIVE : '0' %>)</span></a>
+                        <a type="button" class="inTab" href="/mart/recruit?active=Y"><span>진행 중 (<%=(activeInfo.ACTIVE) ? activeInfo.ACTIVE : '0' %>)</span></a>
                     </li>
                     <li class="<%=(active == 'W') ? 'select' : '' %>">
-                        <a type="button" class="inTab" href="/mart/recruit?active=W"><span>대기 (<%=(activeInfo) ? activeInfo.WAIT : '0' %>)</span></a>
+                        <a type="button" class="inTab" href="/mart/recruit?active=W"><span>대기 (<%=(activeInfo.WAIT) ? activeInfo.WAIT : '0' %>)</span></a>
                     </li>
                     <li class="<%=(active == 'N') ? 'select' : '' %>">
-                        <a type="button" class="inTab" href="/mart/recruit?active=N"><span>마감 (<%=(activeInfo) ? activeInfo.INACTIVE : '0' %>)</span></a>
+                        <a type="button" class="inTab" href="/mart/recruit?active=N"><span>마감 (<%=(activeInfo.INACTIVE) ? activeInfo.INACTIVE : '0' %>)</span></a>
                     </li>
                     <li class="<%=(!active) ? 'select' : '' %>">
                         <a type="button" class="inTab" href="/mart/recruit"><span>전체 (<%=(activeInfo) ? activeInfo.ACTIVE * 1.0 + activeInfo.INACTIVE * 1.0 + activeInfo.WAIT * 1.0: '0' %>)</span></a>
