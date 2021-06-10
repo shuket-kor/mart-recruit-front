@@ -376,6 +376,10 @@ select:focus,
     display: inline-block;
 }
 
+.breadcrumb-logo h2 {
+    color: #888;
+}
+
 .user-image {
     /* width: 130px;
     height: 130px; */
@@ -2058,7 +2062,7 @@ select:focus,
 .user-account .dropdown {
     padding: 5px 20px;
     /* border-radius: 30px; */
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     background-color: #fcfcfc;
 }
 
@@ -2087,6 +2091,21 @@ select:focus,
     padding: 12px 20px 8px;
     margin-bottom: 25px;
 }
+
+.user-account .required {
+    margin-left: 4px;
+    color: #f00;
+    font-size: 10px;
+    vertical-align: top;
+}
+
+.user-account .validate-message {
+    font-size: 80%;
+    color: red;
+    display: none;
+}
+
+
 
 .user-option {
     overflow: hidden;

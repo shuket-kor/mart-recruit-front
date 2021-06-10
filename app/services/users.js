@@ -84,7 +84,7 @@ module.exports = class userService {
         }
     }
     // 유저 생성
-    static async create(userId, password, userType, bizno, active) {
+    static async create(userId, password, userType, bizNo, martName, active) {
         try {
             var apiURL = `${process.env.APIHOST}/api/users/create`;
 
@@ -93,7 +93,8 @@ module.exports = class userService {
                     userId: userId,
                     password: password,
                     userType: userType,
-                    bizno: bizno,
+                    bizNo: bizNo,
+                    martName: martName,
                     active: active,
                 },
                 responseType: "json",
