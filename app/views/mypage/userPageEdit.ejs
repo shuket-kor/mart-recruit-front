@@ -261,9 +261,10 @@
                         <!-- 자기소개 -->
                         <div class="media-body">
                             <span class="tr-title">자기 소개</span>
-                            <div>
-                                <textarea type="text"  class="form-control content-text content-edit" name="introduce" id="introduce" val="<%= resumeInfo.INTRODUCE %>" ></textarea>
+                            <div id="introduce">
+                                <%-(resumeInfo) ? resumeInfo.INTRODUCE : '' %>
                             </div>
+                            <input type="hidden" name="CONTENT" id="introduceForSummerNote">
                             
                         </div>
                     
@@ -552,7 +553,7 @@
                         async: false,
                         success:function(json){
                             if (json.result == "success") {
-                                $('#introduce').summernote('insertImage', hostName + "/PDSData/uploads/resumeIntroduce/" + json.data.filename, "filename");
+                                $('#introduce').summernote('insertImage',  "<%=hostName%>/PDSData/uploads/resumeIntroduce/" + json.data.filename, "filename");
                             }
                         },
                         cache: false,
@@ -562,7 +563,8 @@
                 }
             }
         });
-        $('#introduce').summernote('code','<%= resumeInfo.INTRODUCE %>');
+        
+        
         // 초기 설정.
         var educationName = '<%= resumeInfo.EDUCATION %>';
         $('.selectpicker').val(educationName);
@@ -613,7 +615,8 @@
         // 이력서 수정완료 버튼 클릭
         let userseq = '<%= user.Seq %>'
         $("#resume-update-btn").click(function(){
-
+            $('#introduceForSummerNote').val($("#introduce").summernote('code'));
+            
             trimCheck()
             nullCheck()
             specialCheck()
@@ -631,7 +634,6 @@
                 Ex) 1992`);
                 return false;
             }
-            
             let workingTypeSeqs = getWorkingTypes()
             let workingTypeNames = getWorkingTypeName()
             let region = getRegions()
@@ -683,7 +685,7 @@
                 license: $("#license").val(),
                 isWelfare: $("#isWelfare").val(),
                 isMilitaly: $("#isMilitaly").val(),
-                introduce: $("#introduce").val(),
+                introduce: $("#introduceForSummerNote").val(),
                 workingTypeSeqs: workingTypeSeqs,
                 workingTypeNames: workingTypeNames,
                 region: region,
@@ -797,10 +799,6 @@
         };
         if(!$('#isMilitaly').val()){
             alert(`병역을 입력해주세요.`);
-            return false
-        };
-        if(!$('#introduce').val()){
-            alert(`자기소개을 입력해주세요.`);
             return false
         };
     }
