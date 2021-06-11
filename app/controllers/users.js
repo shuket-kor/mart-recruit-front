@@ -21,22 +21,21 @@ module.exports = {
         let password = req.body.password
         let userType = req.body.usertype
         let active = req.body.active
-        let bizno = req.body.bizno1 + req.body.bizno2 + req.body.bizno3;
+        let bizNo = req.body.bizno1 +'-'+ req.body.bizno2 +'-'+ req.body.bizno3;
 
-        let result = await userService.create(userId, password, userType, bizno, active);
+        let result = await userService.create(userId, password, userType, bizNo, active);
 
         if (result) {
             // 가입이 성공했다면, 로그인을 처리한다
             const loginbody = await authService.authorizatoin(userId, password);
             if (loginbody) {
                 // 인증용 토큰 보관
-                  res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-                  
-                  if (userType == 'U') { 
-                      res.redirect('/mypage/user');
-                  } else {
-                    res.redirect('/martPage/martInfo');
-                  }
+                res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+                if (userType == 'U') { 
+                    res.redirect('/mypage/user');
+                } else {
+                    res.redirect('/martPage/userInfo');
+                }
             } else {
                 res.redirect("/auth/signup?message=fail");
             }    

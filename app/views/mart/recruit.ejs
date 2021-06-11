@@ -80,13 +80,13 @@
 let totalCount =<%=totalCount %>; 
 let page = <%=page %>;
 let rowCount = <%=rowCount %>;
-
+var activeStatus = `<%= active %>`
 $(document).ready(function() {
     // 페이저 만들기
     if (totalCount <= rowCount) {
         $('#recruit-page').hide();
     } else {
-        createPagination('recruit-page', totalCount, rowCount, page, 10, `/mart/recruit`);
+        createPagination('recruit-page', totalCount, rowCount, page, 10, `/mart/recruit?active=${activeStatus}`)
     }
     $("#create").click(function() {
         self.location = "/mart/recruitCreate";

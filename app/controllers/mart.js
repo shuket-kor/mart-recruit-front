@@ -22,7 +22,7 @@ module.exports = {
         let recruitList = await recruitService.listByMart(req.cookies.xToken, martInfo.SEQ, active, currentPage, rowCount);
 
         // console.log(recruitList);
-
+        
         res.render('mart/recruit', {
             layout: 'layouts/default',
             title: req.app.get('baseTitle') + ' 지원자 채용',
@@ -170,7 +170,7 @@ module.exports = {
         let martInfo = await martService.get(req.cookies.xToken, recruitInfo.MART_SEQ);
         // 공고에 지원한 지원자 목록을 얻는다
         let resumeList = await resumeService.listForRecruit(req.cookies.xToken, recruitInfo.SEQ, step);
-
+        console.log(activeInfo);
         res.render('mart/recruitResume', {
             layout: 'layouts/default',
             title: req.app.get('baseTitle') + ' 지원자 채용',
@@ -248,16 +248,15 @@ module.exports = {
 
     async resumeList(req, res, next) {
         const userSeq = req.user.Seq;
-       
     },
 
     async createJobRequest(req, res, next) {
         const userSeq = req.user.Seq;
         const martSeq = req.query.martSeq;
         const targetUserSeq = req.query.userSeq;
-
+        
         let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
-       
+        
         const returnData = await martService.createJobRequest(req.cookies.xToken, martInfo.SEQ, targetUserSeq);
         
         res.json({

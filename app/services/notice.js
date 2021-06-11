@@ -8,17 +8,14 @@ module.exports = class noticeService {
         static async list(seq, page, rowCount) {
             try {
 
-                var apiURL = "";
-                if(process.env.NODE_ENV == "develope") {
-                    apiURL = 'http://localhost:3000/api/notice/list';
-                } else {
-                    apiURL = 'http://localhost:3000/api/notice/list';
-                }
-                const {body} = await got.post(apiURL + "?page=" + page + "&offset=" + rowCount, { json : {
+                var apiURL = `${process.env.APIHOST}/api/notice/list`
+                const {body} = await got.post(apiURL + "?page=" + page + "&offset=" + rowCount, 
+                    { json : {
                     SEQ:seq,
                     page: page,
                     rowCount: rowCount },
-                responseType: 'json'});
+                    responseType: 'json'}
+                    );
                 
                 if (body.result == 'success'){
                     console.log('response.result === success 확인');

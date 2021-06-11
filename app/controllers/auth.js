@@ -16,6 +16,10 @@ module.exports = {
                 LoginId: authData [1],
                 Type: authData[2]
             }
+            if(authData[2] == 'A'){
+                res.cookie('xToken', {expires: 0});
+                res.redirect("/");
+            }
             req.user = userData;
         }
         next();
