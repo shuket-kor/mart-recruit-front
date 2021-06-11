@@ -3664,3 +3664,9 @@ button.btn-primary,
 .tr-breadcrumb-mart-page .breadcrumb-logo {
     margin-bottom: 10px;
 }
+
+.pre-wrap {
+    background-color: white;
+    padding: 20px;
+    white-space: pre-wrap;
+}

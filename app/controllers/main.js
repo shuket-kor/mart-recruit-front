@@ -45,5 +45,23 @@ module.exports = {
             user: req.user,
             message: message
         });
+    },
+
+    async privacy(req, res, next) {
+
+        res.render('privacy', {
+            layout: 'layouts/default',
+            title: '한국마트협회 구인구직 - 개인정보보호정책',
+            user: req.user
+        });
+    },
+
+    async terms(req, res, next) {
+        res.render('terms', {
+            layout: 'layouts/default',
+            title: '한국마트협회 구인구직 - 서비스 이용약관',
+            user: req.user
+        });
     }
+
 }
