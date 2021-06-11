@@ -22,7 +22,7 @@
                         <span class="icon pull-left"><img src="/assets/images/icons/1.png" alt="Icon" class="img-fluid"></span>
                             <div class="row item">
                                 <label for="subject" class="col-sm-2 col-form-label title">이력서 이름</label>
-                                <div class="col-sm-6 data">
+                                <div class="col-sm-10 data">
                                     <input type="text" class="form-control" id="subject" name="subject" value="<%=resumeInfo.SUBJECT %>" required>
                                 </div>
                             </div>
@@ -30,14 +30,15 @@
                         <div class="section display-information">
                         <!-- 개인정보 -->
                         <span class="tr-title">개인 정보</span>
+                        <hr>
                         <div class="media-body">
-                            <div class="row">
+                            <div class="row m-b-20">
                                 <div class="change-photo col-sm-4">
                                     <div class="user-image user-photo">
                                         <% if (resumeInfo.PHOTO) {%><img id='profile-photo'src='<%=hostName %>/api/files/get/<%=resumeInfo.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
                                     </div>
                                     <div class="upload-photo">
-                                        <label class="btn btn-primary photoUploadBtn" for="upload-photo" >사진 업로드</label>
+                                        <label class="btn btn-primary photoUploadBtn width-150" for="upload-photo" >사진 업로드</label>
                                         <input type="file" id="upload-photo">
                                         <!-- <span class="max-size">Max 20 MB</span> -->
                                     </div>
@@ -99,7 +100,8 @@
 
                             <!-- 학력사항  -->
                             <span class="tr-title">학력 사항</span>
-                            <div class="media-body additem-edu">
+                            <hr>
+                            <div class="media-body additem-edu m-b-20">
                                 <div class="media-body additem-edu">
                                     <div class="code-edit-small">
                                         <div class="row">
@@ -130,7 +132,8 @@
                         <!-- 희망연봉 및 근무형태 -->
                         <div class="media-body">
                         <span class="tr-title">희망 사항</span>
-                        <div class="row">
+                        <hr>
+                        <div class="row m-b-20">
                             <div class="col-sm-4">
                                 <label>희망 연봉</label>
                             </div>
@@ -204,7 +207,8 @@
                         <!-- 보유기술 및 자격증 -->
                         <div class="media-body">
                             <span class="tr-title">보유기술 및 자격증</span>
-                            <div class="row">
+                            <hr>
+                            <div class="row m-b-20">
                                 <div class="col-sm-4">
                                     <label>보유기술</label>
                                 </div>
@@ -225,7 +229,8 @@
                         <!-- 취업 우대사항 -->
                         <div class="media-body">
                             <span class="tr-title">취업 우대사항</span>
-                            <div class="row">
+                            <hr>
+                            <div class="row m-b-20">
                                 <div class="col-sm-4">
                                     <label>보훈대상</label>
                                 </div>
@@ -245,14 +250,16 @@
 
                         <!-- 증명서류 -->
                         <div class="media-body">
-                            <span class="tr-title">4대보험 증명 서류</span>
+                            <span class="tr-title">경력 인증용 4대보험 증명 서류</span>
+                            <hr>
                             <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
-                                증명서 업로드 완료.
+                                인증용 증명 서류가 업로드되어 있습니다.
+                                <%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %>
                             <% } %>
                             <div class="change-photo">
                                 <div class="upload-photo">
                                     <label class="btn btn-primary" for="upload-certificate" >증명서 업로드</label>
-                                    <div class="introduce"><%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %></div>
+                                    
                                     <input type="file" id="upload-certificate">
                                 </div>
                             </div>
@@ -271,9 +278,9 @@
                         <!-- 경력사항 -->
                         <br>
                         <div class="media-body additem-work">
-                            <span class="tr-title">경력</span>
-                            <% if(listCareer){%>
-                                <div>
+                            <span class="tr-title">경력 사항</span>
+                            <div class="m-b-20">
+                                <% if(listCareer){%>
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-primary" id="option1">
                                             <input type="radio" name="carrerSeq"  value="2" autocomplete="off" > 신입
@@ -282,9 +289,7 @@
                                             <input type="radio" name="carrerSeq" value="3" autocomplete="off" checked> 경력
                                         </label>
                                     </div>
-                                </div>
                                 <% } else{ %>
-                                <div>
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-primary active" id="option1">
                                             <input type="radio" name="carrerSeq"  value="2" autocomplete="off" checked> 신입
@@ -293,11 +298,11 @@
                                             <input type="radio" name="carrerSeq" value="3" autocomplete="off" > 경력
                                         </label>
                                     </div>
-                                </div>
                                 <% } %>
-                            <div id="addhistory" class="additem">
-                            <table id='careerTable'class="table table-hover" style="background-color: #faf7fa">
                                 <button type="button" class="btn btn-primary waves-effect waves-light m-l-10 btn-md pull-right" id="addUser" onclick="createCareer(<%= resumeInfo.SEQ %>)">경력 추가 <i class="fa fa-plus"></i></button>
+                            </div>
+                            <div id="addhistory clear" class="additem">
+                            <table id='careerTable'class="table table-hover" style="background-color: #faf7fa">
                                 <tr style="background-color: #fff">
                                     <td>근무처</td>
                                     <td>직급/직책</td>
@@ -318,8 +323,8 @@
                                     <td id="salary<%= item.SEQ%>"><%= item.SALARY %></td>
                                     <td id="worktime<%= item.SEQ%>"><%=moment(item.WORKSTART).format('YYYY.MM.DD') %>~ <%=(item.WORKEND) ? moment(item.WORKEND).format('YYYY.MM.DD') : '재직 중' %></td>
                                     <td class="actions">
-                                        <a class="on-default edit-row" onclick="javascript:editCareer(<%=item.SEQ %>);"><i class="fa fa-pencil"></i></a>
-                                        <a class="on-default remove-row" onclick="javascript:removeCareer(<%=item.SEQ %>);"><i class="fa fa-trash-o"></i></a>
+                                        <a href="javascript:return false;" class="on-default edit-row m-r-5" onclick="javascript:editCareer(<%=item.SEQ %>);"><i class="fa fa-pencil"></i></a>
+                                        <a href="javascript:return false;" class="on-default remove-row" onclick="javascript:removeCareer(<%=item.SEQ %>);"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 <% })} %>
@@ -1016,8 +1021,8 @@
     // 경력 추가 확인 버튼 클릭
     function createCareerOkay(){
         TrimCheckEditCareer()
-        nullCheckEditCareer()
-        specialCheckEditCareer()
+        if (!nullCheckEditCareer()) return;
+        if (!specialCheckEditCareer()) return;
         doPostCallSync("/mypage/user/createCareer", {
             resumeSeq: $("#create-seq").val(),
             company: $("#create-company").val(),
