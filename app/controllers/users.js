@@ -21,9 +21,10 @@ module.exports = {
         let password = req.body.password
         let userType = req.body.usertype
         let active = req.body.active
-        let bizNo = req.body.bizno1 +'-'+ req.body.bizno2 +'-'+ req.body.bizno3;
+        let bizno = req.body.bizno1 + '-' + req.body.bizno2 + '-' + req.body.bizno3;
+        let martName = (req.body.martName) ? req.body.martName : "";
 
-        let result = await userService.create(userId, password, userType, bizNo, active);
+        let result = await userService.create(userId, password, userType, bizno, martName, active);
 
         if (result) {
             // 가입이 성공했다면, 로그인을 처리한다
@@ -37,10 +38,10 @@ module.exports = {
                     res.redirect('/martPage/userInfo');
                 }
             } else {
-                res.redirect("/auth/signup?message=fail");
+                res.redirect("/users/signup?message=fail");
             }    
         } else {
-                res.redirect("/auth/signup?message=fail");
+                res.redirect("/users/signup?message=fail");
         }
         // if(userType == 'M'){
         // let seq = userCreate.insertId

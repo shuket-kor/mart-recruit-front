@@ -5,7 +5,7 @@
                 <%-(martInfo.LOGOFILE) ? `<img src='${hostName}/api/files/get/${martInfo.LOGOFILE}' alt='images' class='img-fluid'>` : `<h2>${martInfo.NAME}</h2>` %> 
             </div>
             <ul class="job-meta tr-list list-inline">
-                <li><i class="fa fa-map-marker" aria-hidden="true"></i>(<%=(martInfo.POSTCODE)? martInfo.POSTCODE : '' %>) <%=(martInfo.ADDRESS) ? martInfo.ADDRESS : '' %> <%=(martInfo.ADDRESSEXTRA) ? martInfo.ADDRESSEXTRA : ''%></li>
+                <li><%-(martInfo.POSTCODE)? `<i class="fa fa-map-marker" aria-hidden="true"></i> (${martInfo.POSTCODE})` : '마트 정보를 채워 주세요' %> <%=(martInfo.ADDRESS) ? martInfo.ADDRESS : '' %> <%=(martInfo.ADDRESSEXTRA) ? martInfo.ADDRESSEXTRA : ''%></li>
                 
             </ul>
         </div>

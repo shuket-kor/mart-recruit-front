@@ -17,7 +17,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified" role="tablist">
                 <li role="presentation"><a id="usertab" class="active" href="#seeker" aria-controls="seeker" role="tab" data-toggle="tab">구직자</a></li>
-                <li role="presentation"><a id="marttab" href="#employers" aria-controls="employers" role="tab" data-toggle="tab">고용주</a></li>
+                <li role="presentation"><a id="marttab" href="#employers" aria-controls="employers" role="tab" data-toggle="tab">마트 회원</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -25,21 +25,17 @@
                 <div role="tabpanel" class="tab-pane active" id="seeker">
                     <div class="account-content">
                         <form action="usercreate" class="tr-form" method="POST" id="user-signup-form">
-                            <div style="display: none">
-                                <input type="text" value="U" name="usertype" />
-                            </div>
-                            <div style="display: none">
-                                <input type="text" value="Y" name="active" />
-                            </div>
+                            <input type="hidden" value="U" name="usertype" />
+                            <input type="hidden" value="Y" name="active" />
                             <div>
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="user-loginid" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="user-loginid" maxlength="15" />
                             </div>
                             <!-- <button type="button" class="btn btn-primary idcheckbtn">아이디 중복 체크</button> -->
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="user-password" />
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="user-password"  maxlength="10"/>
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인">
@@ -63,14 +59,13 @@
                 <div role="tabpanel" class="tab-pane" id="employers">
                     <div class="account-content">
                         <form action="usercreate" class="tr-form" method="POST" id="mart-signup-form">
-                            <div style="display: none">
-                                <input type="text" value="M" name="usertype" />
-                            </div>
-                            <div style="display: none">
-                                <input type="text" value="Y" name="active" />
-                            </div>
+                            <input type="hidden" value="M" name="usertype" />
+                            <input type="hidden" value="Y" name="active" />
                             <div>
-                                <p>기업 인증</p>
+                                <p>마트 정보/사업자번호</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="마트명" name="martName" id="martName"  maxlength="45"/>
                             </div>
                             <div class="form-group form-inline">
                                 <input type="text" class="form-control width-100 m-r-10 numberonly" name="bizno1" id="bizno1" name="bizno" maxlength="3" /> 
@@ -84,11 +79,11 @@
                                 <p>ID / PW</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="mart-loginid" />
+                                <input type="text" class="form-control" placeholder="아이디" name="userid" id="mart-loginid"  maxlength="15"/>
                             </div>
                             <!-- <button type="button" class="btn btn-primary idcheckbtn">아이디 중복 체크</button> -->
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="mart-password" />
+                                <input type="password" class="form-control" placeholder="비밀번호" name="password" id="mart-password"  maxlength="10"/>
                             </div>
                             <!-- <div class="form-group">
                                 <input type="password" class="form-control" placeholder="비밀번호 확인" />
@@ -131,6 +126,7 @@
         $("#user-login").click(function () {
             // 아이디 중복체크 먼저 시작.
             loginIdCheck();
+
             // 아이디 유효성 체크
             if ($("#user-loginid").val() == null || $("#user-loginid").val() == "") {
                 alert("아이디 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
@@ -159,16 +155,16 @@
             }
             // 페스워드체크
             if ($("#user-password").val() == null || $("#user-password").val() == "") {
-                alert("페스워드 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
+                alert("비밀번호 입력은 필수입니다."); //아이디 빈칸 포함 안됨 }
                 $("#user-password").focus();
                 return;
             } else if ($("#user-password").val().length > 10 || $("#user-password").val().length < 4) {
-                alert("페스워드는 4~10 글자로 맞추어주세요.  ");
+                alert("비밀번호는 4~10 글자로 맞추어주세요.  ");
                 $("#user-password").focus();
                 $("#user-password").val("");
                 return;
             } else if (checkSpace($("#user-password").val())) {
-                alert("페스워드는 공백이 들어올 수 없습니다.");
+                alert("비밀번호 공백이 들어올 수 없습니다.");
                 $("#user-password").focus();
                 $("#user-password").val("");
                 return;
@@ -182,6 +178,12 @@
             }
         });
         $("#mart-login").click(function () {
+            // 마트 이름은 1글자 이상이면 되며, 최대 글자인 50자는 maxlength=45로 제한되어 있다.
+            if ($("#martName").val() == "") {
+                alert("마트 이름의 입력은 필수입니다."); //마트 이름 공백 안됨
+                $("#martName").focus();
+                return;
+            }
             // 사업자번호 정상인지 체크만 하는 부분.
             var pBizno = $("#bizno1").val() + $("#bizno2").val() + $("#bizno3").val(); //사업자번호
             if (!checkCorporateRegistrationNumber(pBizno)) {
@@ -276,21 +278,21 @@
             doPostCallSync("/users/checkid", {
                 loginid: loginId,
             })
-                .success(function (json) {
-                    // 아이디 중복체크가 false 이면 가입이 불가능.
-                    if (json.result == "success") {
-                        if (json.data.tf == false) {
-                            idcheckflag = false;
-                        } else {
-                            // alert("사용 가능한 아이디 입니다.");
-                            idcheckflag = true;
-                            return;
-                        }
+            .success(function (json) {
+                // 아이디 중복체크가 false 이면 가입이 불가능.
+                if (json.result == "success") {
+                    if (json.data.tf == false) {
+                        idcheckflag = false;
+                    } else {
+                        // alert("사용 가능한 아이디 입니다.");
+                        idcheckflag = true;
+                        return;
                     }
-                })
-                .fail(function () {
-                    alert("아이디 중복체크 오류...");
-                });
+                }
+            })
+            .fail(function () {
+                alert("이미 존재하는 아이디입니다. 다른 아이디를 입력해 주세요.");
+            });
         }
 
         // 사업자번호 체크하는 정규식.
