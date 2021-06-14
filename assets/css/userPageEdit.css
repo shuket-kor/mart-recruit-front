@@ -37,3 +37,10 @@
 .hopeJobKind {
     margin-bottom: 20px;
 }
+
+.required {
+    margin-left: 4px;
+    color: #f00;
+    font-size: 10px;
+    vertical-align: top;
+}
