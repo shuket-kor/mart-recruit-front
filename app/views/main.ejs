@@ -4,19 +4,19 @@
 <div class="tr-banner-main section-before bg-image">
     <div class="container">
         <div class="banner-content text-center">
-            <h1>The Best Way to Get a Job at the Marts</h1>
-            <h2>We offer <%=numeral(totalCount).format('0,0') %> jobs right now</h2>
+            <h1> 마트에 취업하는 좋은 방법 </h1>
+            <h2>현재 <%=numeral(totalCount).format('0,0') %>개의 공고가 있습니다.</h2>
             <div class="banner-form">
                 <form action="#">
                     <div class="dropdown tr-change-dropdown" id="searchType">
-                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">Search For</span><i class="fa fa-angle-down"></i></a>
+                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">검색 조건</span><i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu tr-change" style="left:0 !important">
                             <li><a href="#">마트 이름</a></li>
                             <li><a href="#">공고 제목</a></li>
                         </ul>								
                     </div><!-- /.category-change -->
-                    <input type="text" class="form-control" placeholder="keyword" name="keyword" id="keyword">
-                    <button type="button" class="btn btn-primary button-search" value="Search">Search</button>
+                    <input type="text" class="form-control" placeholder="검색" name="keyword" id="keyword">
+                    <button type="button" class="btn btn-primary button-search" value="Search">검 색</button>
                 </form>
             </div><!-- /.banner-form -->				
         </div><!--/. banner-content -->
@@ -27,7 +27,7 @@
     <div class="container">
 
         <div class="job-topbar shadow p-3 mb-5 bg-white rounded">            
-            <p class="h4"><i class="fa fa-chalkboard"></i> Recently New Jobs</p>
+            <p class="h4"><i class="fa fa-chalkboard"></i> 새로운 공고</p>
         </div>
 
         <div class="tab-content tr-job-posted">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="job-topbar shadow p-3 mb-5 bg-white rounded">
-            <span class="pull-left"><p class="h4"><i class="fa fa-list-alt"></i> Jobs List</p></span>
+            <span class="pull-left"><p class="h4"><i class="fa fa-list-alt"></i> 공고 리스트</p></span>
             <ul class="nav nav-tabs job-tabs" role="tablist">
                 <li>총 <%=numeral(totalCount).format('0,0') %> 개의 공고가 있습니다.</li>
             </ul>				
@@ -139,7 +139,7 @@ let keyword = '<%=keyword %>';
 
 $(document).ready(function() {
     // 검색 조건 설정
-    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
+    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "검색 조건");    
     $("#keyword").val(keyword);
     $("#keyword").keypress(function(e) {
         if (e.keyCode == 13 && $(this).val().length > 0) search();
@@ -147,7 +147,7 @@ $(document).ready(function() {
     //검색 버튼 설정
     $(".button-search").click(function() { search(); })
     $(".button-search-reset").click(function() {
-        $("#searchType > a > span").html("Search For");
+        $("#searchType > a > span").html("검색 조건");
         $('#keyword').val('');
     })
 });

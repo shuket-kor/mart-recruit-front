@@ -6,19 +6,19 @@
     <div class="container">
         <div class="breadcrumb-info text-center">
             <div class="page-title">
-                <h1>Recruitment announcements</h1>
+                <h1>구인 공고</h1>
             </div>		
             <div class="banner-form">
                 <form action="#">
                     <div class="dropdown tr-change-dropdown" id="searchType">
-                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">Search For</span><i class="fa fa-angle-down"></i></a>
+                        <a data-toggle="dropdown" href="#" aria-expanded="false"><span class="change-text">검색 조건</span><i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu tr-change" style="left:0 !important">
                             <li><a href="#">마트 이름</a></li>
                             <li><a href="#">공고 제목</a></li>
                         </ul>								
                     </div><!-- /.category-change -->
-                    <input type="text" class="form-control" placeholder="keyword" name="keyword" id="keyword">
-                    <button type="button" class="btn btn-primary button-search" value="Search">Search</button>
+                    <input type="text" class="form-control" placeholder="검색" name="keyword" id="keyword">
+                    <button type="button" class="btn btn-primary button-search" value="Search">검색</button>
                 </form>
             </div><!-- /.banner-form -->				
         </div>
@@ -217,7 +217,7 @@ $(document).ready(function() {
         createPagination('recruit-page', totalCount, rowCount, page, 10, `/recruit/list?regions=${regions}&jobKinds=${jobKinds}&workingTypes=${workingTypes}&searchType=${searchType}&keyword=${keyword}`);
     }
     // 검색 조건 설정
-    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "Search For");    
+    $("#searchType > a > span").html((searchType == "m") ? "마트 이름" : (searchType == "r") ? "공고 제목" : "검색 조건");    
     $("#keyword").val(keyword);
     regions.forEach(item => {
         $('input:checkbox[id="workingRegion_' + item + '"]').prop("checked", true);
@@ -237,7 +237,7 @@ $(document).ready(function() {
         $('input:checkbox[name="workingRegion"]').prop("checked", false);
         $('input:checkbox[name="jobKind"]').prop("checked", false);
         $('input:checkbox[name="workingType"]').prop("checked", false);
-        $("#searchType > a > span").html("Search For");
+        $("#searchType > a > span").html("검색 조건");
         $('#keyword').val('');
     })
 });

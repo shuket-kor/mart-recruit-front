@@ -93,7 +93,7 @@
                             <div class="form-group row item">                                
                                 <div class="offset-sm-2 col-sm-10 data">
                                     <input type="text" class="form-control numberonly" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
-                                    <input type="text" class="form-control numberonly" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
+                                    <input type="text" class="form-control" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
                                     <input type="text" class="form-control numberonly" style="display: none;" id="sample6_extraAddress" value="<%=resumeInfo.ADDRESSEXTRA %>" />
                                 </div>
                             </div>
@@ -269,6 +269,14 @@
                                     
                                     <input type="file" id="upload-certificate">
                                 </div>
+                                <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
+                                <div id="personInfo">
+                                    <div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
+                                        * 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>
+                                    <label><input type="checkbox" name="info-check" id="info-check" >
+                                    업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>
+                                </div>
+                                <% } %>
                             </div>
                         </div>
 
@@ -723,6 +731,15 @@
             trimCheck()
             // 특수문자 체크
             specialCheck()
+            // 증명서 체크 확인
+            
+            if(!$('#info-check').is(':checked')){
+                alert('증명서 정보 동의에 체크하여 주세요.')
+                console.log('증명서 정보 동의에 체크하여 주세요.')
+                return false;
+            }
+            
+            
             // 이메일 정규식
             if(!emailRegExp.test($("#email").val())){
                 alert("정확한 Email을 입력하여 주세요.")
@@ -1146,11 +1163,15 @@
     
     // 4대보험 증명 서류
     function uploadCertificate(){
+
+        
         var resumeseq = <%= resumeInfo.SEQ %>
         var certificate = null;
         var titleImage = null;
         // 파일이 있으면 먼저 업로드한다 
         if ($("#upload-certificate").val() != "") {
+            // 증명 서류 첨부시 정보동의 보이기
+            //$('#personInfo').css('display', 'block');
             var formData = new FormData();
             formData.append("location", 'certificate');
             formData.append("uploadFile", $('#upload-certificate')[0].files[0]);

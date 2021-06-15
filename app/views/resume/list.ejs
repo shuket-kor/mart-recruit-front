@@ -7,7 +7,7 @@
     <div class="container">
         <div class="breadcrumb-info text-center">
             <div class="page-title">
-                <h1>Resume announcements</h1>
+                <h1>이력서 열람</h1>
             </div>		
         </div>
     </div><!-- /.container -->
@@ -117,7 +117,7 @@
                                 </td>
                                 <td>
                                     <div><%-(item.CERTIFICATE == 'Y') ? `<div class="text-warning font-big"><i class="fa fa-check"></i></div>` : '미인증' %></div>
-                                    <div><%-(item.CERTIFICATE == 'Y') ? moment(item.CERTIFICATEDATE).format('YYYY.MM.DD') + '<br>CERTIFICATED' : '' %></div>
+                                    <div><%-(item.CERTIFICATE == 'Y') ? moment(item.CERTIFICATEDATE).format('YYYY.MM.DD') + '<br>인증' : '' %></div>
                                 </td>
                                 <td>
                                     <div><%=moment(item.MODIFIED).format('YYYY.MM.DD') %></div>

@@ -96,7 +96,7 @@
                                     </td>
                                     <td>
                                         <div><%-(item.CERTIFICATE == 'Y') ? `<div class="text-warning font-big"><i class="fa fa-check"></i></div>` : '미인증' %></div>
-                                        <div><%-(item.CERTIFICATE == 'Y') ? moment(item.CERTIFICATEDATE).format('YYYY.MM.DD') + '<br>CERTIFICATED' : '' %></div>
+                                        <div><%-(item.CERTIFICATE == 'Y') ? moment(item.CERTIFICATEDATE).format('YYYY.MM.DD') + '<br>인증' : '' %></div>
                                     </td>
                                 </tr>
                             <%})
