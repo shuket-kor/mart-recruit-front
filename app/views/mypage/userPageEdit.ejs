@@ -92,9 +92,9 @@
                                 </div>                           
                                 <div class="form-group row item">                                
                                     <div class="offset-sm-2 col-sm-10 data">
-                                        <input type="text" class="form-control numberonly" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
-                                        <input type="text" class="form-control numberonly" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
-                                        <input type="text" class="form-control numberonly" style="display: none;" id="sample6_extraAddress" value="<%=resumeInfo.ADDRESSEXTRA %>" />
+                                        <input type="text" class="form-control" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
+                                        <input type="text" class="form-control" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
+                                        <input type="text" class="form-control" style="display: none;" id="sample6_extraAddress" value="<%=resumeInfo.ADDRESSEXTRA %>" />
                                     </div>
                                 </div>
 
@@ -123,7 +123,7 @@
                                                 <label>최종학력<span class="pull-right">:</span> </label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="EDUCATIONSCHOOL" name="EDUCATIONSCHOOL" type="text" placeholder="" value="<%= resumeInfo.EDUCATIONSCHOOL %>">
+                                                <input class="form-control" id="educationschool" name="educationschool" type="text" placeholder="" value="<%= resumeInfo.EDUCATIONSCHOOL %>">
                                             </div>
                                         </div>
                                     </div>
@@ -224,14 +224,6 @@
                                         <input class="form-control" id="license" name="LICENSE" type="text" placeholder="" value="<%= resumeInfo.LICENSE %>">
                                     </div>
                                 </div>
-                                <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
-                                <div id="personInfo">
-                                    <div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
-                                        * 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>
-                                    <label><input type="checkbox" name="info-check" id="info-check" >
-                                    업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>
-                                </div>
-                                <% } %>
                             </div>
 
                             <!-- 취업 우대사항 -->
@@ -267,16 +259,20 @@
                             <div class="media-body">
                                 <span class="tr-title">경력 인증용 4대보험 증명 서류</span>
                                 <hr>
-                                <% if(resumeInfo.CAREERCERTIFICATE != null){ %>
-                                    인증용 증명 서류가 업로드되어 있습니다.
-                                    <%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %>
-                                <% } %>
+                                <%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %>
                                 <div class="change-photo">
                                     <div class="upload-photo">
                                         <label class="btn btn-primary" for="upload-certificate" >증명서 업로드</label>
-                                        
                                         <input type="file" id="upload-certificate">
                                     </div>
+                                    <% if(resumeInfo.CAREERCERTIFICATE){ %>
+                                        <div id="personInfo">
+                                            <div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
+                                                * 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>
+                                            <label><input type="checkbox" name="info-check" id="info-check" >
+                                            업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>
+                                        </div>
+                                    <% } %>
                                 </div>
                             </div>
 
@@ -692,6 +688,7 @@
             let jobkind = getJobKinds()
             let careerSeq = $('input[name="carrerSeq"]:checked').val()
             let resumeSeq = '<%= resumeInfo.SEQ %>';
+            let certificateFile = '<%=resumeInfo.CAREERCERTIFICATE %>'
             $('#introduceForSummerNote').val($("#introduce").summernote('code'));
             
             // 공백체크
@@ -732,13 +729,15 @@
             // 앞뒤로 비어있는값 체크
             trimCheck()
             // 특수문자 체크
-            specialCheck()
+            if(!specialCheck()) return;
             // 증명서 체크 확인
             
-            if(!$('#info-check').is(':checked')){
-                alert('증명서 정보 동의에 체크하여 주세요.')
-                console.log('증명서 정보 동의에 체크하여 주세요.')
-                return false;
+            if(certificateFile){
+                if(!$('#info-check').is(':checked')){
+                    alert('증명서 정보 동의에 체크하여 주세요.')
+                    console.log('증명서 정보 동의에 체크하여 주세요.')
+                    return false;
+                }
             }
             
             
@@ -758,8 +757,6 @@
                 Ex) 1992`);
                 return false;
             }
-            
-            
             
             doPostCallSync("/mypage/user/updateJobKind", {
                 seq: resumeSeq,
@@ -797,8 +794,8 @@
                 postCode: $("#postCode").val(),
                 address: $("#address").val(),
                 addressExtra: $("#addressExtra").val(),
-                education: $(".selectpicker").val(),
-                educcationSchool: $("#EDUCATIONSCHOOL").val(),
+                education: $("#select_pick").val(),
+                educcationSchool: $("#educationschool").val(),
                 careerSeq: careerSeq,
                 technical: $("#technical").val(),
                 license: $("#license").val(),
@@ -827,16 +824,16 @@
 
     // 트림 체크 함수
     function trimCheck(){
-        $($('#subject').val($('#subject').val().trim()))
-        $($('#name').val($('#name').val().trim()))
-        $($('#contact').val($('#contact').val().trim()))
-        $($('#email').val($('#email').val().trim()))
-        $($('#birthyear').val($('#birthyear').val().trim()))
-        $($('#EDUCATIONSCHOOL').val($('#EDUCATIONSCHOOL').val().trim()))
-        $($('#technical').val($('#technical').val().trim()))
-        $($('#isWelfare').val($('#isWelfare').val().trim()))
-        $($('#isMilitaly').val($('#isMilitaly').val().trim()))
-        $($('#introduce').val($('#introduce').val().trim()))
+        $("#subject").val($.trim($("#subject").val()))
+        $("#name").val($.trim($("#name").val()))
+        $("#contact").val($.trim($("#contact").val()))
+        $("#email").val($.trim($("#email").val()))
+        $("#birthyear").val($.trim($("#birthyear").val()))
+        $("#educationschool").val($.trim($("#educationschool").val()))
+        $("#technical").val($.trim($("#technical").val()))
+        $("#isWelfare").val($.trim($("#isWelfare").val()))
+        $("#isMilitaly").val($.trim($("#isMilitaly").val()))
+        $("#introduce").val($.trim($("#introduce").val()))
     }
     
     // 특수문자 체크
@@ -852,7 +849,7 @@
             }
         }
         checkSpecial($('#name').val());
-        checkSpecial($('#EDUCATIONSCHOOL').val());
+        checkSpecial($('#educationschool').val());
         checkSpecial($('#technical').val());
         checkSpecial($('#isWelfare').val());
         checkSpecial($('#isMilitaly').val());
@@ -861,13 +858,13 @@
     
     // 트림 체크 함수
     function TrimCheckAddCareer(){
-        $($('#create-company').val($('#create-company').val().trim()))
-        $($('#create-career').val($('#create-career').val().trim()))
-        $($('#create-position').val($('#create-position').val().trim()))
-        $($('#create-jobType').val($('#create-jobType').val().trim()))
-        $($('#create-charge').val($('#create-charge').val().trim()))
-        $($('#create-workregion').val($('#create-workregion').val().trim()))
-        $($('#create-salary').val($('#create-salary').val().trim()))
+        $('#create-company').val($.trim($('#create-company').val()))
+        $('#create-career').val($.trim($('#create-career').val()))
+        $('#create-position').val($.trim($('#create-position').val()))
+        $('#create-jobType').val($.trim($('#create-jobType').val()))
+        $('#create-charge').val($.trim($('#create-charge').val()))
+        $('#create-workregion').val($.trim($('#create-workregion').val()))
+        $('#create-salary').val($.trim($('#create-salary').val()))
     }
     
     // 널 체크
@@ -924,13 +921,13 @@
     
     // 트림 체크 함수
     function TrimCheckEditCareer(){
-        $($('#edit-company').val($('#edit-company').val().trim()))
-        $($('#edit-career').val($('#edit-career').val().trim()))
-        $($('#edit-position').val($('#edit-position').val().trim()))
-        $($('#edit-jobType').val($('#edit-jobType').val().trim()))
-        $($('#edit-charge').val($('#edit-charge').val().trim()))
-        $($('#edit-workregion').val($('#edit-workregion').val().trim()))
-        $($('#edit-salary').val($('#edit-salary').val().trim()))
+        $('#edit-company').val($.trim($('#edit-company').val()))
+        $('#edit-career').val($.trim($('#edit-career').val()))
+        $('#edit-position').val($.trim($('#edit-position').val()))
+        $('#edit-jobType').val($.trim($('#edit-jobType').val()))
+        $('#edit-charge').val($.trim($('#edit-charge').val()))
+        $('#edit-workregion').val($.trim($('#edit-workregion').val()))
+        $('#edit-salary').val($.trim($('#edit-salary').val()))
     }
     
     // 널 체크
@@ -1018,8 +1015,8 @@
     function careerEditSaveBtn(){
         if (confirm("경력을 수정하시겠습니까? ")){
             TrimCheckAddCareer()
-            nullCheckAddCareer()
-            specialCheckAddCareer()
+            if (!nullCheckAddCareer()) return;
+            if (!specialCheckAddCareer()) return;
             doPostCallSync("/mypage/user/updateCareer", {
                 resumeSeq: $("#edit-resumeseq").val(),
                 company: $("#edit-company").val(),
