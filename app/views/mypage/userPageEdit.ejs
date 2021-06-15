@@ -745,8 +745,9 @@
             // if(!specialCheck()){
             //     return;
             // }
+
             // 개인정보 동의 체크
-            if(certificateFile){
+            if('<%=resumeInfo.CAREERCERTIFICATE %>'){
                 if(!$('#info-check').is(':checked')){
                     alert('증명서 정보 동의에 체크하여 주세요.')
                     return false;
@@ -853,7 +854,7 @@
             var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
 
             if(special_pattern.test(str) == true) {
-                alert(`특수문자는 사용할 수 업습니다.`);
+                alert(`특수문자는 사용할 수 없습니다.`);
                 return false;
             } else {
                 return true;
