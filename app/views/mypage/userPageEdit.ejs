@@ -576,7 +576,6 @@
             }
         });
         
-        
         // 초기 설정.
         var educationName = '<%= resumeInfo.EDUCATION %>';
         $('#select_pick').val(educationName);
@@ -608,6 +607,52 @@
             $('input:checkbox[id="workingRegion_' + item + '"]').prop("checked", true);
         });
 
+        let getWorkingTypes = function () {
+        let checkWorkingType = "";
+        $('input:checkbox[name="workingType"]').each(function() {
+            if(this.checked){
+                checkWorkingType += this.value + ", "; 
+            }
+        });
+
+            if (checkWorkingType.length > 0) checkWorkingType = checkWorkingType.substring(0, checkWorkingType.length - 2);
+            return checkWorkingType;
+        }
+
+        let getWorkingTypeName = function () {
+            let checkWorkingTypeName = "";
+            $('input:checkbox[name="workingType"]').each(function() {
+                if(this.checked){
+                    checkWorkingTypeName += $("#workingTypeLabel_"+ this.value).html() + ", ";
+                }
+            });
+            
+            if (checkWorkingTypeName.length > 0) checkWorkingTypeName = checkWorkingTypeName.substring(0, checkWorkingTypeName.length - 2);
+            return checkWorkingTypeName;
+        } 
+        
+        let getRegions = function () {
+        let checkRegion = "";
+        $('input:checkbox[name="workingRegion"]').each(function() {
+            if(this.checked){
+                checkRegion += this.value + ", "; 
+            }
+        });
+        if (checkRegion.length > 0) checkRegion = checkRegion.substring(0, checkRegion.length - 2);
+        return checkRegion;
+        }
+
+        let getJobKinds = function () {
+            let checkJobKind = "";
+            $('input:checkbox[name="jobKind"]').each(function() {
+                if(this.checked){
+                    checkJobKind += this.value + ", "; 
+                }
+            });
+            if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 2);
+            return checkJobKind;
+        }
+        
         // 정규식
         var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         var phoneRegExp = /^\d{3}\d{3,4}\d{4}$/;
@@ -618,9 +663,7 @@
         $("#upload-certificate").change(uploadCertificate)
         
         // 경력 생성 오케이 버튼
-        $("#careerCreateSaveBtn").click(function(){
-            createCareerOkay()
-        })
+        $("#careerCreateSaveBtn").click(function(){ createCareerOkay() })
 
         // 신입 / 경력 버튼 클릭시 경력 레이아웃 보이게 or 숨기게
         $('#option1').click(function(){
@@ -633,38 +676,78 @@
         // 이력서 수정완료 버튼 클릭
         let userseq = '<%= user.Seq %>'
         $("#resume-update-btn").click(function(){
-            $('#introduceForSummerNote').val($("#introduce").summernote('code'));
-            
-            trimCheck()
-            nullCheck()
-            specialCheck()
-
-            if(!emailRegExp.test($("#email").val())){
-                alert("정확한 Email을 입력하여 주세요.")
-                return false;
-            };
-            if(!phoneRegExp.test($("#contact").val())){
-                alert("특수문자 (-) 를 제외한 번호만 주세요.")
-                return false;
-            };
-            if(!birthyearRegExp.test($("#birthyear").val())){
-                alert(`출생년도를 입력하여 주세요.
-                Ex) 1992`);
-                return false;
-            }
             let workingTypeSeqs = getWorkingTypes()
             let workingTypeNames = getWorkingTypeName()
             let region = getRegions()
             let jobkind = getJobKinds()
             let careerSeq = $('input[name="carrerSeq"]:checked').val()
             let resumeSeq = '<%= resumeInfo.SEQ %>';
+            $('#introduceForSummerNote').val($("#introduce").summernote('code'));
+            
+            // 공백체크
+            if(!$('#name').val()){
+                alert(`이름을 입력해주세요.`);
+                return false
+            }else if(!$('#subject').val()){
+                alert(`이력서 제목을 입력해주세요.`);
+                return false
+            }else if(!$('#email').val()){
+                alert(`이메일을 입력해주세요.`);
+                return false
+            }else if(!$('#contact').val()){
+                alert(`연락처를 입력해주세요.`);
+                return false
+            }else if(!$('#birthyear').val()){
+                alert(`태어난해를 입력해주세요.`);
+                return false
+            }else if(!$('#gender').val()){
+                alert(`성별을 입력해주세요.`);
+                return false
+            }else if(!$('#postCode').val()){
+                alert(`우편번호를 입력해주세요.`);
+                return false
+            }else if(!$('#salary').val()){
+                alert(`희망연봉을 입력해주세요.`);
+                return false
+            }else if(!workingTypeSeqs){
+                alert(`희망 근무형태를 입력해주세요.`);
+                return false
+            }else if(!region){
+                alert(`희망 근무지역을 입력해주세요.`);
+                return false
+            }else if(!jobkind){
+                alert(`희망직종을 입력해주세요.`);
+                return false
+            };
+            // 앞뒤로 비어있는값 체크
+            trimCheck()
+            // 특수문자 체크
+            specialCheck()
+            // 이메일 정규식
+            if(!emailRegExp.test($("#email").val())){
+                alert("정확한 Email을 입력하여 주세요.")
+                return false;
+            };
+            // 연락처 정규식
+            if(!phoneRegExp.test($("#contact").val())){
+                alert("특수문자 (-) 를 제외한 번호만 주세요.")
+                return false;
+            };
+            // 출생년도 정규식
+            if(!birthyearRegExp.test($("#birthyear").val())){
+                alert(`출생년도를 입력하여 주세요.
+                Ex) 1992`);
+                return false;
+            }
+            
+            
             
             doPostCallSync("/mypage/user/updateJobKind", {
                 seq: resumeSeq,
                 jobKinds: jobkind
             })
             .success(function(json){
-                
+
             })
             .fail(function(sender, message, details){
                 alert("희망직종 업데이트 오류 발생.." + message);
@@ -683,7 +766,6 @@
                 return false;
             });
 
-            // 이력서 수정할때 벨리데이션
             // 수정 완료 클릭시 > api로 호출하는 front 로직 수행(body) >  POST로 (body) api로 전송하여 이력서 seq로 업데이트
             doPostCallSync("/mypage/user/edit", {
                 seq: userseq,
@@ -721,53 +803,9 @@
                 return false;
             });
         })
+
     });
-    let getWorkingTypes = function () {
-        let checkWorkingType = "";
-        $('input:checkbox[name="workingType"]').each(function() {
-            if(this.checked){
-                checkWorkingType += this.value + ", "; 
-            }
-        });
 
-        if (checkWorkingType.length > 0) checkWorkingType = checkWorkingType.substring(0, checkWorkingType.length - 2);
-        return checkWorkingType;
-    }
-
-    let getWorkingTypeName = function () {
-        let checkWorkingTypeName = "";
-        $('input:checkbox[name="workingType"]').each(function() {
-            if(this.checked){
-                checkWorkingTypeName += $("#workingTypeLabel_"+ this.value).html() + ", ";
-            }
-        });
-        
-        if (checkWorkingTypeName.length > 0) checkWorkingTypeName = checkWorkingTypeName.substring(0, checkWorkingTypeName.length - 2);
-        return checkWorkingTypeName;
-    } 
-    
-    let getRegions = function () {
-    let checkRegion = "";
-    $('input:checkbox[name="workingRegion"]').each(function() {
-        if(this.checked){
-            checkRegion += this.value + ", "; 
-        }
-    });
-    if (checkRegion.length > 0) checkRegion = checkRegion.substring(0, checkRegion.length - 2);
-    return checkRegion;
-    }
-
-    let getJobKinds = function () {
-        let checkJobKind = "";
-        $('input:checkbox[name="jobKind"]').each(function() {
-            if(this.checked){
-                checkJobKind += this.value + ", "; 
-            }
-        });
-        if (checkJobKind.length > 0) checkJobKind = checkJobKind.substring(0, checkJobKind.length - 2);
-        return checkJobKind;
-    }
-    
     // 트림 체크 함수
     function trimCheck(){
         $($('#subject').val($('#subject').val().trim()))
@@ -781,45 +819,7 @@
         $($('#isMilitaly').val($('#isMilitaly').val().trim()))
         $($('#introduce').val($('#introduce').val().trim()))
     }
-    // 널 체크
-    function nullCheck(){
-        if(!$('#subject').val()){
-            alert(`이력서 제목을 입력해주세요.`);
-            return false
-        };
-        if(!$('#name').val()){
-            alert(`이름을 입력해주세요.`);
-            return false
-        };
-        if(!$('#contact').val()){
-            alert(`연락처를 입력해주세요.`);
-            return false
-        };
-        if(!$('#email').val()){
-            alert(`이메일을 입력해주세요.`);
-            return false
-        };
-        if(!$('#birthyear').val()){
-            alert(`태어난해를 입력해주세요.`);
-            return false
-        };
-        if(!$('#EDUCATIONSCHOOL').val()){
-            alert(`학교 이름을 입력해주세요.`);
-            return false
-        };
-        if(!$('#technical').val()){
-            alert(`보유 기술을 입력해주세요.`);
-            return false
-        };
-        if(!$('#isWelfare').val()){
-            alert(`보훈대상을 입력해주세요.`);
-            return false
-        };
-        if(!$('#isMilitaly').val()){
-            alert(`병역을 입력해주세요.`);
-            return false
-        };
-    }
+    
     // 특수문자 체크
     function specialCheck(){
         function checkSpecial(str) {
@@ -839,6 +839,7 @@
         checkSpecial($('#isMilitaly').val());
         checkSpecial($('#name').val());
     }
+    
     // 트림 체크 함수
     function TrimCheckAddCareer(){
         $($('#create-company').val($('#create-company').val().trim()))
@@ -849,6 +850,7 @@
         $($('#create-workregion').val($('#create-workregion').val().trim()))
         $($('#create-salary').val($('#create-salary').val().trim()))
     }
+    
     // 널 체크
     function nullCheckAddCareer(){
         if(!$('#create-company').val()){
@@ -880,6 +882,7 @@
             return false
         };
     }
+    
     // 특수문자 체크
     function specialCheckAddCareer(){
         function checkSpecial(str) {
@@ -899,6 +902,7 @@
         checkSpecial($('#create-workregion').val());
         checkSpecial($('#create-salary').val());
     }
+    
     // 트림 체크 함수
     function TrimCheckEditCareer(){
         $($('#edit-company').val($('#edit-company').val().trim()))
@@ -909,6 +913,7 @@
         $($('#edit-workregion').val($('#edit-workregion').val().trim()))
         $($('#edit-salary').val($('#edit-salary').val().trim()))
     }
+    
     // 널 체크
     function nullCheckEditCareer(){
         if(!$('#edit-company').val()){
@@ -940,6 +945,7 @@
             return false
         };
     }
+    
     // 특수문자 체크
     function specialCheckEditCareer(){
         function checkSpecial(str) {
