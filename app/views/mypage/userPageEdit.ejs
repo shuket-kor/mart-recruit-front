@@ -35,7 +35,10 @@
                                 <div class="row m-b-20">
                                     <div class="change-photo col-sm-4">
                                         <div class="user-image user-photo">
-                                            <% if (resumeInfo.PHOTO) {%><img id='profile-photo'src='<%=hostName %>/api/files/get/<%=resumeInfo.PHOTO %>'alt="Icon" class="img-fluid"><% } %>
+                                            <% if (resumeInfo.PHOTO) {%><img id='profile-photo' src='<%=hostName %>/api/files/get/<%=resumeInfo.PHOTO %>'alt="Icon" class="img-fluid">
+                                            <% }else { %>
+                                                <img id='profile-photo' src="/assets/images/others/author.png" alt="Image" class="img-fluid">
+                                            <% } %>
                                         </div>
                                         <div class="upload-photo">
                                             <label class="btn btn-primary photoUploadBtn width-150" for="upload-photo" >사진 업로드</label>
@@ -94,11 +97,6 @@
                                     <div class="offset-sm-2 col-sm-10 data">
                                         <input type="text" class="form-control numberonly" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
                                         <input type="text" class="form-control" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
-                                        <input type="text" class="form-control numberonly" style="display: none;" id="sample6_extraAddress" value="<%=resumeInfo.ADDRESSEXTRA %>" />
-
-                                        <input type="text" class="form-control" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
-                                        <input type="text" class="form-control" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
-                                        <input type="text" class="form-control" style="display: none;" id="sample6_extraAddress" value="<%=resumeInfo.ADDRESSEXTRA %>" />
                                     </div>
                                 </div>
 
@@ -261,24 +259,25 @@
 
                             <!-- 증명서류 -->
                             <div class="media-body">
-                                <span class="tr-title">경력 인증용 4대보험 증명 서류</span>
+                                <span class="tr-title">건강보험자격득실확인서</span>
                                 <hr>
-                                <%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %>
+                                <div id="certificateArea">
+                                    <%-(resumeInfo.CAREERCERTIFICATE) ? `<a href='${hostName}/api/files/get/${resumeInfo.CAREERCERTIFICATE}' target='_blank'> 증명서 다운로드 </a>` : '제출되지 않았습니다' %>
+                                </div>
+
                                 <div class="change-photo">
                                     <div class="upload-photo">
                                         <label class="btn btn-primary" for="upload-certificate" >증명서 업로드</label>
                                         <input type="file" id="upload-certificate">
                                     </div>
-
-                                    <% if(resumeInfo.CAREERCERTIFICATE){ %>
-                                        <div id="personInfo">
+                                    <div id="personInfo">
+                                        <% if(resumeInfo.CAREERCERTIFICATE){ %>
                                             <div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
                                                 * 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>
                                             <label><input type="checkbox" name="info-check" id="info-check" >
                                             업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>
-                                        </div>
-                                    <% } %>
-                                    
+                                        <% } %>
+                                    </div>
                                 </div>
                             </div>
 
@@ -587,7 +586,13 @@
                 }
             }
         });
-        
+        var certificateValue = '<%=resumeInfo.CAREERCERTIFICATE %>'
+        if(certificateValue){
+            $('#personInfo').show();
+        }else{
+            $('#personInfo').hide();
+        }
+
         // 초기 설정.
         var educationName = '<%= resumeInfo.EDUCATION %>';
         $('#select_pick').val(educationName);
@@ -735,9 +740,14 @@
             // 앞뒤로 비어있는값 체크
             trimCheck()
             // 특수문자 체크
-            if(!specialCheck()) return;
+            specialCheck()
 
+            // 개인정보 동의 체크
+            if($("#upload-certificate").val() != ""){
+
+            if(!specialCheck()) return;
             // 증명서 체크 확인
+            
             if(certificateFile){
                 if(!$('#info-check').is(':checked')){
                     alert('증명서 정보 동의에 체크하여 주세요.')
@@ -745,7 +755,7 @@
                     return false;
                 }
             }
-            
+            }
             // 이메일 정규식
             if(!emailRegExp.test($("#email").val())){
                 alert("정확한 Email을 입력하여 주세요.")
@@ -1140,23 +1150,22 @@
                     // 업로드가 성공했으면 정보를 업데이트
                     if (json.result == "success") {
                         resumeImage = json.data.filename;
-                    doPostCallSync("/mypage/user/updateimage", {
-                        SEQ: resumeseq,
-                        location: 'resume',
-                        RESUMEFILE: resumeImage
-                    })
-                    .success(function(json){
-                        if (json.result == "success") {
-                            console.log(JSON.stringify(json))
-                            // location.reload();
-                            $("#profile-photo").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
-                            $("#profile-main").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
-                        }
-                    })
-                    .fail(function(sender, message, details){
-                        alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
-                    });                         
-                }
+                        doPostCallSync("/mypage/user/updateimage", {
+                            SEQ: resumeseq,
+                            location: 'resume',
+                            RESUMEFILE: resumeImage
+                        })
+                        .success(function(json){
+                            if (json.result == "success") {
+                                alert("이미지 업로드 완료.")
+                                $("#profile-photo").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
+                                $("#profile-main").attr('src',`<%=hostName %>/api/files/get/+${json.data}`)
+                            }
+                        })
+                        .fail(function(sender, message, details){
+                            alert("사용자 사진을 변경하는 도중에 오류가 발생했습니다.");
+                        });                         
+                    }
                 },
                 cache: false,
                 contentType: false,
@@ -1168,7 +1177,6 @@
     // 4대보험 증명 서류
     function uploadCertificate(){
 
-        
         var resumeseq = <%= resumeInfo.SEQ %>
         var certificate = null;
         var titleImage = null;
@@ -1184,23 +1192,32 @@
                 data: formData,
                 async: false,
                 success:function(json){
-                    console.log(json)
                     if (json.result == "success") {
                         certificate = json.data.filename;
-                    doPostCallSync("/mypage/user/updatecertificate", {
-                        SEQ: resumeseq,
-                        location: 'certificate',
-                        RESUMEFILE: certificate
-                    })
-                    .success(function(json){
-                        if (json.result == "success"){
-                            alert("업로드 완료.")
-                        }
-                    })
-                    .fail(function(sender, message, details){
-                        alert("증명서를 업로드 하는 도중에 오류가 발생했습니다.");
-                    });
-                }
+                        doPostCallSync("/mypage/user/updatecertificate", {
+                            SEQ: resumeseq,
+                            location: 'certificate',
+                            RESUMEFILE: certificate
+                        })
+                        .success(function(json){
+                            if (json.result == "success"){
+                                $('#personInfo').show();
+                                alert("업로드 완료.");
+                                var checkboxString = ''
+                                checkboxString += `<div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>`;
+                                checkboxString += `* 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>`;
+                                checkboxString += `<label><input type="checkbox" name="info-check" id="info-check" >`;
+                                checkboxString += `업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>`;
+                                $('#personInfo').html(checkboxString);
+                                var downloadString = ''
+                                downloadString += `<a href='<%=hostName %>/api/files/get/${json.data}' target='_blank'> 증명서 다운로드 </a>`;
+                                $("#certificateArea").html(downloadString)
+                            }
+                        })
+                        .fail(function(sender, message, details){
+                            alert("증명서를 업로드 하는 도중에 오류가 발생했습니다.");
+                        });
+                    }
                 },
                 cache: false,
                 contentType: false,
