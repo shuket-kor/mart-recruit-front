@@ -273,7 +273,7 @@
                                     </div>
                                     <div id="personInfo">
                                         <% if(resumeInfo.CAREERCERTIFICATE){ %>
-                                            <div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
+                                            <div id='person-info-text' class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>
                                                 * 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>
                                             <label><input type="checkbox" name="info-check" id="info-check" >
                                             업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>
@@ -746,7 +746,7 @@
             //     return;
             // }
             // 개인정보 동의 체크
-            if(certificateFile){
+            if($("#person-info-text").hasClass('person-info-text')){
                 if(!$('#info-check').is(':checked')){
                     alert('증명서 정보 동의에 체크하여 주세요.')
                     return false;
@@ -1200,7 +1200,7 @@
                                 $('#personInfo').show();
                                 alert("업로드 완료.");
                                 var checkboxString = ''
-                                checkboxString += `<div class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>`;
+                                checkboxString += `<div id="person-info-text" class="person-info-text"><p>경력 증명용 첨부파일은 지원한 업체에서 열람할 수 있습니다. 따라서 민감한 개인정보(주민등록번호)은 지운 후에 업로드하여 주시기 바랍니다.<br/>`;
                                 checkboxString += `* 인증용 파일의 개인 정보를 삭제하지 않고 업로드 한 경우 유출되는 개인정보에 대해서 마트협회는 책임지지 않습니다.</p></div>`;
                                 checkboxString += `<label><input type="checkbox" name="info-check" id="info-check" >`;
                                 checkboxString += `업로드한 증명 문서에 포함된 정보를 제 3자 (입사 지원한 마트)의 관리자가 열람하는 것에 동의합니다.</label>`;
