@@ -735,14 +735,9 @@
             // 앞뒤로 비어있는값 체크
             trimCheck()
             // 특수문자 체크
-            specialCheck()
-
-            // 개인정보 동의 체크
-            if($("#upload-certificate").val() != ""){
-
             if(!specialCheck()) return;
+
             // 증명서 체크 확인
-            
             if(certificateFile){
                 if(!$('#info-check').is(':checked')){
                     alert('증명서 정보 동의에 체크하여 주세요.')
@@ -750,7 +745,7 @@
                     return false;
                 }
             }
-            }
+            
             // 이메일 정규식
             if(!emailRegExp.test($("#email").val())){
                 alert("정확한 Email을 입력하여 주세요.")
