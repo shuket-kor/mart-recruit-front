@@ -97,6 +97,7 @@
                                     <div class="offset-sm-2 col-sm-10 data">
                                         <input type="text" class="form-control numberonly" name="address" id="address" readonly value="<%=resumeInfo.ADDRESS %>" />
                                         <input type="text" class="form-control" name="addressExtra" id="addressExtra" value="<%=resumeInfo.ADDRESSEXTRA %>" />
+                                        <input type="text" class="form-control" name="addressExtra" style='display:none;' id="sample6_extraAddress" value="" />
                                     </div>
                                 </div>
 
@@ -741,20 +742,15 @@
             trimCheck()
             // 특수문자 체크
             specialCheck()
-
+            // if(!specialCheck()){
+            //     return;
+            // }
             // 개인정보 동의 체크
-            if($("#upload-certificate").val() != ""){
-
-            if(!specialCheck()) return;
-            // 증명서 체크 확인
-            
             if(certificateFile){
                 if(!$('#info-check').is(':checked')){
                     alert('증명서 정보 동의에 체크하여 주세요.')
-                    console.log('증명서 정보 동의에 체크하여 주세요.')
                     return false;
                 }
-            }
             }
             // 이메일 정규식
             if(!emailRegExp.test($("#email").val())){
@@ -863,7 +859,7 @@
                 return true;
             }
         }
-        checkSpecial($('#name').val());
+        checkSpecial($('#subject').val());
         checkSpecial($('#educationschool').val());
         checkSpecial($('#technical').val());
         checkSpecial($('#isWelfare').val());
