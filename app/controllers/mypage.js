@@ -224,6 +224,7 @@ module.exports = {
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
         const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeInfo.SEQ);
 
+        console.log(resumeInfo);
         res.render('mypage/userPageResume', {
             layout: 'layouts/default',
             title: title,

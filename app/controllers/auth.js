@@ -55,16 +55,16 @@ module.exports = {
         let refer = (req.body.refer) ? req.body.refer : '';
         // 인증서버로부터 인증 정보를 받는다.
         const loginbody = await authService.authorizatoin(userId, password);
-    
+        let hostName = process.env.FRTHOST
         if (loginbody) {
           // 인증용 토큰 보관
             res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
             
-            if (refer != '') {
+            if (refer == `${hostName}/users/signup` && refer == `${hostName}/auth/login`) {
+                res.redirect('/');
+            }else{
                 res.redirect(refer);
-                // res.redirect('/');
-            }else 
-            res.redirect('/mypage/user');
+            }
         } else {
             res.redirect(`/auth/login?refer=${refer}&result=1`);
         }    

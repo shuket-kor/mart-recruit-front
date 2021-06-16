@@ -109,7 +109,11 @@
                                         <li><i class="fa fa-money" aria-hidden="true"></i><%=item.SALARYTYPE %> <%=item.SALARY %></li>
                                     </ul>
                                     <ul class="job-social tr-list listing-2" > 
-                                        <li><a class="cursor-pointer" onclick="scrap(<%=item.SEQ %>)" ><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                        <% if (user) { %>
+                                            <% if (user.Type == 'U') { %>
+                                                <li><a class="cursor-pointer" onclick="scrap(<%=item.SEQ %>)" ><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <%} %>
+                                        <% }%>
                                         <li><a class="cursor-pointer" onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>										
