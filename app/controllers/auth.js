@@ -60,7 +60,7 @@ module.exports = {
           // 인증용 토큰 보관
             res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
             
-            if (refer == `${hostName}/users/signup` && refer == `${hostName}/auth/login`) {
+            if (refer == `${hostName}/users/signup` || refer == `${hostName}/auth/login`) {
                 res.redirect('/');
             }else{
                 res.redirect(refer);
