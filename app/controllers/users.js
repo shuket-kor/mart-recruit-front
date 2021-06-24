@@ -32,16 +32,16 @@ module.exports = {
             if (loginbody) {
                 // 인증용 토큰 보관
                 res.cookie("xToken", loginbody.data.token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-                if (userType == 'U') { 
+                if (userType == 'U') {
                     res.redirect('/mypage/user');
                 } else {
                     res.redirect('/martPage/userInfo');
                 }
             } else {
                 res.redirect("/users/signup?message=fail");
-            }    
+            }
         } else {
-                res.redirect("/users/signup?message=fail");
+            res.redirect("/users/signup?message=fail");
         }
         // if(userType == 'M'){
         // let seq = userCreate.insertId
@@ -53,7 +53,7 @@ module.exports = {
     },
 
     // 아이디 중복체크
-    async checkid(req, res, next){
+    async checkid(req, res, next) {
         let userId = req.body.loginid
         let userCheckId = await userService.checkid(userId);
         res.json({
@@ -74,7 +74,7 @@ module.exports = {
             info: userUpdate,
         });
     },
-    
+
     // 유저 수정
     async updatePassword(req, res, next) {
         let password = req.body.password;
@@ -86,12 +86,12 @@ module.exports = {
             res.status(200).json({
                 result: 'success',
                 data: result
-            });    
+            });
         } else {
             res.status(200).json({
                 result: 'fail',
                 data: null
-            });    
+            });
         }
     },
 
@@ -104,12 +104,12 @@ module.exports = {
             res.status(200).json({
                 result: 'success',
                 data: result
-            });    
+            });
         } else {
             res.status(200).json({
                 result: 'fail',
                 data: null
-            });    
+            });
         }
 
     },
@@ -125,22 +125,22 @@ module.exports = {
         // console.log(bizNoCheck)
         return bizNoCheck;
     },
-    
-    async index(req, res, next){
+
+    async index(req, res, next) {
         res.render("index", {
             layout: "layouts/default",
         });
     },
 
-    async signup(req, res, next){
+    async signup(req, res, next) {
         let message = req.query.message;
         res.render("signup", {
             layout: "layouts/default",
-            title: '한국마트협회 구인구직',
+            title: '마트인 - 한국마트협회',
             user: req.user,
             message: message
         });
     },
 
-    
+
 };
