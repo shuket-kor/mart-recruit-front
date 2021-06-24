@@ -3,7 +3,7 @@ const numeral = require('numeral');
 const logger = require('../config/logger.js');
 const recruitService = require('../services/recruit.js');
 
-module.exports = {       
+module.exports = {
     async main(req, res, next) {
         const currentPage = 1;
         const rowCount = 20;
@@ -16,12 +16,12 @@ module.exports = {
         const returnData = await recruitService.list(req.cookies.xToken, 'Y', null, null, null, searchType, keyword, currentPage, rowCount);
         if (returnData && returnData.list) {
             if (returnData.list.length > 8) {
-                for (let i=0; i < 8; i++) {returnData.list.shift();} 
+                for (let i = 0; i < 8; i++) { returnData.list.shift(); }
             }
         }
         res.render('main', {
             layout: 'layouts/default',
-            title: '한국마트협회 구인구직',
+            title: '마트인 - 한국마트협회',
             user: req.user,
             moment: moment,
             numeral: numeral,
@@ -41,7 +41,7 @@ module.exports = {
 
         res.render('error', {
             layout: 'layouts/default',
-            title: '한국마트협회 구인구직 에러',
+            title: '마트인 - 한국마트협회 에러',
             user: req.user,
             message: message
         });

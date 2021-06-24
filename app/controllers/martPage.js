@@ -6,7 +6,7 @@ const moment = require('moment');
 
 module.exports = {
     async userInfo(req, res, next) {
-        let title = '마트 페이지';
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
 
         let userInfo = await userService.get(req.cookies.xToken, userSeq);
@@ -25,13 +25,13 @@ module.exports = {
     },
 
     async martInfo(req, res, next) {
-        let title = '마트 페이지';
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
         let message = (req.query.message) ? req.query.message : '';
 
         let userInfo = await userService.get(req.cookies.xToken, userSeq);
         if (userInfo.USERTYPE != 'M') res.redirect("/");
-        let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);        
+        let martInfo = await martService.getMartByUser(req.cookies.xToken, userSeq);
 
         res.render('martPage/martInfo', {
             layout: 'layouts/default',
@@ -56,7 +56,7 @@ module.exports = {
         const HRONAME = req.body.HRONAME;
         const HROCONTACT = req.body.HROCONTACT;
         const HRORANK = req.body.HRORANK;
-        
+
         const returnData = await martService.update(req.cookies.xToken, SEQ, NAME, REGNO, POSTCODE, ADDRESS, ADDRESSEXTRA, CONTACT, HRONAME, HROCONTACT, HRORANK);
 
         if (returnData) {
@@ -67,11 +67,11 @@ module.exports = {
             }
         } else {
             res.redirect("/martPage/martInfo?message=2");
-        }        
+        }
     },
 
     async scrap(req, res, next) {
-        let title = '마트 페이지';
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
 
         let userInfo = await userService.get(req.cookies.xToken, userSeq);
@@ -90,9 +90,9 @@ module.exports = {
             list: resumeList,
         });
     },
-    
+
     async scrapDetail(req, res, next) {
-        let title = '마트 페이지';
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
         let resumeSeq = req.query.resumeSeq;
 
@@ -119,7 +119,7 @@ module.exports = {
             martInfo: martInfo,
             resumeInfo: resumeInfo,
             listCareer: listCareer,
-            jobRequest : jobRequest,
+            jobRequest: jobRequest,
             resumeScrap: resumeScrap,
         });
     },

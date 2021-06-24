@@ -9,10 +9,10 @@ const commonService = require('../services/common');
 const moment = require('moment');
 
 module.exports = {
-    
+
     // 유저 정보 페이지
     async userPage(req, res, next) {
-        let title = '마이 페이지';
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
         // 사용자 정보를 포함한 이력서 정보이다
         const userInfo = await userService.get(req.cookies.xToken, userSeq);
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     // POST 로 이력서 수정
-    async userEdit(req, res, next){
+    async userEdit(req, res, next) {
         let seq = req.body.seq
         let subject = req.body.subject;
         let name = req.body.name;
@@ -53,7 +53,7 @@ module.exports = {
         let workingTypeNames = req.body.workingTypeNames;
         let salary = req.body.salary;
 
-        
+
         const returnData = await resumeService.update(req.cookies.xToken, seq, subject, name, contact, birthyear, email, gender,
             postCode, address, addressExtra, education, educcationSchool, careerSeq, technical, license,
             isWelfare, isMilitaly, introduce, workingTypeSeqs, workingTypeNames, salary);
@@ -64,13 +64,13 @@ module.exports = {
         });
     },
 
-    async edit(req, res, next){
-        let title = '마이 페이지';
+    async edit(req, res, next) {
+        let title = '마트인 - 한국마트협회';
         let user_seq = req.user.Seq;
         // 이력서 정보
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, user_seq);
         let resumeSeq = resumeInfo.SEQ;
-        
+
         // 경력이 있을때만 가져오면 됨.
         const listCareer = await resumeService.listCareer(req.cookies.xToken, resumeSeq);
         // 근무 형태 리스트를 얻는다
@@ -79,7 +79,7 @@ module.exports = {
         const regionList = await commonService.listWorkingRegion();
         // 업종 리스트를 얻는다
         const jobKindList = await commonService.listJobKind();
-        
+
         res.render('mypage/userPageEdit', {
             layout: 'layouts/default',
             title: title,
@@ -95,7 +95,7 @@ module.exports = {
     },
 
     // updateWorkingRegion
-    async updateWorkingRegion(req, res, next){
+    async updateWorkingRegion(req, res, next) {
         let seq = req.body.seq
         let regions = req.body.regions;
 
@@ -108,7 +108,7 @@ module.exports = {
     },
 
     // updateWorkingJobKind
-    async updateJobKind(req, res, next){
+    async updateJobKind(req, res, next) {
         let seq = req.body.seq
         let jobKinds = req.body.jobKinds;
 
@@ -121,7 +121,7 @@ module.exports = {
     },
 
     // 경력 추가
-    async createCareer(req, res, next){
+    async createCareer(req, res, next) {
         let resumeSeq = req.body.resumeSeq;
         let company = req.body.company;
         let workStart = req.body.workStart;
@@ -141,9 +141,9 @@ module.exports = {
         });
 
     },
-    
+
     // 이력서 수정 > 사진 업로드 모달에서 사진 업로드
-    async updateImage(req, res, next){
+    async updateImage(req, res, next) {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
@@ -156,33 +156,33 @@ module.exports = {
         });
     },
     // 이력서 수정 > 증명서 업로드 모달에서 증명서 업로드
-    async updatecertificate(req, res, next){
+    async updatecertificate(req, res, next) {
         const SEQ = req.body.SEQ;
         const location = req.body.location;
         const RESUMEFILE = location + "/" + req.body.RESUMEFILE;
 
         const returnData = await resumeService.updatecertificate(req.cookies.xToken, SEQ, RESUMEFILE);
-        
+
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
             data: returnData
         });
     },
-    
-    async getCareer(req, res, next){
+
+    async getCareer(req, res, next) {
         let resumeSeq = req.query.seq;
-        
+
         const returnData = await resumeService.getCareer(req.cookies.xToken, resumeSeq);
 
         res.json({
             result: (returnData == null) ? 'fail' : 'success',
             data: returnData
         });
-        
+
     },
 
     // 경력 삭제
-    async removeCareer(req, res, next){
+    async removeCareer(req, res, next) {
 
         let resumeSeq = req.body.resumeSeq;
 
@@ -192,11 +192,11 @@ module.exports = {
             result: (returnData == null) ? 'fail' : 'success',
             data: returnData
         });
-        
+
     },
 
     // 경력 수정
-    async updateCareer(req, res, next){
+    async updateCareer(req, res, next) {
         let resumeSeq = req.body.resumeSeq;
         let company = req.body.company;
         let workStart = req.body.workStart;
@@ -207,7 +207,7 @@ module.exports = {
         let workRegion = req.body.workRegion;
         let charge = req.body.charge;
         let salary = req.body.salary;
-        
+
         const returnData = await resumeService.updateCareer(req.cookies.xToken, resumeSeq, company, workStart, workEnd, career, position, jobType, workRegion, charge, salary);
 
         res.json({
@@ -215,10 +215,10 @@ module.exports = {
             data: returnData
         });
     },
-    
+
     // 
-    async resumegetByUserSeq(req, res, next){
-        let title = '마이 페이지';
+    async resumegetByUserSeq(req, res, next) {
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
 
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
@@ -236,8 +236,8 @@ module.exports = {
         })
     },
 
-    async scrap(req, res, next){
-        let title = '마이 페이지';
+    async scrap(req, res, next) {
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
 
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
@@ -255,8 +255,8 @@ module.exports = {
     },
 
     // 지원현황
-    async apply(req, res, next){
-        let title = '마이 페이지';
+    async apply(req, res, next) {
+        let title = '마트인 - 한국마트협회';
         let userSeq = req.user.Seq;
 
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
@@ -269,13 +269,13 @@ module.exports = {
             moment: moment,
             hostName: process.env.APIHOST,
             resumeInfo: resumeInfo,
-            list : applyList.list
+            list: applyList.list
         })
     },
 
     // 탈퇴
-    async closeAccount(req, res, next){
-        let title = '마이 페이지';
+    async closeAccount(req, res, next) {
+        let title = '마트인 - 한국마트협회';
 
         const userSeq = req.user.Seq;
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
@@ -291,8 +291,8 @@ module.exports = {
         })
     },
 
-    async requestedMartList(req, res, next){
-        let title = '마이 페이지';
+    async requestedMartList(req, res, next) {
+        let title = '마트인 - 한국마트협회';
 
         const userSeq = req.user.Seq;
         const resumeInfo = await resumeService.getByUserSeq(req.cookies.xToken, userSeq);
@@ -309,9 +309,9 @@ module.exports = {
             list: (returnData) ? returnData : null,
         })
     },
-        
-    async requestedRecruitList(req, res, next){
-        let title = '마이 페이지';
+
+    async requestedRecruitList(req, res, next) {
+        let title = '마트인 - 한국마트협회';
 
         const martSeq = req.query.martSeq;
         const userSeq = req.user.Seq;

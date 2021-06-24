@@ -28,13 +28,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, '/assets/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
-app.set('baseTitle', '마트협회구인구직 ');
+app.set('baseTitle', '마트인 - 한국마트협회 ');
 if (process.env.NODE_ENV == 'develope') {
   process.env.APIHOST = 'http://localhost:3000';
 } else {
-    process.env.APIHOST = 'http://3.37.14.220:3000';
-    process.env.FRTHOST = 'http://3.37.14.220'
-  }
+  process.env.APIHOST = 'http://3.37.14.220:3000';
+}
 
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
@@ -47,7 +46,7 @@ app.use('/mypage', require('./routes/mypage'));
 app.use('/martPage', require('./routes/martPage'));
 
 app.use(
-  morgan('combined', 
+  morgan('combined',
     {
       skip: function (req, res) { return res.statusCode < 400 }, // http return 이 에러일때만 출력
       stream: logger.stream // logger에서 morgan의 stream 을 받도록 추가
@@ -56,12 +55,12 @@ app.use(
 );
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
