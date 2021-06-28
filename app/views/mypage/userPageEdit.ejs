@@ -1026,9 +1026,9 @@
     // 경력 수정 확인 버튼 클릭
     function careerEditSaveBtn(){
         if (confirm("경력을 수정하시겠습니까? ")){
-            TrimCheckAddCareer()
-            if (!nullCheckAddCareer()) return;
-            if (!specialCheckAddCareer()) return;
+            TrimCheckEditCareer()
+            nullCheckEditCareer()
+            specialCheckEditCareer()
             doPostCallSync("/mypage/user/updateCareer", {
                 resumeSeq: $("#edit-resumeseq").val(),
                 company: $("#edit-company").val(),
@@ -1049,7 +1049,7 @@
                     $("#jobType"+editNumber).text($("#edit-jobType").val());
                     $("#charge"+editNumber).text($("#edit-charge").val());
                     $("#salary"+editNumber).text($("#edit-salary").val());
-                    $("#worktime"+editNumber).text($("#edit-workstart").val()+'~'+("#edit-workend").val());
+                    $("#worktime"+editNumber).text($("#edit-workstart").val()+'~'+$("#edit-workend").val());
                 })
                 .fail(function(sender, message, details){
                     alert("유저 수정 오류 발생..");
@@ -1067,9 +1067,9 @@
 
     // 경력 추가 확인 버튼 클릭
     function createCareerOkay(){
-        TrimCheckEditCareer()
-        if (!nullCheckEditCareer()) return;
-        if (!specialCheckEditCareer()) return;
+        TrimCheckAddCareer()
+        nullCheckAddCareer()
+        specialCheckAddCareer()
         doPostCallSync("/mypage/user/createCareer", {
             resumeSeq: $("#create-seq").val(),
             company: $("#create-company").val(),
