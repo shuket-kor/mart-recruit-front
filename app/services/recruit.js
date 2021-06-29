@@ -242,7 +242,7 @@ module.exports = class recruitService {
     }  
     static async create(token, MART_SEQ, HRONAME, HROCONTACT, HROEMAIL, SUBJECT, CAREER_SEQ, CHARGE, 
         PREFERENTIAL, EDUCATION, SALARYTYPE, SALARY, PROBATIONTERM, WORKSHIFT, WORKSHIFTTIME, 
-        GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION) {
+        GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION, ACTIVE) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/create`;
 
@@ -279,6 +279,7 @@ module.exports = class recruitService {
                     JOBRANK: JOBRANK,
                     WORKINGTYPE: WORKINGTYPE,
                     WORKREGION: WORKREGION,
+                    ACTIVE: ACTIVE
                 },
                 responseType: 'json'
             });

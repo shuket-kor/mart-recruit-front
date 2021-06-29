@@ -583,12 +583,13 @@
                         cache: false,
                         contentType: false,
                         processData: false
-                    }); 
+                    })
                 }
             }
         });
-        var certificateValue = '<%=resumeInfo.CAREERCERTIFICATE %>'
+        var certificateValue = '<%=resumeInfo.CAREERCERTIFICATE %>';
         if(certificateValue){
+            $('input:checkbox[id="info-check"]').prop("checked", true);
             $('#personInfo').show();
         }else{
             $('#personInfo').hide();

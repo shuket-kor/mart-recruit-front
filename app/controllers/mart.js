@@ -147,7 +147,7 @@ module.exports = {
         if (workType == "CREATE") {
             result = await recruitService.create(req.cookies.xToken, MART_SEQ, HRONAME, HROCONTACT, HROEMAIL, SUBJECT, CAREER_SEQ, CHARGE, 
                 PREFERENTIAL, EDUCATION, SALARYTYPE, SALARY, PROBATIONTERM, WORKSHIFT, WORKSHIFTTIME, 
-                GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION);
+                GENDER, AGE, STARTDATE, ENDDATE, HIRINGSTEP, REQUIREDOCS, CONTENT, JOBKIND, JOBRANK, WORKINGTYPE, WORKREGION, ACTIVE);
         } else {
             result = await recruitService.update(req.cookies.xToken, SEQ, HRONAME, HROCONTACT, HROEMAIL, SUBJECT, CAREER_SEQ, CHARGE, 
                 PREFERENTIAL, EDUCATION, SALARYTYPE, SALARY, PROBATIONTERM, WORKSHIFT, WORKSHIFTTIME, 
@@ -166,6 +166,7 @@ module.exports = {
         if (!recruitInfo) res.redirect("/");
          // 공고의 지원 카운트를 얻는다
          let activeInfo = await recruitService.getResumeCount(req.cookies.xToken, recruitSeq);
+         console.log(activeInfo);
          // 공고 정보로부터 마트 정보를 얻는다
         let martInfo = await martService.get(req.cookies.xToken, recruitInfo.MART_SEQ);
         // 공고에 지원한 지원자 목록을 얻는다

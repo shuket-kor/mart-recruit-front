@@ -31,7 +31,15 @@
         <div class="section edit-recruit">
             <% if (recruitInfo) { %>
             <div class="row">
-                <div class="col-sm-8"><h3><%-(recruitInfo.ACTIVE == 'Y') ? `<span class="badge badge-success">진행 중</span>` : `<span class="badge badge-secondary">마감</span>` %>
+                <div class="col-sm-8">
+                    <h3>
+                        <% if(recruitInfo.ACTIVE == 'Y'){ %>
+                            <span class="badge badge-success">진행 중</span>
+                        <% }else if(recruitInfo.ACTIVE == 'W'){%>
+                            <span class="badge badge-secondary">진행 대기 중</span>
+                        <% }else{ %>
+                        <span class="badge badge-secondary">마감</span>
+                        <% }%>
                     <%=recruitInfo.SUBJECT %></h3></div>
                 <div class="col-sm-4">
                     <button type="button" class="btn btn-outline-dark pull-right m-r-10 gotoList">목록으로 돌아가기</button>
