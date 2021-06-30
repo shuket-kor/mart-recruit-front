@@ -182,8 +182,11 @@ let apply = function() {
         .success(function(json){
             if (json.result == "success") 
                 self.location.reload();
-            else
-                alert("구인 공고에 지원하는 도중에 오류가 발생했습니다.");
+            else {
+                if (confirm("이력서를 먼저 완성해야 합니다. 이력서 수정 화면으로 이동하시겠습니까?")) {
+                    self.location = "/mypage/user/edit";
+                }
+            }
         })
         .fail(function(sender, message, details){
             alert("구인 공고에 지원하는 도중에 오류가 발생했습니다.");
