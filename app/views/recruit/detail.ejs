@@ -113,7 +113,7 @@
                                         <ul class="job-social tr-list listing-2" > 
                                             <% if (user) { %>
                                             <% if (user.Type == 'U') { %>
-                                            <li><a onclick="cancelScrap(<%=item.SEQ %>)"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
+                                            <li><a onclick="scrap(<%=item.SEQ %>)"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a></li>
                                             <% } %>
                                             <% } %>
                                             <li><a onclick="showDetail(<%=item.SEQ %>)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
