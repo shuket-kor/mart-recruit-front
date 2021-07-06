@@ -67,7 +67,8 @@ module.exports = {
     async intro(req, res, next) {
 
         res.render('intro/index', {
-            // title: '마트 페이지'
+            layout: 'layouts/intro',
+            title: '마트 페이지'
         });
         
     },
