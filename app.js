@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const logger = require('./app/config/logger');
 const expressLayouts = require('express-ejs-layouts');
+const { http } = require('./app/config/logger');
+const { fstat } = require('fs');
 
 var app = express();
 

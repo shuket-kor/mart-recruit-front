@@ -62,6 +62,14 @@ module.exports = {
             title: '한국마트협회 구인구직 - 서비스 이용약관',
             user: req.user
         });
-    }
+    },
+
+    async intro(req, res, next) {
+
+        res.render('intro/index', {
+            // title: '마트 페이지'
+        });
+        
+    },
 
 }
