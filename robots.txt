@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+sitemap: http://www.xn--hz2bi4w3wi.kr/sitemap.xml
