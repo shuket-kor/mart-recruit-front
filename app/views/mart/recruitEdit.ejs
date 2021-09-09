@@ -94,8 +94,9 @@
                 <div class="col-sm-10 data"><input type="text" class="form-control" id="CHARGE" name="CHARGE" placeholder="담당 업무를 입력하세요" required><span class="validate-message" for="CHARGE">담당해야 할 업무를 구체적으로 적어 주세요</span></div>
             </div>
             <div class="form-group row item">
-                <label for="inputEmail3" class="col-sm-2 col-form-label title">직급/직책 </label>
+                <label for="inputEmail3" class="col-sm-2 col-form-label title">직급/직책 <em class="required">필수</em></label>
                 <div class="col-sm-10 data">
+                    <a id="JOBRANK"></a>
                     <% let jobRank = ['사원', '주임', '계장', '대리', '과장', '차장', '부장', '이사', '전무', '부사장', '임원', '면접 후 결정']; %>
                     <% jobRank.forEach((item, index) => { %>
                         <div class="form-check mb-2 mr-sm-2 pull-left">
@@ -105,6 +106,7 @@
                             </label>
                         </div>
                     <%}); %>
+                    <div class="clearfix validate-message" for="JOBRANK">직급 및 직책을 선택하여 주세요.</div>
                 </div>
             </div>
             <div class="form-group row item">
@@ -470,36 +472,82 @@ let saveData = function() {
     if (!validateText()) invalidate++;
 
     // 직종 (필)
+    //  '' 이 나옴. 
     let jobKinds = getJobKinds();
     if (jobKinds.length == 0) {
         $(".validate-message[for='JOBKIND']").css("display", "block");
+        return false;
     }
     // 직급/직책
     let jobRanks = getJobRanks();
+    if(jobRanks.length == 0){
+        $(".validate-message[for='JOBRANK']").css("display", "block");
+        return false;
+    }
     // 근무 형태 (필)
     let workingTypes = getWorkingTypes();
     if (workingTypes.length == 0) {
         $(".validate-message[for='WORKINGTYPE']").css("display", "block");
+        return false;
     }
     // 지역 (필)
     let regions = getRegions();
     if (regions.length == 0) {
         $(".validate-message[for='WORKREGION']").css("display", "block");
+        return false;
     }
+    // 접수 시작 기간 (필)
+    // getStartDate();
+    // getEndDate();
+    let startDt = $("#STARTDATE").val()
+    if(!startDt){
+        alert('접수시작 기간을 선택하여 주세요.');
+        return false;
+    }
+    let endDt = $("#ENDDATE").val()
+    // 종료날자 없고
+    if(!endDt){
+        // 채용시까지도 체크 안되있으면,
+        if($('input:checkbox[id="ENDDATE_UNTIL"]').is(":checked") == false) {
+            alert('접수종료 기간 및 채용시까지를 선택하여 주세요.');
+            return false;
+        }
+    }
+    // 접수 끝 기간 or 채용시까지
 
     if (invalidate > 0) {
         // $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].scrollIntoView();
         $("#" + $($('.validate-message:visible')[0]).attr("for"))[0].focus();
-        return;
+        return false;
     } else  {
         $("#contentForSummerNote").val($('#CONTENT').summernote('code'));
         $("#recruit").submit();
     }
 }
 
+// function getStartDate() {
+//     let startDt = $("#STARTDATE").val()
+//     if(!startDt){
+//         alert('접수시작 기간을 선택하여 주세요.');
+//         return false;
+//     }
+// };
+
+// function getEndDate() {
+//     let endDt = $("#ENDDATE").val()
+//     // 종료날자 없고
+//     if(!endDt){
+//         // 채용시까지도 체크 안되있으면,
+//         if($('input:checkbox[id="ENDDATE_UNTIL"]').is(":checked") == false) {
+//             alert('접수종료 기간 및 채용시까지를 선택하여 주세요.');
+//             return false;
+//         }
+//     }
+// }
+
 function getJobKinds() {
     var checkJobKind = "";
-    $('input:checkbox[name="jobKind"]').each(function() {
+    $('input:checkbox[name="JOBKIND"]').each(function() {
         if(this.checked){
             checkJobKind += this.value + ","; 
         }
@@ -510,7 +558,7 @@ function getJobKinds() {
 
 function getJobRanks() {
     var checkJobRank = "";
-    $('input:checkbox[name="jobRank"]').each(function() {
+    $('input:checkbox[name="JOBRANK"]').each(function() {
         if(this.checked){
             checkJobRank += "'" + this.value + "',"; 
         }
@@ -521,7 +569,7 @@ function getJobRanks() {
 
 function getWorkingTypes() {
     var checkWorkingType = "";
-    $('input:checkbox[name="workingType"]').each(function() {
+    $('input:checkbox[name="WORKINGTYPE"]').each(function() {
         if(this.checked){
             checkWorkingType += this.value + ","; 
         }
@@ -532,7 +580,7 @@ function getWorkingTypes() {
 
 function getRegions() {
     var checkRegion = "";
-    $('input:checkbox[name="workingRegion"]').each(function() {
+    $('input:checkbox[name="WORKREGION"]').each(function() {
         if(this.checked){
             checkRegion += this.value + ","; 
         }

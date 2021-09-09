@@ -195,7 +195,9 @@ module.exports = {
     async apply(req, res, next) {
         let recruitSeq = req.query.seq;
         let userSeq = req.user.Seq;
-
+        console.log(recruitSeq);
+        console.log(userSeq);
+        console.log(req.user);
         // 공고 정보가 전달되지 않았으면 리스트로 이동
         if (!recruitSeq) res.redirect("/recruit/list");
         if (req.user.Type != "U") res.redirect(`/recruit/detail?seq=${recruitSeq}&applyResult=userNotMatch`);

@@ -160,18 +160,16 @@ module.exports = {
         const recruitSeq = req.query.seq;
         const currentPage = (req.query.page) ? req.query.page : 1;
         const step = req.query.step;
-
+        // console.log("@@@@@@@@@@@@@@@@@@@@@@@@" + recruitSeq);
         // 공고 정보를 얻는다
         let recruitInfo = await recruitService.get(req.cookies.xToken, recruitSeq);
         if (!recruitInfo) res.redirect("/");
          // 공고의 지원 카운트를 얻는다
-         let activeInfo = await recruitService.getResumeCount(req.cookies.xToken, recruitSeq);
-         console.log(activeInfo);
+        let activeInfo = await recruitService.getResumeCount(req.cookies.xToken, recruitSeq);
          // 공고 정보로부터 마트 정보를 얻는다
         let martInfo = await martService.get(req.cookies.xToken, recruitInfo.MART_SEQ);
         // 공고에 지원한 지원자 목록을 얻는다
         let resumeList = await resumeService.listForRecruit(req.cookies.xToken, recruitInfo.SEQ, step);
-        console.log(activeInfo);
         res.render('mart/recruitResume', {
             layout: 'layouts/default',
             title: req.app.get('baseTitle') + ' 지원자 채용',

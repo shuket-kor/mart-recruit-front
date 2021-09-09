@@ -6,6 +6,7 @@ module.exports = class recruitService {
     static async get(token, seq) {
         try {
             var apiURL = `${process.env.APIHOST}/api/recruit/get`;
+            // var apiURL = `http://localhost:3000/api/recruit/get`;
 
             const {body} = await got.post(apiURL, {
                 headers: {
@@ -14,10 +15,12 @@ module.exports = class recruitService {
                     'userAgent': 'DEVICE-AGENT',
                     'Authorization': token
                 }, json: {
-                    seq: seq
+                    seq: seq,
+                    key: secretKey
                 },
                 responseType: 'json'
             });
+            console.log(body)
             if (body.result === 'success') {
                 return body.data;
             } else {

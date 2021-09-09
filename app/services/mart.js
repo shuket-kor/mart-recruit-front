@@ -15,7 +15,7 @@ module.exports = class martService {
                     'Authorization': token
                 }, json: {
                     key: secretKey,
-                    seq: seq
+                    SEQ: seq
                 },
                 responseType: 'json'
             });
