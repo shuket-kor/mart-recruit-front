@@ -160,7 +160,7 @@ module.exports = {
         const recruitSeq = req.query.seq;
         const currentPage = (req.query.page) ? req.query.page : 1;
         const step = req.query.step;
-        // console.log("@@@@@@@@@@@@@@@@@@@@@@@@" + recruitSeq);
+
         // 공고 정보를 얻는다
         let recruitInfo = await recruitService.get(req.cookies.xToken, recruitSeq);
         if (!recruitInfo) res.redirect("/");
@@ -170,6 +170,7 @@ module.exports = {
         let martInfo = await martService.get(req.cookies.xToken, recruitInfo.MART_SEQ);
         // 공고에 지원한 지원자 목록을 얻는다
         let resumeList = await resumeService.listForRecruit(req.cookies.xToken, recruitInfo.SEQ, step);
+        
         res.render('mart/recruitResume', {
             layout: 'layouts/default',
             title: req.app.get('baseTitle') + ' 지원자 채용',

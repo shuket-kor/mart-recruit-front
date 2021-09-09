@@ -497,8 +497,6 @@ let saveData = function() {
         return false;
     }
     // 접수 시작 기간 (필)
-    // getStartDate();
-    // getEndDate();
     let startDt = $("#STARTDATE").val()
     if(!startDt){
         alert('접수시작 기간을 선택하여 주세요.');
@@ -524,26 +522,6 @@ let saveData = function() {
         $("#recruit").submit();
     }
 }
-
-// function getStartDate() {
-//     let startDt = $("#STARTDATE").val()
-//     if(!startDt){
-//         alert('접수시작 기간을 선택하여 주세요.');
-//         return false;
-//     }
-// };
-
-// function getEndDate() {
-//     let endDt = $("#ENDDATE").val()
-//     // 종료날자 없고
-//     if(!endDt){
-//         // 채용시까지도 체크 안되있으면,
-//         if($('input:checkbox[id="ENDDATE_UNTIL"]').is(":checked") == false) {
-//             alert('접수종료 기간 및 채용시까지를 선택하여 주세요.');
-//             return false;
-//         }
-//     }
-// }
 
 function getJobKinds() {
     var checkJobKind = "";
